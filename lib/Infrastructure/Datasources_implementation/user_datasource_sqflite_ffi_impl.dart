@@ -27,7 +27,8 @@ class UserDatasourceSqfliteFfiImpl extends UserDatasource {
 
   @override
   Future retrieveUser(String email) async {
-    return await database.query('UsersTest');
+    return await database
+        .rawQuery('SELECT * FROM UsersTest WHERE email = ? limit = 1', [email]);
   }
 
   Future<void> close() async {

@@ -12,12 +12,13 @@ void main() {
     sqfliteFfiInit();
 
     test('user can register', () async {
-      List<Map> userInDb = [
+      List<Map> user1InDb = [
         {'id': 1, 'email': 'thusy@gmail.com', 'password': 'password'},
       ];
 
-      String email = 'thusy@gmail.com';
-      String password = 'password';
+      List<Map> user2InDb = [
+        {'id': 2, 'email': 'thusy@hotmail.com', 'password': 'password'},
+      ];
 
       UserDatasourceSqfliteFfiImpl userDatasourceSqfliteFfiImpl =
           UserDatasourceSqfliteFfiImpl();
@@ -26,11 +27,16 @@ void main() {
       UserRepositoryImpl userRepositoryImpl =
           UserRepositoryImpl(userDatasourceSqfliteFfiImpl);
 
-      await userRepositoryImpl.registerUser(email, password);
+      await userRepositoryImpl.registerUser('thusy@gmail.com', 'password');
+      await userRepositoryImpl.registerUser('thusy@hotmail.com', 'password');
 
-      var dataSearchResult = await userRepositoryImpl.retrieveUser(email);
+      var dataSearchUser1 =
+          await userRepositoryImpl.retrieveUser('thusy@gmail.com');
+      var dataSearchUser2 =
+          await userRepositoryImpl.retrieveUser('thusy@hotmail.com');
 
-      expect(await dataSearchResult, userInDb);
+      expect(await dataSearchUser1, user1InDb);
+      expect(await dataSearchUser2, user2InDb);
       await userDatasourceSqfliteFfiImpl.close();
     });
   });

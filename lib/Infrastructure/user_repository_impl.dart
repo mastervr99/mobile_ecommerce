@@ -6,7 +6,7 @@ class UserRepositoryImpl {
   UserRepositoryImpl(this.userDatasource);
 
   registerUser(String email, String password) {
-    userDatasource.registerUser(email, password);
+    return userDatasource.registerUser(email, password);
   }
 
   retrieveUser(String email) {

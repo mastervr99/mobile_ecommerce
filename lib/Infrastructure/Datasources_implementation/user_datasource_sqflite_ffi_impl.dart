@@ -21,8 +21,14 @@ class UserDatasourceSqfliteFfiImpl extends UserDatasource {
 
   @override
   registerUser(String email, String password) async {
-    await database.insert(
-        'UsersTest', <String, Object?>{'email': email, 'password': password});
+    var user = await retrieveUser(email);
+    if (user.isEmpty) {
+      await database.insert(
+          'UsersTest', <String, Object?>{'email': email, 'password': password});
+      return "user is registered";
+    } else {
+      return "email already used";
+    }
   }
 
   @override

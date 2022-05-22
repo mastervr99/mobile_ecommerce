@@ -39,5 +39,20 @@ void main() {
       expect(await dataSearchUser2, user2InDb);
       await userDatasourceSqfliteFfiImpl.close();
     });
+
+    test("user can't register twice with same email", () async {
+      UserDatasourceSqfliteFfiImpl userDatasourceSqfliteFfiImpl =
+          UserDatasourceSqfliteFfiImpl();
+      await userDatasourceSqfliteFfiImpl.init();
+
+      UserRepositoryImpl userRepositoryImpl =
+          UserRepositoryImpl(userDatasourceSqfliteFfiImpl);
+      await userRepositoryImpl.registerUser('thusy@gmail.com', 'password');
+
+      var isUserRegistered = await userRepositoryImpl.registerUser(
+          'thusy@gmail.com', 'password22');
+      expect(isUserRegistered, "email already used");
+      await userDatasourceSqfliteFfiImpl.close();
+    });
   });
 }

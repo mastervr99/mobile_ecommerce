@@ -40,6 +40,8 @@ dependencies:
   flutter_bloc:
   http:
 
+  flutter_translate:
+
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +83,7 @@ flutter:
     - assets/images/empty_shopping_cart_image.png
     - assets/images/empty_shopping_cart.png
     - assets/images/empty_wish_list.png
+    - assets/app_languages/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

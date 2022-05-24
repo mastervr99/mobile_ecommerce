@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 //import 'package:mobile_ecommerce/components/AppSingUp.dart';
 
 class AppSignIn extends StatefulWidget {
@@ -71,7 +72,7 @@ class _AppSignInState extends State<AppSignIn> {
                           color: Color(0xFF666666),
                           fontFamily: defaultFontFamily,
                           fontSize: defaultFontSize),
-                      hintText: "Phone Number",
+                      hintText: translate("label_phone_number"),
                     ),
                   ),
                   SizedBox(
@@ -104,7 +105,7 @@ class _AppSignInState extends State<AppSignIn> {
                         fontFamily: defaultFontFamily,
                         fontSize: defaultFontSize,
                       ),
-                      hintText: "Password",
+                      hintText: translate("label_password"),
                     ),
                   ),
                   SizedBox(
@@ -113,7 +114,7 @@ class _AppSignInState extends State<AppSignIn> {
                   Container(
                     width: double.infinity,
                     child: Text(
-                      "Forgot your password?",
+                      translate("label_password_forgotten"),
                       style: TextStyle(
                         color: Color(0xFF666666),
                         fontFamily: defaultFontFamily,
@@ -132,7 +133,7 @@ class _AppSignInState extends State<AppSignIn> {
                       padding: EdgeInsets.all(17.0),
                       onPressed: () {},
                       child: Text(
-                        "Sign In",
+                        translate("label_sign_in"),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -164,7 +165,7 @@ class _AppSignInState extends State<AppSignIn> {
                   children: <Widget>[
                     Container(
                       child: Text(
-                        "Don't have an account? ",
+                        translate("label_question_account"),
                         style: TextStyle(
                           color: Color(0xFF666666),
                           fontFamily: defaultFontFamily,
@@ -182,7 +183,7 @@ class _AppSignInState extends State<AppSignIn> {
                       },
                       child: Container(
                         child: Text(
-                          "Sign Up",
+                          translate("label_sign_up"),
                           style: TextStyle(
                             color: Color(0xFFAC252B),
                             fontFamily: defaultFontFamily,

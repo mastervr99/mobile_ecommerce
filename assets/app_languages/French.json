@@ -1,0 +1,9 @@
+{
+  "label_phone_number": "Numéro de téléphone",
+  "label_password": "Mot de passe",
+  "label_password_forgotten" : "Mot de passe oublié ?",
+  "label_sign_in" : "S'identifier",
+  "label_sign_up" : "S'inscrire",
+  "label_question_account" : "Pas encore de compte ?"
+
+}

@@ -5,8 +5,8 @@ import 'Application/MyHomePage.dart';
 
 void main() async {
   var delegate = await LocalizationDelegate.create(
-      fallbackLocale: 'french',
-      supportedLocales: ['english', 'french'],
+      fallbackLocale: 'French',
+      supportedLocales: ['English', 'French'],
       basePath: 'assets/app_languages/');
 
   runApp(LocalizedApp(delegate, const MyApp()));

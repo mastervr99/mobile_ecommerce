@@ -37,12 +37,12 @@ PreferredSizeWidget appBarWidget(context) {
                           ElevatedButton(
                               child: Text("English"),
                               onPressed: () {
-                                changeLocale(context, 'english');
+                                changeLocale(context, 'English');
                               }),
                           ElevatedButton(
                               child: Text("Français"),
                               onPressed: () {
-                                changeLocale(context, 'french');
+                                changeLocale(context, 'French');
                               }),
                           InkWell(
                               child: Container(

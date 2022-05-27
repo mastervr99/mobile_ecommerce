@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:mobile_ecommerce/Application/LangagueTranslatorImpl.dart';
 
 import 'Application/MyHomePage.dart';
 
 void main() async {
-  LanguageTranslatorImpl languageTranslator = LanguageTranslatorImpl();
   var delegate = await LocalizationDelegate.create(
       fallbackLocale: 'french',
       supportedLocales: ['english', 'french'],

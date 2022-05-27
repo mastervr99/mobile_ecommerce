@@ -4,27 +4,6 @@ import 'package:mobile_ecommerce/Application/components/AppSignIn.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 PreferredSizeWidget appBarWidget(context) {
-  showMyAlertDialog(BuildContext context) {
-    // Create AlertDialog
-    AlertDialog dialog = AlertDialog(
-      title: Text("Sélection langage"),
-      actions: [
-        ElevatedButton(
-            child: Text("English"),
-            onPressed: () {
-              changeLocale(context, 'English');
-              Navigator.of(context).pop(); // Return true
-            }),
-        ElevatedButton(
-            child: Text("French"),
-            onPressed: () {
-              changeLocale(context, 'French');
-              Navigator.of(context).pop(); // Return false
-            })
-      ],
-    );
-  }
-
   return AppBar(
     elevation: 0.0,
     centerTitle: true,
@@ -52,18 +31,35 @@ PreferredSizeWidget appBarWidget(context) {
                 return AlertDialog(
                   title: Text(translate("label_language_selection")),
                   actions: [
-                    ElevatedButton(
-                        child: Text("English"),
-                        onPressed: () {
-                          changeLocale(context, 'English');
-                          Navigator.of(context).pop();
-                        }),
-                    ElevatedButton(
-                        child: Text("Français"),
-                        onPressed: () {
-                          changeLocale(context, 'French');
-                          Navigator.of(context).pop();
-                        })
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          ElevatedButton(
+                              child: Text("English"),
+                              onPressed: () {
+                                changeLocale(context, 'english');
+                              }),
+                          ElevatedButton(
+                              child: Text("Français"),
+                              onPressed: () {
+                                changeLocale(context, 'french');
+                              }),
+                          InkWell(
+                              child: Container(
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: CircleAvatar(
+                                    radius: 15.0,
+                                    backgroundColor: Colors.blue,
+                                    child:
+                                        Icon(Icons.close, color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.pop(context);
+                              })
+                        ]),
                   ],
                 );
               });

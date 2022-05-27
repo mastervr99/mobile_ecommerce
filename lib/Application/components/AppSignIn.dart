@@ -28,7 +28,7 @@ class _AppSignInState extends State<AppSignIn> {
               child: InkWell(
                 child: Container(
                   child: Align(
-                    alignment: Alignment.topLeft,
+                    alignment: Alignment.topRight,
                     child: Icon(Icons.close),
                   ),
                 ),

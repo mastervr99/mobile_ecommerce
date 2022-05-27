@@ -1,13 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_ecommerce/Application/translatorImpl.dart';
+import 'package:mobile_ecommerce/Application/LangagueTranslatorImpl.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
   group('translator actions:', () {
     test('translator translate strings based on location', () {
-      TranslatorImpl translator = TranslatorImpl();
-      expect(translator.translate("it works"), "ça marche");
+      LanguageTranslatorImpl langugageTranslator = LanguageTranslatorImpl();
 
-      expect(translator.translate("ça marche"), "it works");
+      expect(langugageTranslator.translate("it works"), "ça marche");
+
+      expect(langugageTranslator.translate("ça marche"), "it works");
     });
   });
 }

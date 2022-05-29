@@ -9,7 +9,7 @@ void main() {
   group('User actions : ', () {
     sqfliteFfiInit();
 
-    test('user can register', () async {
+    test('user can sign up', () async {
       List<Map> user1InDb = [
         {'id': 1, 'email': 'thusy@gmail.com', 'password': 'password'},
       ];
@@ -18,39 +18,35 @@ void main() {
         {'id': 2, 'email': 'thusy@hotmail.com', 'password': 'password'},
       ];
 
-      UserDatasourceSqfliteFfiImpl userDatasourceSqfliteFfiImpl =
-          UserDatasourceSqfliteFfiImpl();
-      await userDatasourceSqfliteFfiImpl.init();
+      final userDatasource = UserDatasourceSqfliteFfiImpl();
+      await userDatasource.init();
 
-      UserRepositoryImpl userRepositoryImpl =
-          UserRepositoryImpl(userDatasourceSqfliteFfiImpl);
+      final userRepository = UserRepositoryImpl(userDatasource);
 
-      await userRepositoryImpl.registerUser('thusy@gmail.com', 'password');
-      await userRepositoryImpl.registerUser('thusy@hotmail.com', 'password');
+      await userRepository.registerUser('thusy@gmail.com', 'password');
+      await userRepository.registerUser('thusy@hotmail.com', 'password');
 
       var dataSearchUser1 =
-          await userRepositoryImpl.retrieveUser('thusy@gmail.com');
+          await userRepository.retrieveUser('thusy@gmail.com');
       var dataSearchUser2 =
-          await userRepositoryImpl.retrieveUser('thusy@hotmail.com');
+          await userRepository.retrieveUser('thusy@hotmail.com');
 
       expect(await dataSearchUser1, user1InDb);
       expect(await dataSearchUser2, user2InDb);
-      await userDatasourceSqfliteFfiImpl.close();
+      await userDatasource.close();
     });
 
-    test("user can't register twice with same email", () async {
-      UserDatasourceSqfliteFfiImpl userDatasourceSqfliteFfiImpl =
-          UserDatasourceSqfliteFfiImpl();
-      await userDatasourceSqfliteFfiImpl.init();
+    test("user can't sign up twice with same email", () async {
+      final userDatasource = UserDatasourceSqfliteFfiImpl();
+      await userDatasource.init();
 
-      UserRepositoryImpl userRepositoryImpl =
-          UserRepositoryImpl(userDatasourceSqfliteFfiImpl);
-      await userRepositoryImpl.registerUser('thusy@gmail.com', 'password');
+      final userRepository = UserRepositoryImpl(userDatasource);
+      await userRepository.registerUser('thusy@gmail.com', 'password');
 
-      var isUserRegistered = await userRepositoryImpl.registerUser(
-          'thusy@gmail.com', 'password22');
+      var isUserRegistered =
+          await userRepository.registerUser('thusy@gmail.com', 'password22');
       expect(isUserRegistered, "email already used");
-      await userDatasourceSqfliteFfiImpl.close();
+      await userDatasource.close();
     });
   });
 }

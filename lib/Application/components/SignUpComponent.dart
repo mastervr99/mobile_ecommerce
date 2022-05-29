@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:mobile_ecommerce/Application/components/SignUpComponent.dart';
+import 'package:mobile_ecommerce/Application/components/SignInComponent.dart';
 
-class SignInComponent extends StatefulWidget {
-  @override
-  _SignInComponentState createState() => _SignInComponentState();
-}
-
-class _SignInComponentState extends State<SignInComponent> {
+class SignUpComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String defaultFontFamily = 'Roboto-Light.ttf';
@@ -47,6 +41,64 @@ class _SignInComponentState extends State<SignInComponent> {
                     height: 130,
                     alignment: Alignment.center,
                     child: Image.asset("assets/images/ic_app_icon.png"),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Flexible(
+                        flex: 1,
+                        child: TextField(
+                          showCursor: true,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                            ),
+                            filled: true,
+                            fillColor: Color(0xFFF2F3F5),
+                            hintStyle: TextStyle(
+                              color: Color(0xFF666666),
+                              fontFamily: defaultFontFamily,
+                              fontSize: defaultFontSize,
+                            ),
+                            hintText: translate("label_first_name"),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: TextField(
+                          showCursor: true,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                            ),
+                            filled: true,
+                            fillColor: Color(0xFFF2F3F5),
+                            hintStyle: TextStyle(
+                              color: Color(0xFF666666),
+                              fontFamily: defaultFontFamily,
+                              fontSize: defaultFontSize,
+                            ),
+                            hintText: translate("label_last_name"),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 15,
@@ -90,12 +142,7 @@ class _SignInComponentState extends State<SignInComponent> {
                       ),
                       filled: true,
                       prefixIcon: Icon(
-                        Icons.lock_outline,
-                        color: Color(0xFF666666),
-                        size: defaultIconSize,
-                      ),
-                      suffixIcon: Icon(
-                        Icons.remove_red_eye,
+                        Icons.code,
                         color: Color(0xFF666666),
                         size: defaultIconSize,
                       ),
@@ -105,25 +152,33 @@ class _SignInComponentState extends State<SignInComponent> {
                         fontFamily: defaultFontFamily,
                         fontSize: defaultFontSize,
                       ),
-                      hintText: translate("label_password"),
+                      hintText: translate("label_invitation_code"),
                     ),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 10,
                   ),
                   Container(
-                    width: double.infinity,
-                    child: Text(
-                      translate("label_password_forgotten"),
-                      style: TextStyle(
-                        color: Color(0xFF666666),
-                        fontFamily: defaultFontFamily,
-                        fontSize: defaultFontSize,
-                        fontStyle: FontStyle.normal,
-                      ),
-                      textAlign: TextAlign.end,
-                    ),
-                  ),
+                      width: double.infinity,
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.info_outline,
+                            color: Color(0xFF666666),
+                            size: defaultIconSize,
+                          ),
+                          Text(
+                            translate("label_invitation_code_text"),
+                            style: TextStyle(
+                              color: Color(0xFF666666),
+                              fontFamily: defaultFontFamily,
+                              fontSize: defaultFontSize,
+                              fontStyle: FontStyle.normal,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      )),
                   SizedBox(
                     height: 15,
                   ),
@@ -133,7 +188,7 @@ class _SignInComponentState extends State<SignInComponent> {
                       padding: EdgeInsets.all(17.0),
                       onPressed: () {},
                       child: Text(
-                        translate("label_sign_in"),
+                        translate("label_sign_up"),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -165,7 +220,7 @@ class _SignInComponentState extends State<SignInComponent> {
                   children: <Widget>[
                     Container(
                       child: Text(
-                        translate("label_new_account"),
+                        translate("label_existing_account"),
                         style: TextStyle(
                           color: Color(0xFF666666),
                           fontFamily: defaultFontFamily,
@@ -175,17 +230,17 @@ class _SignInComponentState extends State<SignInComponent> {
                       ),
                     ),
                     InkWell(
-                      onTap: () => {
-                        Navigator.pop(context),
+                      onTap: () {
+                        Navigator.pop(context);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpComponent()),
-                        )
+                              builder: (context) => SignInComponent()),
+                        );
                       },
                       child: Container(
                         child: Text(
-                          translate("label_sign_up"),
+                          translate("label_sign_in"),
                           style: TextStyle(
                             color: Color(0xFFAC252B),
                             fontFamily: defaultFontFamily,

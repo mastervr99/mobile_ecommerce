@@ -5,8 +5,6 @@ import 'dart:async';
 
 class UserDatasourceSqfliteFfiImpl extends UserDatasource {
   late var database;
-  var initialisationCompleter = Completer();
-  Future get instanceReady => initialisationCompleter.future;
 
   init() async {
     database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);

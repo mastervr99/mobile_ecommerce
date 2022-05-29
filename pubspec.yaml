@@ -84,6 +84,7 @@ flutter:
     - assets/images/empty_shopping_cart.png
     - assets/images/empty_wish_list.png
     - assets/app_languages/
+    - assets/databases/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

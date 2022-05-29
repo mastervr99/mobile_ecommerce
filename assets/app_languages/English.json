@@ -1,9 +1,15 @@
 {
   "label_language_selection" : "Language Selection",
   "label_phone_number": "Phone Number",
+  "label_email": "Email",
   "label_password": "Password",
   "label_password_forgotten" : "Forgot your password ?",
   "label_sign_in" : "Sign In",
   "label_sign_up" : "Sign Up",
-  "label_question_account" : "Don't have an account ?"
+  "label_new_account" : "Don't have an account ?",
+  "label_existing_account" : "Already have an account? ",
+  "label_first_name" : "First name",
+  "label_last_name" : "Last name",
+  "label_invitation_code" : "Invitation Code",
+  "label_invitation_code_text" : " Leave empty if you don't have Invitation Code"
 }

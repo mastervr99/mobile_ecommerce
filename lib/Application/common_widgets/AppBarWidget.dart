@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mobile_ecommerce/Application/components/SignInComponent.dart';
 import 'package:mobile_ecommerce/Application/components/LanguageSelectionComponent.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 PreferredSizeWidget appBarWidget(context) {
   return AppBar(

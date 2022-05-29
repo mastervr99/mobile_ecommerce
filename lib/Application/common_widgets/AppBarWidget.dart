@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mobile_ecommerce/Application/components/AppSignIn.dart';
+import 'package:mobile_ecommerce/Application/components/AppLanguageSelection.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 PreferredSizeWidget appBarWidget(context) {
@@ -26,43 +27,7 @@ PreferredSizeWidget appBarWidget(context) {
       IconButton(
         onPressed: () {
           showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text(translate("label_language_selection")),
-                  actions: [
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          ElevatedButton(
-                              child: Text("English"),
-                              onPressed: () {
-                                changeLocale(context, 'English');
-                              }),
-                          ElevatedButton(
-                              child: Text("Français"),
-                              onPressed: () {
-                                changeLocale(context, 'French');
-                              }),
-                          InkWell(
-                              child: Container(
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: CircleAvatar(
-                                    radius: 15.0,
-                                    backgroundColor: Colors.blue,
-                                    child:
-                                        Icon(Icons.close, color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                              onTap: () {
-                                Navigator.pop(context);
-                              })
-                        ]),
-                  ],
-                );
-              });
+              context: context, builder: (context) => AppLanguageSelection());
         },
         icon: const Icon(FontAwesomeIcons.language),
         color: const Color(0xFF323232),

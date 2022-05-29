@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mobile_ecommerce/Application/components/AppSignIn.dart';
-import 'package:mobile_ecommerce/Application/components/AppLanguageSelection.dart';
+import 'package:mobile_ecommerce/Application/components/SignInComponent.dart';
+import 'package:mobile_ecommerce/Application/components/LanguageSelectionComponent.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 PreferredSizeWidget appBarWidget(context) {
@@ -18,7 +18,7 @@ PreferredSizeWidget appBarWidget(context) {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AppSignIn()),
+            MaterialPageRoute(builder: (context) => SignInComponent()),
           );
         },
         icon: const Icon(FontAwesomeIcons.user),
@@ -27,7 +27,8 @@ PreferredSizeWidget appBarWidget(context) {
       IconButton(
         onPressed: () {
           showDialog(
-              context: context, builder: (context) => AppLanguageSelection());
+              context: context,
+              builder: (context) => LanguageSelectionComponent());
         },
         icon: const Icon(FontAwesomeIcons.language),
         color: const Color(0xFF323232),

@@ -3,12 +3,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 //import 'package:mobile_ecommerce/components/AppSingUp.dart';
 
-class AppSignIn extends StatefulWidget {
+class SignInComponent extends StatefulWidget {
   @override
-  _AppSignInState createState() => _AppSignInState();
+  _SignInComponentState createState() => _SignInComponentState();
 }
 
-class _AppSignInState extends State<AppSignIn> {
+class _SignInComponentState extends State<SignInComponent> {
   @override
   Widget build(BuildContext context) {
     String defaultFontFamily = 'Roboto-Light.ttf';

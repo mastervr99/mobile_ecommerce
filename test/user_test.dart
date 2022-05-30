@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_ecommerce/Infrastructure/Datasources_implementation/user_datasource_sqflite_ffi_impl.dart';
-import 'package:mobile_ecommerce/Infrastructure/Datasources_implementation/user_datasource_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Infrastructure/user_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -8,7 +7,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   group('User actions : ', () {
-    //sqfliteFfiInit();
+    sqfliteFfiInit();
 
     test('user can sign up', () async {
       List<Map> user1InDb = [
@@ -19,7 +18,7 @@ void main() {
         {'id': 2, 'email': 'thusy@hotmail.com', 'password': 'password'},
       ];
 
-      final userDatasource = UserDatasourceSqfliteImpl();
+      final userDatasource = UserDatasourceSqfliteFfiImpl();
       await userDatasource.init();
 
       final userRepository = UserRepositoryImpl(userDatasource);

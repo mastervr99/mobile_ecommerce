@@ -5,6 +5,7 @@ import 'package:mobile_ecommerce/Application/components/LanguageSelectionCompone
 
 PreferredSizeWidget appBarWidget(context) {
   return AppBar(
+    backgroundColor: Color(0xFFAC252B),
     elevation: 0.0,
     centerTitle: true,
     title: Image.asset(

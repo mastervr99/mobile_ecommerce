@@ -1,11 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_ecommerce/Infrastructure/Datasources_implementation/user_datasource_sqflite_ffi_impl.dart';
 import 'package:mobile_ecommerce/Infrastructure/user_repository_impl.dart';
-import 'package:flutter/material.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  TestWidgetsFlutterBinding.ensureInitialized();
   group('User actions : ', () {
     sqfliteFfiInit();
 

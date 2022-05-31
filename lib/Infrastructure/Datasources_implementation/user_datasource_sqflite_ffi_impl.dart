@@ -29,9 +29,9 @@ class UserDatasourceSqfliteFfiImpl extends UserDatasource {
         'firstname': newUserInfos['firstname'],
         'lastname': newUserInfos['lastname'],
       });
-      return "user is registered";
+      return true;
     } else {
-      return "email already used";
+      return false;
     }
   }
 

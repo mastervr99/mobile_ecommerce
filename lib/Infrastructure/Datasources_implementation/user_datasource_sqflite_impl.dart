@@ -34,6 +34,9 @@ class UserDatasourceSqfliteImpl extends UserDatasource {
         'firstname': newUserInfos['firstname'],
         'lastname': newUserInfos['lastname'],
       });
+      return true;
+    } else {
+      return false;
     }
   }
 

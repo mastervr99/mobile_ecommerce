@@ -18,11 +18,11 @@ registerUser(Map newUserInfos) async {
 
   final userRepository = UserRepositoryImpl(userDatasource);
 
-  await userRepository.registerUser(newUserInfos);
-  var dataUser = await userRepository.retrieveUser(newUserInfos);
+  var isUserRegistered = await userRepository.registerUser(newUserInfos);
+  //var dataUser = await userRepository.retrieveUser(newUserInfos);
   await userDatasource.close();
 
-  return dataUser;
+  return isUserRegistered;
 }
 
 class _SignUpComponentState extends State<SignUpComponent> {
@@ -213,18 +213,35 @@ class _SignUpComponentState extends State<SignUpComponent> {
                               'lastname': lastNameController.text,
                             };
 
-                            var registrationTest =
+                            var isUserRegistered =
                                 await registerUser(newUserInfos);
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  // Retrieve the text the that user has entered by using the
-                                  // TextEditingController.
-                                  content: Text(registrationTest.toString()),
-                                );
-                              },
-                            );
+                            if (isUserRegistered) {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    // Retrieve the text the that user has entered by using the
+                                    // TextEditingController.
+
+                                    content: Text(
+                                        'Félicitations ! Vous êtes enregistré ! Vous pouvez maintenant vous connecter'),
+                                  );
+                                },
+                              );
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    // Retrieve the text the that user has entered by using the
+                                    // TextEditingController.
+
+                                    content: Text(
+                                        'Votre email est déjà utilisé : connectez-vous ou utilisez un email différent'),
+                                  );
+                                },
+                              );
+                            }
                           },
                           child: Text(
                             translate("label_sign_up"),

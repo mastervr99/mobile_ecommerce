@@ -75,7 +75,7 @@ void main() {
       await userRepository.registerUser(user);
 
       var isUserAlreadyRegistered = await userRepository.registerUser(user);
-      expect(isUserAlreadyRegistered, "email already used");
+      expect(isUserAlreadyRegistered, false);
       await userDatasource.close();
     });
   });

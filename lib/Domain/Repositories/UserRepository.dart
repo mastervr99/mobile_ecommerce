@@ -1,5 +1,5 @@
 abstract class UserRepository {
-  registerUser(String email, String password);
+  registerUser(Map newUserInfos);
 
-  retrieveUser(String email);
+  retrieveUser(Map userInfos);
 }

@@ -9,7 +9,7 @@ class SignUpComponent extends StatefulWidget {
   _SignUpComponentState createState() => _SignUpComponentState();
 }
 
-registerUser() async {
+registerUser(Map newUserInfos) async {
   WidgetsFlutterBinding.ensureInitialized();
   // Open the database and store the reference.
 
@@ -18,13 +18,19 @@ registerUser() async {
 
   final userRepository = UserRepositoryImpl(userDatasource);
 
-  await userRepository.registerUser('thusy@gmail.com', 'password');
-  var dataSearchUser1 = await userRepository.retrieveUser('thusy@gmail.com');
-  return dataSearchUser1;
+  await userRepository.registerUser(newUserInfos);
+  var dataUser = await userRepository.retrieveUser(newUserInfos);
+  await userDatasource.close();
+
+  return dataUser;
 }
 
 class _SignUpComponentState extends State<SignUpComponent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +82,7 @@ class _SignUpComponentState extends State<SignUpComponent> {
                           Flexible(
                             flex: 1,
                             child: TextFormField(
+                              controller: firstNameController,
                               showCursor: true,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
@@ -103,6 +110,7 @@ class _SignUpComponentState extends State<SignUpComponent> {
                           Flexible(
                             flex: 1,
                             child: TextFormField(
+                              controller: lastNameController,
                               showCursor: true,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
@@ -130,6 +138,7 @@ class _SignUpComponentState extends State<SignUpComponent> {
                         height: 15,
                       ),
                       TextFormField(
+                        controller: emailController,
                         showCursor: true,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -158,6 +167,7 @@ class _SignUpComponentState extends State<SignUpComponent> {
                         height: 15,
                       ),
                       TextFormField(
+                        controller: passwordController,
                         showCursor: true,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -196,7 +206,15 @@ class _SignUpComponentState extends State<SignUpComponent> {
                                 side: BorderSide(color: Color(0xFFBC1F26))),
                           ),
                           onPressed: () async {
-                            var registrationTest = await registerUser();
+                            Map newUserInfos = {
+                              'email': emailController.text,
+                              'password': passwordController.text,
+                              'firstname': firstNameController.text,
+                              'lastname': lastNameController.text,
+                            };
+
+                            var registrationTest =
+                                await registerUser(newUserInfos);
                             showDialog(
                               context: context,
                               builder: (context) {

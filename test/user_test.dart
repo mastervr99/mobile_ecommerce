@@ -9,6 +9,21 @@ void main() {
     sqfliteFfiInit();
 
     test('user can sign up', () async {
+      Map user1 = {'email': 'thusy@gmail.com', 'password': 'password'};
+
+      Map user2 = {'email': 'thusy@hotmail.com', 'password': 'password'};
+
+      final userDatasource = UserDatasourceSqfliteFfiImpl();
+      await userDatasource.init();
+
+      final userRepository = UserRepositoryImpl(userDatasource);
+
+      await userRepository.registerUser(user1);
+      await userRepository.registerUser(user2);
+
+      var dataSearchUser1 = await userRepository.retrieveUser(user1);
+      var dataSearchUser2 = await userRepository.retrieveUser(user2);
+
       List<Map> user1InDb = [
         {'id': 1, 'email': 'thusy@gmail.com', 'password': 'password'},
       ];
@@ -16,19 +31,6 @@ void main() {
       List<Map> user2InDb = [
         {'id': 2, 'email': 'thusy@hotmail.com', 'password': 'password'},
       ];
-
-      final userDatasource = UserDatasourceSqfliteFfiImpl();
-      await userDatasource.init();
-
-      final userRepository = UserRepositoryImpl(userDatasource);
-
-      await userRepository.registerUser('thusy@gmail.com', 'password');
-      await userRepository.registerUser('thusy@hotmail.com', 'password');
-
-      var dataSearchUser1 =
-          await userRepository.retrieveUser('thusy@gmail.com');
-      var dataSearchUser2 =
-          await userRepository.retrieveUser('thusy@hotmail.com');
 
       expect(await dataSearchUser1, user1InDb);
       expect(await dataSearchUser2, user2InDb);
@@ -40,11 +42,13 @@ void main() {
       await userDatasource.init();
 
       final userRepository = UserRepositoryImpl(userDatasource);
-      await userRepository.registerUser('thusy@gmail.com', 'password');
 
-      var isUserRegistered =
-          await userRepository.registerUser('thusy@gmail.com', 'password22');
-      expect(isUserRegistered, "email already used");
+      Map user = {'email': 'thusy@yahoo.com', 'password': 'password'};
+
+      await userRepository.registerUser(user);
+
+      var isUserAlreadyRegistered = await userRepository.registerUser(user);
+      expect(isUserAlreadyRegistered, "email already used");
       await userDatasource.close();
     });
   });

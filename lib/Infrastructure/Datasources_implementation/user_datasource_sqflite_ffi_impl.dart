@@ -1,4 +1,4 @@
-import 'package:mobile_ecommerce/Infrastructure/DataSources_abstraction/user_datasource.dart';
+import 'package:mobile_ecommerce/Infrastructure/Datasources_abstraction/user_datasource.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common/sqlite_api.dart';
 import 'dart:async';
@@ -18,11 +18,13 @@ class UserDatasourceSqfliteFfiImpl extends UserDatasource {
   }
 
   @override
-  registerUser(String email, String password) async {
-    var user = await retrieveUser(email);
+  registerUser(Map newUserInfos) async {
+    var user = await retrieveUser(newUserInfos);
     if (user.isEmpty) {
-      await database.insert(
-          'UsersTest', <String, Object?>{'email': email, 'password': password});
+      await database.insert('UsersTest', <String, Object?>{
+        'email': newUserInfos['email'],
+        'password': newUserInfos['password']
+      });
       return "user is registered";
     } else {
       return "email already used";
@@ -30,9 +32,9 @@ class UserDatasourceSqfliteFfiImpl extends UserDatasource {
   }
 
   @override
-  Future retrieveUser(String email) async {
-    return await database
-        .rawQuery('SELECT * FROM UsersTest WHERE email = ?', [email]);
+  Future retrieveUser(Map userInfos) async {
+    return await database.rawQuery(
+        'SELECT * FROM UsersTest WHERE email = ?', [userInfos['email']]);
   }
 
   Future<void> close() async {

@@ -13,8 +13,8 @@ void main() async {
 
   final userRepository = UserRepositoryImpl(userDatasource);
 
-  await userRepository.registerUser('thusy@gmail.com', 'password');
-  var dataSearchUser1 = await userRepository.retrieveUser('thusy@gmail.com');
+  //await userRepository.registerUser('thusy@gmail.com', 'password');
+  //var dataSearchUser1 = await userRepository.retrieveUser('thusy@gmail.com');
 
-  print(await dataSearchUser1.toString());
+  //print(await dataSearchUser1.toString());
 }

@@ -9,9 +9,19 @@ void main() {
     sqfliteFfiInit();
 
     test('user can sign up', () async {
-      Map user1 = {'email': 'thusy@gmail.com', 'password': 'password'};
+      Map user1 = {
+        'email': 'thusy@gmail.com',
+        'password': 'password',
+        'firstname': 'thusy',
+        'lastname': 'vinay'
+      };
 
-      Map user2 = {'email': 'thusy@hotmail.com', 'password': 'password'};
+      Map user2 = {
+        'email': 'thusy@hotmail.com',
+        'password': 'password',
+        'firstname': 'thusy',
+        'lastname': 'vinay'
+      };
 
       final userDatasource = UserDatasourceSqfliteFfiImpl();
       await userDatasource.init();
@@ -25,11 +35,23 @@ void main() {
       var dataSearchUser2 = await userRepository.retrieveUser(user2);
 
       List<Map> user1InDb = [
-        {'id': 1, 'email': 'thusy@gmail.com', 'password': 'password'},
+        {
+          'id': 1,
+          'email': 'thusy@gmail.com',
+          'password': 'password',
+          'firstname': 'thusy',
+          'lastname': 'vinay'
+        },
       ];
 
       List<Map> user2InDb = [
-        {'id': 2, 'email': 'thusy@hotmail.com', 'password': 'password'},
+        {
+          'id': 2,
+          'email': 'thusy@hotmail.com',
+          'password': 'password',
+          'firstname': 'thusy',
+          'lastname': 'vinay'
+        },
       ];
 
       expect(await dataSearchUser1, user1InDb);
@@ -43,7 +65,12 @@ void main() {
 
       final userRepository = UserRepositoryImpl(userDatasource);
 
-      Map user = {'email': 'thusy@yahoo.com', 'password': 'password'};
+      Map user = {
+        'email': 'thusy@yahoo.com',
+        'password': 'password',
+        'firstname': 'thusy',
+        'lastname': 'vinay'
+      };
 
       await userRepository.registerUser(user);
 

@@ -12,7 +12,9 @@ class UserDatasourceSqfliteFfiImpl extends UserDatasource {
       CREATE TABLE UsersTest (
         id INTEGER PRIMARY KEY,
         email TEXT,
-        password TEXT
+        password TEXT,
+        firstname TEXT,
+        lastname TEXT
       )
       ''');
   }
@@ -23,7 +25,9 @@ class UserDatasourceSqfliteFfiImpl extends UserDatasource {
     if (user.isEmpty) {
       await database.insert('UsersTest', <String, Object?>{
         'email': newUserInfos['email'],
-        'password': newUserInfos['password']
+        'password': newUserInfos['password'],
+        'firstname': newUserInfos['firstname'],
+        'lastname': newUserInfos['lastname'],
       });
       return "user is registered";
     } else {

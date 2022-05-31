@@ -5,6 +5,8 @@
   "label_password": "Password",
   "label_password_forgotten" : "Forgot your password ?",
   "label_sign_in" : "Sign In",
+  "label_new_user_registration" : "Congratulation ! You are registered! You can now connect",
+  "label_existing_user_registration" : "Your email is already in use: log in or use a different email",
   "label_sign_up" : "Sign Up",
   "label_new_account" : "Don't have an account ?",
   "label_existing_account" : "Already have an account? ",

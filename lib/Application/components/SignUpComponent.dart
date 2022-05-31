@@ -3,6 +3,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/components/SignInComponent.dart';
 import 'package:mobile_ecommerce/Infrastructure/Datasources_implementation/user_datasource_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Infrastructure/user_repository_impl.dart';
+import 'package:path/path.dart';
 
 class SignUpComponent extends StatefulWidget {
   @override
@@ -23,6 +24,41 @@ registerUser(Map newUserInfos) async {
   await userDatasource.close();
 
   return isUserRegistered;
+}
+
+registrationSucceded(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        // Retrieve the text the that user has entered by using the
+        // TextEditingController.
+
+        content: Text(translate('label_new_user_registration')),
+        actions: [
+          ElevatedButton(
+              child: Text(translate('label_sign_in')),
+              onPressed: (() {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignInComponent()),
+                );
+              }))
+        ],
+      );
+    },
+  );
+}
+
+registrationFailed(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        content: Text(translate('label_existing_user_registration')),
+      );
+    },
+  );
 }
 
 class _SignUpComponentState extends State<SignUpComponent> {
@@ -216,31 +252,9 @@ class _SignUpComponentState extends State<SignUpComponent> {
                             var isUserRegistered =
                                 await registerUser(newUserInfos);
                             if (isUserRegistered) {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    // Retrieve the text the that user has entered by using the
-                                    // TextEditingController.
-
-                                    content: Text(
-                                        'Félicitations ! Vous êtes enregistré ! Vous pouvez maintenant vous connecter'),
-                                  );
-                                },
-                              );
+                              registrationSucceded(context);
                             } else {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    // Retrieve the text the that user has entered by using the
-                                    // TextEditingController.
-
-                                    content: Text(
-                                        'Votre email est déjà utilisé : connectez-vous ou utilisez un email différent'),
-                                  );
-                                },
-                              );
+                              registrationFailed(context);
                             }
                           },
                           child: Text(

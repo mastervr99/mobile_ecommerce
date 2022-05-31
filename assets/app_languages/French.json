@@ -6,6 +6,8 @@
   "label_password_forgotten" : "Mot de passe oublié ?",
   "label_sign_in" : "S'identifier",
   "label_sign_up" : "S'inscrire",
+  "label_new_user_registration" : "Félicitations ! Vous êtes enregistré ! Vous pouvez maintenant vous connecter",
+  "label_existing_user_registration" : "Votre email est déjà utilisé : connectez-vous ou utilisez un email différent",
   "label_new_account" : "Pas encore de compte ?",
   "label_existing_account" : "vous avez déjà un compte ?",
   "label_first_name" : "Prénom",

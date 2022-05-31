@@ -16,6 +16,7 @@ class _SignInComponentState extends State<SignInComponent> {
     double defaultIconSize = 17;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         padding: EdgeInsets.only(left: 20, right: 20, top: 35, bottom: 30),
         width: double.infinity,

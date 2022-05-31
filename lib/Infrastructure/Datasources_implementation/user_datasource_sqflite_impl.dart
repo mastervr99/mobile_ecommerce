@@ -8,7 +8,7 @@ class UserDatasourceSqfliteImpl extends UserDatasource {
 
   init() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, 'mobile_shop.db');
+    final path = join(databasesPath, 'mobile_ecom.db');
     database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table
@@ -16,7 +16,9 @@ class UserDatasourceSqfliteImpl extends UserDatasource {
         CREATE TABLE Users (
         id INTEGER PRIMARY KEY,
         email TEXT,
-        password TEXT
+        password TEXT,
+        firstname TEXT,
+        lastname TEXT
       )
       ''');
     });
@@ -28,7 +30,9 @@ class UserDatasourceSqfliteImpl extends UserDatasource {
     if (user.isEmpty) {
       await database.insert('Users', <String, Object?>{
         'email': newUserInfos['email'],
-        'password': newUserInfos['password']
+        'password': newUserInfos['password'],
+        'firstname': newUserInfos['firstname'],
+        'lastname': newUserInfos['lastname'],
       });
     }
   }

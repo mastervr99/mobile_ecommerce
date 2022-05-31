@@ -18,11 +18,13 @@ class _LanguageSelectionComponentState
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
                   child: Text("English"),
                   onPressed: () {
                     changeLocale(context, 'English');
                   }),
               ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
                   child: Text("Français"),
                   onPressed: () {
                     changeLocale(context, 'French');
@@ -33,7 +35,7 @@ class _LanguageSelectionComponentState
                       alignment: Alignment.bottomCenter,
                       child: CircleAvatar(
                         radius: 15.0,
-                        backgroundColor: Colors.blue,
+                        backgroundColor: Color(0xFFAC252B),
                         child: Icon(Icons.close, color: Colors.white),
                       ),
                     ),

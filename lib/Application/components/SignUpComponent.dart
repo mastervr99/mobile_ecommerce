@@ -33,10 +33,13 @@ registrationSucceded(BuildContext context) {
       return AlertDialog(
         // Retrieve the text the that user has entered by using the
         // TextEditingController.
-
-        content: Text(translate('label_new_user_registration')),
+        content: Text(
+          translate('label_new_user_registration'),
+          textAlign: TextAlign.center,
+        ),
         actions: [
           ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
               child: Text(translate('label_sign_in')),
               onPressed: (() {
                 Navigator.push(
@@ -55,7 +58,10 @@ registrationFailed(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        content: Text(translate('label_existing_user_registration')),
+        content: Text(
+          translate('label_existing_user_registration'),
+          textAlign: TextAlign.center,
+        ),
       );
     },
   );

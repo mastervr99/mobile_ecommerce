@@ -8,10 +8,15 @@
   "label_new_user_registration" : "Congratulation ! You are registered! You can now connect",
   "label_existing_user_registration" : "Your email is already in use: log in or use a different email",
   "label_sign_up" : "Sign Up",
+  "label_valid_firstname" : "Enter a valid firstname",
+  "label_valid_lastname" : "Enter a valid lastname",
+  "label_valid_email" : "Enter a valid email",
+  "label_password_requirements" : "Enter a password with minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character",
+  "label_valid_password": "Enter a valid password",
   "label_new_account" : "Don't have an account ?",
   "label_existing_account" : "Already have an account? ",
-  "label_first_name" : "First name",
-  "label_last_name" : "Last name",
+  "label_firstname" : "First name",
+  "label_lastname" : "Last name",
   "label_invitation_code" : "Invitation Code",
   "label_invitation_code_text" : " Leave empty if you don't have Invitation Code"
 }

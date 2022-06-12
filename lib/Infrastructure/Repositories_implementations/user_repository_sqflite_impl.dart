@@ -1,11 +1,12 @@
-import 'package:mobile_ecommerce/Infrastructure/Datasources_abstraction/user_datasource.dart';
 import 'dart:async';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class UserDatasourceSqfliteImpl extends UserDatasource {
+class UserRepositorySqfliteImpl extends UserRepository {
   late var database;
 
+  @override
   init() async {
     final databasesPath = await getDatabasesPath();
     final path = join(databasesPath, 'mobile_ecom.db');
@@ -46,6 +47,7 @@ class UserDatasourceSqfliteImpl extends UserDatasource {
         .rawQuery('SELECT * FROM Users WHERE email = ?', [userInfos['email']]);
   }
 
+  @override
   Future<void> close() async {
     await database.close();
   }

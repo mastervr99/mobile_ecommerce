@@ -1,15 +1,15 @@
-import 'package:mobile_ecommerce/Infrastructure/Datasources_abstraction/user_datasource.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common/sqlite_api.dart';
-import 'dart:async';
 
-class UserDatasourceSqfliteFfiImpl extends UserDatasource {
+class UserRepositorySqfliteFfiImpl extends UserRepository {
   late var database;
 
+  @override
   init() async {
     database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
     database.execute('''
-      CREATE TABLE UsersTest (
+      CREATE TABLE UserTest (
         id INTEGER PRIMARY KEY,
         email TEXT,
         password TEXT,
@@ -36,11 +36,12 @@ class UserDatasourceSqfliteFfiImpl extends UserDatasource {
   }
 
   @override
-  Future retrieveUser(Map userInfos) async {
+  retrieveUser(Map userInfos) async {
     return await database.rawQuery(
         'SELECT * FROM UsersTest WHERE email = ?', [userInfos['email']]);
   }
 
+  @override
   Future<void> close() async {
     await database.close();
   }

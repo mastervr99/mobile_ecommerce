@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:mobile_ecommerce/Application/components/SignUpComponent.dart';
+import 'package:mobile_ecommerce/Application/components/sign_up_component.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
 
 class SignInComponent extends StatefulWidget {
   @override
   _SignInComponentState createState() => _SignInComponentState();
+}
+
+signInUser(Map newUserInfos) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Open the database and store the reference.
+
+  UserRepository userRepository = UserRepositorySqfliteImpl();
+  await userRepository.init();
+
+  var isUserRegistered = await userRepository.registerUser(newUserInfos);
+  await userRepository.close();
+
+  return isUserRegistered;
 }
 
 class _SignInComponentState extends State<SignInComponent> {

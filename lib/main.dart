@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-
 import 'Application/MyHomePage.dart';
 
 void main() async {
@@ -8,7 +7,6 @@ void main() async {
       fallbackLocale: 'French',
       supportedLocales: ['English', 'French'],
       basePath: 'assets/app_languages/');
-
   runApp(LocalizedApp(delegate, const MyApp()));
 }
 

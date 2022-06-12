@@ -1,10 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_ecommerce/Infrastructure/Datasources_implementation/user_datasource_sqflite_ffi_impl.dart';
-import 'package:mobile_ecommerce/Infrastructure/user_repository_impl.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_ffi_impl.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
   group('User actions : ', () {
     sqfliteFfiInit();
 
@@ -23,10 +25,8 @@ void main() {
         'lastname': 'vinay'
       };
 
-      final userDatasource = UserDatasourceSqfliteFfiImpl();
-      await userDatasource.init();
-
-      final userRepository = UserRepositoryImpl(userDatasource);
+      UserRepository userRepository = UserRepositorySqfliteFfiImpl();
+      await userRepository.init();
 
       await userRepository.registerUser(user1);
       await userRepository.registerUser(user2);
@@ -56,14 +56,12 @@ void main() {
 
       expect(await dataSearchUser1, user1InDb);
       expect(await dataSearchUser2, user2InDb);
-      await userDatasource.close();
+      await userRepository.close();
     });
 
     test("user can't sign up twice with same email", () async {
-      final userDatasource = UserDatasourceSqfliteFfiImpl();
-      await userDatasource.init();
-
-      final userRepository = UserRepositoryImpl(userDatasource);
+      UserRepository userRepository = UserRepositorySqfliteFfiImpl();
+      await userRepository.init();
 
       Map user = {
         'email': 'thusy@yahoo.com',
@@ -76,7 +74,17 @@ void main() {
 
       var isUserAlreadyRegistered = await userRepository.registerUser(user);
       expect(isUserAlreadyRegistered, false);
-      await userDatasource.close();
+      await userRepository.close();
+    });
+
+    test('user can sign in', () async {
+      await Hive.initFlutter();
+      await Hive.openBox('myBox');
+      var box = Hive.box('myBox');
+
+      box.put('isUserConnected', true);
+      var isUserConnected = box.get('isUserConnected');
+      expect(isUserConnected, true);
     });
   });
 }

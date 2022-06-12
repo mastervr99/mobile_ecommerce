@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
-import 'package:mobile_ecommerce/Application/components/SignInComponent.dart';
-import 'package:mobile_ecommerce/Infrastructure/Datasources_implementation/user_datasource_sqflite_impl.dart';
-import 'package:mobile_ecommerce/Infrastructure/user_repository_impl.dart';
+import 'package:mobile_ecommerce/Application/components/sign_in_component.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
 
 class SignUpComponent extends StatefulWidget {
   @override
@@ -14,13 +14,11 @@ registerUser(Map newUserInfos) async {
   WidgetsFlutterBinding.ensureInitialized();
   // Open the database and store the reference.
 
-  final userDatasource = UserDatasourceSqfliteImpl();
-  await userDatasource.init();
-
-  final userRepository = UserRepositoryImpl(userDatasource);
+  UserRepository userRepository = UserRepositorySqfliteImpl();
+  await userRepository.init();
 
   var isUserRegistered = await userRepository.registerUser(newUserInfos);
-  await userDatasource.close();
+  await userRepository.close();
 
   return isUserRegistered;
 }

@@ -11,19 +11,6 @@ class SignUpComponent extends StatefulWidget {
   _SignUpComponentState createState() => _SignUpComponentState();
 }
 
-registerUser(Map newUserInfos) async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // Open the database and store the reference.
-
-  UserRepository userRepository = UserRepositorySqfliteImpl();
-  await userRepository.init();
-
-  var isUserRegistered = await userRepository.registerUser(newUserInfos);
-  await userRepository.close();
-
-  return isUserRegistered;
-}
-
 registrationSucceded(BuildContext context) {
   showDialog(
     context: context,

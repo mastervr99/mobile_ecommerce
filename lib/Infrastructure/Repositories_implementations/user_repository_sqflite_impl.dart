@@ -27,18 +27,12 @@ class UserRepositorySqfliteImpl extends UserRepository {
 
   @override
   registerUser(Map newUserInfos) async {
-    var user = await retrieveUser(newUserInfos);
-    if (user.isEmpty) {
-      await database.insert('Users', <String, Object?>{
-        'email': newUserInfos['email'],
-        'password': newUserInfos['password'],
-        'firstname': newUserInfos['firstname'],
-        'lastname': newUserInfos['lastname'],
-      });
-      return true;
-    } else {
-      return false;
-    }
+    await database.insert('Users', <String, Object?>{
+      'email': newUserInfos['email'],
+      'password': newUserInfos['password'],
+      'firstname': newUserInfos['firstname'],
+      'lastname': newUserInfos['lastname'],
+    });
   }
 
   @override

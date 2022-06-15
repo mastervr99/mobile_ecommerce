@@ -9,7 +9,7 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
   init() async {
     database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
     database.execute('''
-      CREATE TABLE UserTest (
+      CREATE TABLE IF NOT EXISTS Users (
         id INTEGER PRIMARY KEY,
         email TEXT,
         password TEXT,
@@ -21,28 +21,20 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
 
   @override
   registerUser(Map newUserInfos) async {
-    var user = await retrieveUser(newUserInfos);
-    if (user.isEmpty) {
-      await database.insert('UsersTest', <String, Object?>{
-        'email': newUserInfos['email'],
-        'password': newUserInfos['password'],
-        'firstname': newUserInfos['firstname'],
-        'lastname': newUserInfos['lastname'],
-      });
-      return true;
-    } else {
-      return false;
-    }
+    await database.insert('Users', <String, Object?>{
+      'email': newUserInfos['email'],
+      'password': newUserInfos['password'],
+      'firstname': newUserInfos['firstname'],
+      'lastname': newUserInfos['lastname'],
+    });
   }
 
   @override
   retrieveUser(Map userInfos) async {
-    return await database.rawQuery(
-        'SELECT * FROM UsersTest WHERE email = ?', [userInfos['email']]);
+    return await database
+        .rawQuery('SELECT * FROM Users WHERE email = ?', [userInfos['email']]);
   }
 
   @override
-  Future<void> close() async {
-    await database.close();
-  }
+  close() {}
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
 import 'package:mobile_ecommerce/Application/components/sign_in_component.dart';
+import 'package:mobile_ecommerce/Application/usecases/sign_up_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
 
@@ -74,6 +75,9 @@ class _SignUpComponentState extends State<SignUpComponent> {
   TextEditingController passwordController = TextEditingController();
 
   var formFieldValidator = CustomFormFieldValidator();
+
+  UserRepository userRepository = UserRepositorySqfliteImpl();
+  late SignUpUsecase signUpUsecase = SignUpUsecase(userRepository);
 
   @override
   Widget build(BuildContext context) {
@@ -299,10 +303,11 @@ class _SignUpComponentState extends State<SignUpComponent> {
                                     'firstname': firstNameController.text,
                                     'lastname': lastNameController.text,
                                   };
-
-                                  var isUserRegistered =
-                                      await registerUser(newUserInfos);
-                                  if (isUserRegistered) {
+                                  bool isNewUser = await signUpUsecase
+                                      .checkIfNewUser(newUserInfos);
+                                  if (isNewUser) {
+                                    await signUpUsecase
+                                        .createNewUSer(newUserInfos);
                                     registrationSucceded(context);
                                   } else {
                                     registrationFailed(context);

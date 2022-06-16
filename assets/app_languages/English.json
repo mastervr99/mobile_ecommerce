@@ -5,8 +5,8 @@
   "label_password": "Password",
   "label_password_forgotten" : "Forgot your password ?",
   "label_sign_in" : "Sign In",
-  "label_new_user_registration" : "Congratulation ! You are registered! You can now connect",
-  "label_existing_user_registration" : "Your email is already in use: log in or use a different email",
+  "label_user_registration_succeded" : "Congratulation ! You are registered! You can now connect",
+  "label_user_registration_failed" : "Your email is already in use: log in or use a different email",
   "label_sign_up" : "Sign Up",
   "label_valid_firstname" : "Enter a valid firstname",
   "label_valid_lastname" : "Enter a valid lastname",
@@ -18,5 +18,10 @@
   "label_firstname" : "First name",
   "label_lastname" : "Last name",
   "label_invitation_code" : "Invitation Code",
-  "label_invitation_code_text" : " Leave empty if you don't have Invitation Code"
+  "label_invitation_code_text" : " Leave empty if you don't have Invitation Code",
+  "label_homepage" : "Homepage",
+  "label_sign_in_failed" : "Fail",
+  "label_sign_in_succeded" : "Success",
+  "label_email_not_registered" : "new email"
+
 }

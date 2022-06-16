@@ -18,10 +18,10 @@ class SignUpUsecase {
     }
   }
 
-  signUpNewUSer(Map newUserInfos) async {
+  signUpNewUSer(Map newUser) async {
     await userRepository.init();
 
-    var result = await userRepository.registerUser(newUserInfos);
+    var result = await userRepository.registerUser(newUser);
     await userRepository.close();
 
     return result;

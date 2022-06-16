@@ -19,7 +19,7 @@ registrationSucceded(BuildContext context) {
         // Retrieve the text the that user has entered by using the
         // TextEditingController.
         content: Text(
-          translate('label_new_user_registration'),
+          translate('label_user_registration_succeded'),
           textAlign: TextAlign.center,
         ),
         actions: [
@@ -45,7 +45,7 @@ registrationFailed(BuildContext context) {
     builder: (context) {
       return AlertDialog(
         content: Text(
-          translate('label_existing_user_registration'),
+          translate('label_user_registration_failed'),
           textAlign: TextAlign.center,
         ),
       );
@@ -55,7 +55,6 @@ registrationFailed(BuildContext context) {
 
 class _SignUpComponentState extends State<SignUpComponent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   TextEditingController lastNameController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();

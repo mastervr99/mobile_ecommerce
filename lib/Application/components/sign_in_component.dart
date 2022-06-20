@@ -3,6 +3,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
 import 'package:mobile_ecommerce/Application/MyHomePage.dart';
 import 'package:mobile_ecommerce/Application/components/sign_up_component.dart';
+import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
@@ -239,13 +240,17 @@ class _SignInComponentState extends State<SignInComponent> {
                                   'email': emailController.text,
                                   'password': passwordController.text,
                                 };
+
+                                User user = User();
+                                user.setUserEmail(emailController.text);
+                                user.setUserPassword(passwordController.text);
+
                                 bool isEmailRegistered = await signInUsecase
-                                    .checkIfEmailRegistered(userInfos);
+                                    .checkIfEmailRegistered(user);
                                 if (isEmailRegistered) {
                                   bool isValidAccountPassword =
                                       await signInUsecase
-                                          .checkIfValidAccountPassword(
-                                              userInfos);
+                                          .checkIfValidAccountPassword(user);
                                   if (isValidAccountPassword) {
                                     signInSucceded(context);
                                   }

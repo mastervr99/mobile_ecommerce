@@ -5,14 +5,11 @@ import 'package:mobile_ecommerce/Application/usecases/sign_up_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'Repositories_test/user_repository_sqflite_ffi_impl.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('SignUpUsecase : ', () {
-    sqfliteFfiInit();
-
     test('user can sign up', () async {
       Map userMap = {
         'email': 'test23@gmail.com',

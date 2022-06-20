@@ -15,7 +15,7 @@ class UserRepositorySqfliteImpl extends UserRepository {
         onCreate: (Database db, int version) async {
       // When creating the db, create the table
       await db.execute('''
-        CREATE TABLE Users (
+        CREATE TABLE IF NOT EXISTS Users (
         id INTEGER PRIMARY KEY,
         email TEXT,
         password TEXT,
@@ -33,8 +33,21 @@ class UserRepositorySqfliteImpl extends UserRepository {
 
   @override
   retrieveUser(User user) async {
-    return await database
+    var userInfos = await database
         .rawQuery('SELECT * FROM Users WHERE email = ?', [user.getUserEmail()]);
+
+    if (userInfos.isEmpty) {
+      return false;
+    } else {
+      User registeredUser = User();
+
+      registeredUser.setUserFirstname(await userInfos[0]['lastname']);
+      registeredUser.setUserLastname(await userInfos[0]['firstname']);
+      registeredUser.setUserEmail(await userInfos[0]['email']);
+      registeredUser.setUserPassword(await userInfos[0]['password']);
+
+      return registeredUser;
+    }
   }
 
   @override

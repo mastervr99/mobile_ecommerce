@@ -3,6 +3,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
 import 'package:mobile_ecommerce/Application/components/sign_in_component.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_up_usecase.dart';
+import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
 
@@ -289,11 +290,17 @@ class _SignUpComponentState extends State<SignUpComponent> {
                                     'firstname': firstNameController.text,
                                     'lastname': lastNameController.text,
                                   };
-                                  bool isNewUser = await signUpUsecase
-                                      .checkIfNewUser(newUserInfos);
+                                  User user = User();
+                                  user.setUserEmail(emailController.text);
+                                  user.setUserPassword(passwordController.text);
+                                  user.setUserFirstname(
+                                      firstNameController.text);
+                                  user.setUserLastname(
+                                      firstNameController.text);
+                                  bool isNewUser =
+                                      await signUpUsecase.checkIfNewUser(user);
                                   if (isNewUser) {
-                                    await signUpUsecase
-                                        .signUpNewUSer(newUserInfos);
+                                    await signUpUsecase.signUpNewUSer(user);
                                     registrationSucceded(context);
                                   } else {
                                     registrationFailed(context);

@@ -36,4 +36,16 @@ class SignInUsecase {
 
     box.put('isUserConnected', true);
   }
+
+  checkIfUserConnected() async {
+    await Hive.initFlutter();
+    await Hive.openBox('myBox');
+    var box = Hive.box('myBox');
+    var isUserConnected = await box.get('isUserConnected');
+    if (isUserConnected == true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

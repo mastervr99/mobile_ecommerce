@@ -29,10 +29,6 @@ void main() {
     });
 
     test('registered user can sign in', () async {
-      await Hive.initFlutter();
-      await Hive.openBox('myBox');
-      var box = Hive.box('myBox');
-
       User user = User();
 
       user.setUserFirstname('testFirstname');
@@ -58,9 +54,9 @@ void main() {
 
       await signInUsecase.signInRegisteredUser();
 
-      var isUserConnected = box.get('isUserConnected');
+      var isUserConnected = await signInUsecase.checkIfUserConnected();
 
-      expect(isUserConnected, true);
+      expect(await isUserConnected, true);
     });
   });
 }

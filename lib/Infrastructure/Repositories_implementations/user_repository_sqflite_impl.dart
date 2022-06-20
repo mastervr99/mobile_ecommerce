@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -26,19 +27,14 @@ class UserRepositorySqfliteImpl extends UserRepository {
   }
 
   @override
-  registerUser(Map newUserInfos) async {
-    await database.insert('Users', <String, Object?>{
-      'email': newUserInfos['email'],
-      'password': newUserInfos['password'],
-      'firstname': newUserInfos['firstname'],
-      'lastname': newUserInfos['lastname'],
-    });
+  registerUser(User newUser) async {
+    await database.insert('Users', newUser.toMap());
   }
 
   @override
-  retrieveUser(Map userInfos) async {
+  retrieveUser(User user) async {
     return await database
-        .rawQuery('SELECT * FROM Users WHERE email = ?', [userInfos['email']]);
+        .rawQuery('SELECT * FROM Users WHERE email = ?', [user.getUserEmail()]);
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 
 class SignUpUsecase {
@@ -5,20 +6,20 @@ class SignUpUsecase {
 
   SignUpUsecase(this.userRepository);
 
-  checkIfNewUser(Map newUserInfos) async {
+  checkIfNewUser(User user) async {
     await userRepository.init();
 
-    var user = await userRepository.retrieveUser(newUserInfos);
+    var registeredUser = await userRepository.retrieveUser(user);
     await userRepository.close();
 
-    if (user.isEmpty) {
-      return true;
-    } else {
+    if (registeredUser is User) {
       return false;
+    } else {
+      return true;
     }
   }
 
-  signUpNewUSer(Map newUser) async {
+  signUpNewUSer(User newUser) async {
     await userRepository.init();
 
     var result = await userRepository.registerUser(newUser);

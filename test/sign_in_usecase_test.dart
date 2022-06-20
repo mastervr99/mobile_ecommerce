@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_up_usecase.dart';
+import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'Repositories_test/user_repository_sqflite_ffi_impl.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
@@ -15,16 +16,23 @@ void main() {
         'lastname': 'testLastname'
       };
 
+      User newUser = User();
+
+      newUser.setUserFirstname(user['firstname']);
+      newUser.setUserLastname(user['lastname']);
+      newUser.setUserEmail(user['email']);
+      newUser.setUserPassword(user['password']);
+
       UserRepository userRepository = UserRepositorySqfliteFfiImpl();
       SignInUsecase signInUsecase = SignInUsecase(userRepository);
 
-      expect(await signInUsecase.checkIfEmailRegistered(user), false);
+      expect(await signInUsecase.checkIfEmailRegistered(newUser), false);
 
       SignUpUsecase signUpUsecase = SignUpUsecase(userRepository);
 
-      await signUpUsecase.signUpNewUSer(user);
+      await signUpUsecase.signUpNewUSer(newUser);
 
-      expect(await signInUsecase.checkIfEmailRegistered(user), true);
+      expect(await signInUsecase.checkIfEmailRegistered(newUser), true);
     });
 
     test('registered user can sign in', () async {
@@ -39,19 +47,27 @@ void main() {
         'lastname': 'testLastname'
       };
 
+      User newUser = User();
+
+      newUser.setUserFirstname(user['firstname']);
+      newUser.setUserLastname(user['lastname']);
+      newUser.setUserEmail(user['email']);
+      newUser.setUserPassword(user['password']);
+
       UserRepository userRepository = UserRepositorySqfliteFfiImpl();
       SignUpUsecase signUpUsecase = SignUpUsecase(userRepository);
 
-      await signUpUsecase.signUpNewUSer(user);
+      await signUpUsecase.signUpNewUSer(newUser);
 
       SignInUsecase signInUsecase = SignInUsecase(userRepository);
 
-      var isRegisteredEmail = await signInUsecase.checkIfEmailRegistered(user);
+      var isRegisteredEmail =
+          await signInUsecase.checkIfEmailRegistered(newUser);
 
       expect(await isRegisteredEmail, true);
 
       var isValidAccountPassword =
-          await signInUsecase.checkIfValidAccountPassword(user);
+          await signInUsecase.checkIfValidAccountPassword(newUser);
 
       expect(await isValidAccountPassword, true);
 

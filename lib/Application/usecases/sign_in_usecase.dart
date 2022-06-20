@@ -1,3 +1,4 @@
+import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -6,22 +7,22 @@ class SignInUsecase {
 
   SignInUsecase(this.userRepository);
 
-  checkIfEmailRegistered(Map userInfos) async {
+  checkIfEmailRegistered(User user) async {
     await userRepository.init();
 
-    var user = await userRepository.retrieveUser(userInfos);
+    var registeredUser = await userRepository.retrieveUser(user);
     await userRepository.close();
 
-    if (user.isEmpty) {
-      return false;
-    } else {
+    if (registeredUser is User) {
       return true;
+    } else {
+      return false;
     }
   }
 
-  checkIfValidAccountPassword(Map userInfos) async {
-    var registeredUser = await userRepository.retrieveUser(userInfos);
-    if (userInfos['password'] == await registeredUser[0]['password']) {
+  checkIfValidAccountPassword(User user) async {
+    var registeredUser = await userRepository.retrieveUser(user);
+    if (user.getUserPassword() == await registeredUser.getUserPassword()) {
       return true;
     } else {
       return false;

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_up_usecase.dart';
+import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'Repositories_test/user_repository_sqflite_ffi_impl.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -11,22 +14,28 @@ void main() {
     sqfliteFfiInit();
 
     test('user can sign up', () async {
-      Map user1 = {
-        'email': 'test@gmail.com',
+      Map userMap = {
+        'email': 'test23@gmail.com',
         'password': 'password',
         'firstname': 'testFirstname',
         'lastname': 'testLastname'
       };
 
+      User user = User();
+      user.setUserFirstname(userMap['firstname']);
+      user.setUserLastname(userMap['lastname']);
+      user.setUserEmail(userMap['email']);
+      user.setUserPassword(userMap['password']);
+
       UserRepository userRepository = UserRepositorySqfliteFfiImpl();
 
       SignUpUsecase signUpUsecase = SignUpUsecase(userRepository);
 
-      await signUpUsecase.signUpNewUSer(user1);
+      await signUpUsecase.signUpNewUSer(user);
 
-      var dataSearchUser1 = await userRepository.retrieveUser(user1);
+      User dataSearchUser1 = await userRepository.retrieveUser(user);
 
-      expect(await dataSearchUser1[0]['email'], user1['email']);
+      expect(await dataSearchUser1.getUserEmail(), user.getUserEmail());
     });
 
     test("user can't sign up twice with same email", () async {
@@ -41,13 +50,20 @@ void main() {
         'lastname': 'testLastname'
       };
 
-      var isNewUser = await signUpUsecase.checkIfNewUser(user);
+      User newUser = User();
+
+      newUser.setUserFirstname(user['firstname']);
+      newUser.setUserLastname(user['lastname']);
+      newUser.setUserEmail(user['email']);
+      newUser.setUserPassword(user['password']);
+
+      var isNewUser = await signUpUsecase.checkIfNewUser(newUser);
 
       expect(await isNewUser, true);
 
-      await signUpUsecase.signUpNewUSer(user);
+      await signUpUsecase.signUpNewUSer(newUser);
 
-      var isStillNewUser = await signUpUsecase.checkIfNewUser(user);
+      var isStillNewUser = await signUpUsecase.checkIfNewUser(newUser);
 
       expect(await isStillNewUser, false);
     });

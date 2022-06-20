@@ -1,9 +1,11 @@
+import 'package:mobile_ecommerce/Domain/Entity/user.dart';
+
 abstract class UserRepository {
   init();
 
-  registerUser(Map newUserInfos);
+  registerUser(User newUser);
 
-  retrieveUser(Map userInfos);
+  retrieveUser(User user);
 
   close();
 }

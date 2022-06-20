@@ -8,32 +8,24 @@ import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
 
 void main() {
   group('SignInUsecase : ', () {
-
     test('check if user email is registered', () async {
-      Map user = {
-        'email': 'test@gmail.com',
-        'password': 'password',
-        'firstname': 'testFirstname',
-        'lastname': 'testLastname'
-      };
+      User user = User();
 
-      User newUser = User();
-
-      newUser.setUserFirstname(user['firstname']);
-      newUser.setUserLastname(user['lastname']);
-      newUser.setUserEmail(user['email']);
-      newUser.setUserPassword(user['password']);
+      user.setUserFirstname('testFirstname');
+      user.setUserLastname('testLastname');
+      user.setUserEmail('test@gmail.com');
+      user.setUserPassword('password');
 
       UserRepository userRepository = UserRepositorySqfliteFfiImpl();
       SignInUsecase signInUsecase = SignInUsecase(userRepository);
 
-      expect(await signInUsecase.checkIfEmailRegistered(newUser), false);
+      expect(await signInUsecase.checkIfEmailRegistered(user), false);
 
       SignUpUsecase signUpUsecase = SignUpUsecase(userRepository);
 
-      await signUpUsecase.signUpNewUSer(newUser);
+      await signUpUsecase.signUpNewUSer(user);
 
-      expect(await signInUsecase.checkIfEmailRegistered(newUser), true);
+      expect(await signInUsecase.checkIfEmailRegistered(user), true);
     });
 
     test('registered user can sign in', () async {
@@ -41,34 +33,26 @@ void main() {
       await Hive.openBox('myBox');
       var box = Hive.box('myBox');
 
-      Map user = {
-        'email': 'test2@gmail.com',
-        'password': 'password',
-        'firstname': 'testFirstname',
-        'lastname': 'testLastname'
-      };
+      User user = User();
 
-      User newUser = User();
-
-      newUser.setUserFirstname(user['firstname']);
-      newUser.setUserLastname(user['lastname']);
-      newUser.setUserEmail(user['email']);
-      newUser.setUserPassword(user['password']);
+      user.setUserFirstname('testFirstname');
+      user.setUserLastname('testLastname');
+      user.setUserEmail('test2@gmail.com');
+      user.setUserPassword('password');
 
       UserRepository userRepository = UserRepositorySqfliteFfiImpl();
       SignUpUsecase signUpUsecase = SignUpUsecase(userRepository);
 
-      await signUpUsecase.signUpNewUSer(newUser);
+      await signUpUsecase.signUpNewUSer(user);
 
       SignInUsecase signInUsecase = SignInUsecase(userRepository);
 
-      var isRegisteredEmail =
-          await signInUsecase.checkIfEmailRegistered(newUser);
+      var isRegisteredEmail = await signInUsecase.checkIfEmailRegistered(user);
 
       expect(await isRegisteredEmail, true);
 
       var isValidAccountPassword =
-          await signInUsecase.checkIfValidAccountPassword(newUser);
+          await signInUsecase.checkIfValidAccountPassword(user);
 
       expect(await isValidAccountPassword, true);
 

@@ -236,11 +236,6 @@ class _SignInComponentState extends State<SignInComponent> {
                             padding: EdgeInsets.all(17.0),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                Map userInfos = {
-                                  'email': emailController.text,
-                                  'password': passwordController.text,
-                                };
-
                                 User user = User();
                                 user.setUserEmail(emailController.text);
                                 user.setUserPassword(passwordController.text);

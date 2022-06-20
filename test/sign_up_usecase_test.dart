@@ -11,18 +11,11 @@ void main() {
 
   group('SignUpUsecase : ', () {
     test('user can sign up', () async {
-      Map userMap = {
-        'email': 'test23@gmail.com',
-        'password': 'password',
-        'firstname': 'testFirstname',
-        'lastname': 'testLastname'
-      };
-
       User user = User();
-      user.setUserFirstname(userMap['firstname']);
-      user.setUserLastname(userMap['lastname']);
-      user.setUserEmail(userMap['email']);
-      user.setUserPassword(userMap['password']);
+      user.setUserFirstname('testFirstname');
+      user.setUserLastname('testLastname');
+      user.setUserEmail('test23@gmail.com');
+      user.setUserPassword('password');
 
       UserRepository userRepository = UserRepositorySqfliteFfiImpl();
 
@@ -40,27 +33,19 @@ void main() {
 
       SignUpUsecase signUpUsecase = SignUpUsecase(userRepository);
 
-      Map user = {
-        'email': 'testt@aol.com',
-        'password': 'password',
-        'firstname': 'testFirstname',
-        'lastname': 'testLastname'
-      };
+      User user = User();
+      user.setUserFirstname('testFirstname');
+      user.setUserLastname('testLastname');
+      user.setUserEmail('testt@aol.com');
+      user.setUserPassword('password');
 
-      User newUser = User();
-
-      newUser.setUserFirstname(user['firstname']);
-      newUser.setUserLastname(user['lastname']);
-      newUser.setUserEmail(user['email']);
-      newUser.setUserPassword(user['password']);
-
-      var isNewUser = await signUpUsecase.checkIfNewUser(newUser);
+      var isNewUser = await signUpUsecase.checkIfNewUser(user);
 
       expect(await isNewUser, true);
 
-      await signUpUsecase.signUpNewUSer(newUser);
+      await signUpUsecase.signUpNewUSer(user);
 
-      var isStillNewUser = await signUpUsecase.checkIfNewUser(newUser);
+      var isStillNewUser = await signUpUsecase.checkIfNewUser(user);
 
       expect(await isStillNewUser, false);
     });

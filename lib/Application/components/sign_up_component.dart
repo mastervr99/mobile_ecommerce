@@ -284,12 +284,6 @@ class _SignUpComponentState extends State<SignUpComponent> {
                               ),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  Map newUserInfos = {
-                                    'email': emailController.text,
-                                    'password': passwordController.text,
-                                    'firstname': firstNameController.text,
-                                    'lastname': lastNameController.text,
-                                  };
                                   User user = User();
                                   user.setUserEmail(emailController.text);
                                   user.setUserPassword(passwordController.text);

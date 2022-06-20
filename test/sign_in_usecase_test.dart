@@ -54,7 +54,7 @@ void main() {
 
       await signInUsecase.signInRegisteredUser();
 
-      var isUserConnected = await signInUsecase.checkIfUserConnected();
+      var isUserConnected = await signInUsecase.checkUserStatus();
 
       expect(await isUserConnected, true);
     });

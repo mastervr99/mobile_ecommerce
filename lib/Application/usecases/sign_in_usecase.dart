@@ -1,3 +1,4 @@
+import 'package:mobile_ecommerce/Application/hive_data_stocker.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -30,19 +31,18 @@ class SignInUsecase {
   }
 
   signInRegisteredUser() async {
-    await Hive.initFlutter();
-    await Hive.openBox('myBox');
-    var box = Hive.box('myBox');
+    bool isUserConnected = true;
 
-    box.put('isUserConnected', true);
+    HiveDataStocker localDataStocker = HiveDataStocker();
+
+    localDataStocker.registerUserStatus(isUserConnected);
   }
 
-  checkIfUserConnected() async {
-    await Hive.initFlutter();
-    await Hive.openBox('myBox');
-    var box = Hive.box('myBox');
-    var isUserConnected = await box.get('isUserConnected');
-    if (isUserConnected == true) {
+  checkUserStatus() async {
+    HiveDataStocker localDataStocker = HiveDataStocker();
+    bool userStatus = await localDataStocker.checkUserStatus();
+
+    if (userStatus) {
       return true;
     } else {
       return false;

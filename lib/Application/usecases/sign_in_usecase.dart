@@ -30,7 +30,7 @@ class SignInUsecase {
     }
   }
 
-  signInRegisteredUser() async {
+  signIn() async {
     bool isUserConnected = true;
 
     HiveDataStocker localDataStocker = HiveDataStocker();

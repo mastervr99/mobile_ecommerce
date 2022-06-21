@@ -19,7 +19,7 @@ class SignUpUsecase {
     }
   }
 
-  signUpNewUSer(User newUser) async {
+  signUp(User newUser) async {
     await userRepository.init();
 
     var result = await userRepository.registerUser(newUser);

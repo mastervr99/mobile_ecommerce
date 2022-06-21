@@ -21,7 +21,7 @@ void main() {
 
       SignUpUsecase signUpUsecase = SignUpUsecase(userRepository);
 
-      await signUpUsecase.signUpNewUSer(user);
+      await signUpUsecase.signUp(user);
 
       User dataSearchUser1 = await userRepository.retrieveUser(user);
 
@@ -43,7 +43,7 @@ void main() {
 
       expect(await isNewUser, true);
 
-      await signUpUsecase.signUpNewUSer(user);
+      await signUpUsecase.signUp(user);
 
       var isStillNewUser = await signUpUsecase.checkIfNewUser(user);
 

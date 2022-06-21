@@ -23,7 +23,7 @@ void main() {
 
       SignUpUsecase signUpUsecase = SignUpUsecase(userRepository);
 
-      await signUpUsecase.signUpNewUSer(user);
+      await signUpUsecase.signUp(user);
 
       expect(await signInUsecase.checkIfEmailRegistered(user), true);
     });
@@ -39,7 +39,7 @@ void main() {
       UserRepository userRepository = UserRepositorySqfliteFfiImpl();
       SignUpUsecase signUpUsecase = SignUpUsecase(userRepository);
 
-      await signUpUsecase.signUpNewUSer(user);
+      await signUpUsecase.signUp(user);
 
       SignInUsecase signInUsecase = SignInUsecase(userRepository);
 
@@ -52,7 +52,7 @@ void main() {
 
       expect(await isValidAccountPassword, true);
 
-      await signInUsecase.signInRegisteredUser();
+      await signInUsecase.signIn();
 
       var isUserConnected = await signInUsecase.checkUserStatus();
 

@@ -294,7 +294,7 @@ class _SignUpComponentState extends State<SignUpComponent> {
                                   bool isNewUser =
                                       await signUpUsecase.checkIfNewUser(user);
                                   if (isNewUser) {
-                                    await signUpUsecase.signUpNewUSer(user);
+                                    await signUpUsecase.signUp(user);
                                     registrationSucceded(context);
                                   } else {
                                     registrationFailed(context);

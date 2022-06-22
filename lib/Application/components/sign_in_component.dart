@@ -176,7 +176,9 @@ class _SignInComponentState extends State<SignInComponent> {
                           height: 15,
                         ),
                         TextFormField(
+                          controller: passwordController,
                           showCursor: true,
+                          obscureText: true,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius:
@@ -232,8 +234,14 @@ class _SignInComponentState extends State<SignInComponent> {
                         ),
                         Container(
                           width: double.infinity,
-                          child: RaisedButton(
-                            padding: EdgeInsets.all(17.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.all(17.0),
+                              primary: Color(0xFFBC1F26),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  side: BorderSide(color: Color(0xFFBC1F26))),
+                            ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 User user = User();
@@ -242,12 +250,16 @@ class _SignInComponentState extends State<SignInComponent> {
 
                                 bool isEmailRegistered = await signInUsecase
                                     .checkIfEmailRegistered(user);
+
                                 if (isEmailRegistered) {
-                                  bool isValidAccountPassword =
+                                  var isValidAccountPassword =
                                       await signInUsecase
                                           .checkIfValidAccountPassword(user);
-                                  if (isValidAccountPassword) {
+                                  if (await isValidAccountPassword) {
+                                    await signInUsecase.signIn(user);
                                     signInSucceded(context);
+                                  } else {
+                                    signInFailed(context);
                                   }
                                 } else {
                                   signInFailed(context);
@@ -263,10 +275,6 @@ class _SignInComponentState extends State<SignInComponent> {
                               ),
                               textAlign: TextAlign.center,
                             ),
-                            color: Color(0xFFBC1F26),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(15.0),
-                                side: BorderSide(color: Color(0xFFBC1F26))),
                           ),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle, color: Color(0xFFF2F3F7)),

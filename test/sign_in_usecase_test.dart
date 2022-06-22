@@ -52,7 +52,7 @@ void main() {
 
       expect(await isValidAccountPassword, true);
 
-      await signInUsecase.signIn();
+      await signInUsecase.signIn(user);
 
       var isUserConnected = await signInUsecase.checkUserStatus();
 

@@ -22,24 +22,30 @@ class SignInUsecase {
   }
 
   checkIfValidAccountPassword(User user) async {
+    await userRepository.init();
     var registeredUser = await userRepository.retrieveUser(user);
-    if (user.getUserPassword() == await registeredUser.getUserPassword()) {
+    var registeredUserPassword = await registeredUser.getUserPassword();
+    await userRepository.close();
+
+    if (user.getUserPassword() == await registeredUserPassword) {
       return true;
     } else {
       return false;
     }
   }
 
-  signIn() async {
+  signIn(User user) async {
     bool isUserConnected = true;
 
     HiveDataStocker localDataStocker = HiveDataStocker();
+    await localDataStocker.init();
 
-    localDataStocker.registerUserStatus(isUserConnected);
+    await localDataStocker.registerUserStatus(isUserConnected);
   }
 
   checkUserStatus() async {
     HiveDataStocker localDataStocker = HiveDataStocker();
+    await localDataStocker.init();
     bool userStatus = await localDataStocker.checkUserStatus();
 
     if (userStatus) {

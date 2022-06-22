@@ -1,17 +1,20 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 
 class HiveDataStocker {
-  registerUserStatus(bool isUserConnected) async {
+  late var box;
+
+  init() async {
     await Hive.initFlutter();
     await Hive.openBox('myBox');
-    var box = Hive.box('myBox');
-    box.put('isUserConnected', isUserConnected);
+    box = Hive.box('myBox');
+  }
+
+  registerUserStatus(bool isUserConnected) async {
+    await box.put('isUserConnected', isUserConnected);
   }
 
   checkUserStatus() async {
-    await Hive.initFlutter();
-    await Hive.openBox('myBox');
-    var box = Hive.box('myBox');
     var userStatus = await box.get('isUserConnected');
     return await userStatus;
   }

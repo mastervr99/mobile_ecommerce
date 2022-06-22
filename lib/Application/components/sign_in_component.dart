@@ -216,7 +216,6 @@ class _SignInComponentState extends State<SignInComponent> {
                                 size: defaultIconSize,
                               ),
                               onPressed: () {
-                                // Update the state i.e. toogle the state of passwordVisible variable
                                 setState(() {
                                   _passwordhidden = !_passwordhidden;
                                 });
@@ -224,10 +223,9 @@ class _SignInComponentState extends State<SignInComponent> {
                             ),
                             fillColor: Color(0xFFF2F3F5),
                             hintStyle: TextStyle(
-                              color: Color(0xFF666666),
-                              fontFamily: defaultFontFamily,
-                              fontSize: defaultFontSize,
-                            ),
+                                color: Color(0xFF666666),
+                                fontFamily: defaultFontFamily,
+                                fontSize: defaultFontSize),
                             hintText: translate("label_password"),
                           ),
                           validator: (password) {

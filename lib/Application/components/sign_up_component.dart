@@ -60,6 +60,7 @@ class _SignUpComponentState extends State<SignUpComponent> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool _passwordhidden = true;
 
   var formFieldValidator = CustomFormFieldValidator();
 
@@ -220,7 +221,7 @@ class _SignUpComponentState extends State<SignUpComponent> {
                           TextFormField(
                             controller: passwordController,
                             showCursor: true,
-                            obscureText: true,
+                            obscureText: _passwordhidden,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius:
@@ -235,6 +236,18 @@ class _SignUpComponentState extends State<SignUpComponent> {
                                 Icons.password,
                                 color: Color(0xFF666666),
                                 size: defaultIconSize,
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  Icons.remove_red_eye,
+                                  color: Color(0xFF666666),
+                                  size: defaultIconSize,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _passwordhidden = !_passwordhidden;
+                                  });
+                                },
                               ),
                               fillColor: Color(0xFFF2F3F5),
                               hintStyle: TextStyle(

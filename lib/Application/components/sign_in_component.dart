@@ -71,13 +71,27 @@ emailNotRegistered(BuildContext context) {
   );
 }
 
-signInFailed(BuildContext context) {
+signInEmailFailed(BuildContext context) {
   showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
         content: Text(
-          translate('label_sign_in_failed'),
+          translate('label_sign_in_email_failed'),
+          textAlign: TextAlign.center,
+        ),
+      );
+    },
+  );
+}
+
+signInPasswordFailed(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        content: Text(
+          translate('label_sign_in_password_failed'),
           textAlign: TextAlign.center,
         ),
       );
@@ -94,6 +108,7 @@ class _SignInComponentState extends State<SignInComponent> {
   late SignInUsecase signInUsecase = SignInUsecase(userRepository);
 
   var formFieldValidator = CustomFormFieldValidator();
+  bool _passwordhidden = true;
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +193,7 @@ class _SignInComponentState extends State<SignInComponent> {
                         TextFormField(
                           controller: passwordController,
                           showCursor: true,
-                          obscureText: true,
+                          obscureText: _passwordhidden,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius:
@@ -194,10 +209,18 @@ class _SignInComponentState extends State<SignInComponent> {
                               color: Color(0xFF666666),
                               size: defaultIconSize,
                             ),
-                            suffixIcon: Icon(
-                              Icons.remove_red_eye,
-                              color: Color(0xFF666666),
-                              size: defaultIconSize,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                Icons.remove_red_eye,
+                                color: Color(0xFF666666),
+                                size: defaultIconSize,
+                              ),
+                              onPressed: () {
+                                // Update the state i.e. toogle the state of passwordVisible variable
+                                setState(() {
+                                  _passwordhidden = !_passwordhidden;
+                                });
+                              },
                             ),
                             fillColor: Color(0xFFF2F3F5),
                             hintStyle: TextStyle(
@@ -259,10 +282,10 @@ class _SignInComponentState extends State<SignInComponent> {
                                     await signInUsecase.signIn(user);
                                     signInSucceded(context);
                                   } else {
-                                    signInFailed(context);
+                                    signInPasswordFailed(context);
                                   }
                                 } else {
-                                  signInFailed(context);
+                                  signInEmailFailed(context);
                                 }
                               }
                             },

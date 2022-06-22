@@ -20,7 +20,8 @@
   "label_invitation_code" : "Code d'invitation",
   "label_invitation_code_text" : "Laissez vide si vous n'avez pas de code d'invitation",
   "label_homepage" : "Accueil",
-  "label_sign_in_failed" : "Fail",
+  "label_sign_in_email_failed" : "Désolé, mais cet e-mail n'est pas enregistré avec un compte",
+  "label_sign_in_password_failed" : "Désolé, mais ce mot de passe est incorrect",
   "label_sign_in_succeded" : "Success",
   "label_email_not_registered" : "new email"
 

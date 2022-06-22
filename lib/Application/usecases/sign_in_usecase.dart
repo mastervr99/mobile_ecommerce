@@ -1,7 +1,7 @@
 import 'package:mobile_ecommerce/Application/hive_data_stocker.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mobile_ecommerce/Domain/local_data_stocker.dart';
 
 class SignInUsecase {
   UserRepository userRepository;
@@ -37,14 +37,14 @@ class SignInUsecase {
   signIn(User user) async {
     bool isUserConnected = true;
 
-    HiveDataStocker localDataStocker = HiveDataStocker();
+    LocalDataStocker localDataStocker = HiveDataStocker();
     await localDataStocker.init();
 
     await localDataStocker.registerUserStatus(isUserConnected);
   }
 
   checkUserStatus() async {
-    HiveDataStocker localDataStocker = HiveDataStocker();
+    LocalDataStocker localDataStocker = HiveDataStocker();
     await localDataStocker.init();
     bool userStatus = await localDataStocker.checkUserStatus();
 

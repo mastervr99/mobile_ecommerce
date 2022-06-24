@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'common_widgets/AppBarWidget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/DrawerWidget.dart';
+import 'package:mobile_ecommerce/Application/screens/HomeScreen.dart';
 
 int currentIndex = 0;
 
@@ -27,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> viewContainer = [
-    //HomeScreen(),
+    HomeScreen(),
     //WishListScreen(),
     //ShoppingCartScreen(),
     //HomeScreen()
@@ -36,10 +38,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 1,
+      length: 3,
       child: Scaffold(
         appBar: appBarWidget(context),
-        //drawer: DrawerWidget(),
+        drawer: DrawerWidget(),
         body: IndexedStack(
           index: currentIndex,
           children: viewContainer,

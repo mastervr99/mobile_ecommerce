@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
-import 'package:mobile_ecommerce/Application/MyHomePage.dart';
 import 'package:mobile_ecommerce/Application/components/sign_up_component.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
+import 'package:mobile_ecommerce/main.dart';
 
 class SignInComponent extends StatefulWidget {
   @override

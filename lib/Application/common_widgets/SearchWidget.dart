@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
-class SearchWidget extends StatelessWidget {
+class SearchWidget extends StatefulWidget {
+  @override
+  _SearchWidgetState createState() => _SearchWidgetState();
+}
+
+class _SearchWidgetState extends State<SearchWidget> {
+  TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Theme(
           child: TextField(
+            controller: searchController,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -19,7 +28,7 @@ class SearchWidget extends StatelessWidget {
               prefixIcon: Icon(Icons.search),
               fillColor: Color(0xFFF2F4F5),
               hintStyle: new TextStyle(color: Colors.grey[600]),
-              hintText: "What would your like to buy?",
+              hintText: translate("label_search"),
             ),
             autofocus: false,
           ),

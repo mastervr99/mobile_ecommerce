@@ -1,4 +1,7 @@
 {
+  "label_home": "Home",
+  "label_contact" : "Contact Us",
+  "label_search" : "Search on Eshop",
   "label_language_selection" : "Language Selection",
   "label_phone_number": "Phone Number",
   "label_email": "Email",

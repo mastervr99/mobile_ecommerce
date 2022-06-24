@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mobile_ecommerce/Application/components/sign_up_component.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
@@ -23,12 +21,6 @@ _checkUserStatus() async {
 class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   Widget build(BuildContext context) {
-    var testDrawer = _createDrawerItem(
-        icon: FontAwesomeIcons.user,
-        text: translate('Connected'),
-        onTap: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => SignUpComponent())));
-
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.65,
       child: Drawer(
@@ -38,22 +30,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             _createDrawerHeader(),
             _createDrawerItem(
                 icon: Icons.home,
-                text: 'Home',
+                text: translate('label_home'),
                 onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => MyHomePage(title: 'ESHOP')),
                     )),
             _createDrawerItem(
-                icon: FontAwesomeIcons.user,
-                text: translate('Connected'),
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SignUpComponent()))),
-            _createDrawerItem(
                 icon: Icons.call,
-                text: 'Contact Us',
+                text: translate('label_contact'),
                 onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(

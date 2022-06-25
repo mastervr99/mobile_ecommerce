@@ -24,14 +24,25 @@ class SqfliteFfiProductRepostitoryImpl extends ProductRepository {
   }
 
   @override
-  retrieveProduct(String productTitle) async {
-    var searchedProduct = await database
-        .rawQuery('SELECT * FROM Products WHERE title = ?', [productTitle]);
+  retrieveSingleProductByTitle(String productTitle) async {
+    var searchedProduct = await database.rawQuery(
+        "SELECT * FROM Products WHERE title like '%$productTitle%' LIMIT 1");
     if (searchedProduct.isEmpty) {
       return false;
     } else {
       Product product = Product(await searchedProduct[0]['title']);
       return product;
+    }
+  }
+
+  @override
+  retrieveProductsByTitle(String productTitle) async {
+    var searchedProducts = await database
+        .rawQuery("SELECT * FROM Products WHERE title like '%$productTitle%'");
+    if (searchedProducts.isEmpty) {
+      return false;
+    } else {
+      return searchedProducts;
     }
   }
 

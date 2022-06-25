@@ -6,9 +6,18 @@ class SearchProductUsecase {
 
   SearchProductUsecase(this.productRepository);
 
-  searchProduct(String productTitle) async {
+  searchSingleProductByTitle(String productTitle) async {
     await productRepository.init();
-    var product = await productRepository.retrieveProduct(productTitle);
+    var product =
+        await productRepository.retrieveSingleProductByTitle(productTitle);
+    await productRepository.close();
+
+    return await product;
+  }
+
+  searchProductsByTitle(String productTitle) async {
+    await productRepository.init();
+    var product = await productRepository.retrieveProductsByTitle(productTitle);
     await productRepository.close();
 
     return await product;

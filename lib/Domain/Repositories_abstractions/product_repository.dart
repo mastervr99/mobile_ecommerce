@@ -5,7 +5,9 @@ abstract class ProductRepository {
 
   registerProduct(Product product);
 
-  retrieveProduct(String productTitle);
+  retrieveSingleProductByTitle(String productTitle);
+
+  retrieveProductsByTitle(String productTitle);
 
   close();
 }

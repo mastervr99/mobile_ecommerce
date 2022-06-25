@@ -6,7 +6,7 @@ import 'Repositories_test/user_repository_sqflite_ffi_impl.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
 
 void main() {
-  group('SignInUsecase : ', () {
+  group('Sign In Usecase : ', () {
     test('check if user email is registered', () async {
       User user = User();
 

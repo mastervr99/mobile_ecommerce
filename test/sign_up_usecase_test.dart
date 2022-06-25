@@ -9,7 +9,7 @@ import 'Repositories_test/user_repository_sqflite_ffi_impl.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('SignUpUsecase : ', () {
+  group('Sign Up Usecase : ', () {
     test('user can sign up', () async {
       User user = User();
       user.setUserFirstname('testFirstname');

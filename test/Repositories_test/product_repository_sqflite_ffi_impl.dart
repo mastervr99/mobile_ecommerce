@@ -3,7 +3,7 @@ import 'package:mobile_ecommerce/Domain/Repositories_abstractions/product_reposi
 import 'package:sqflite_common/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-class SqfliteFfiProductRepostitoryImpl extends ProductRepository {
+class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
   late var database;
 
   @override
@@ -18,7 +18,6 @@ class SqfliteFfiProductRepostitoryImpl extends ProductRepository {
       ''');
   }
 
-  @override
   registerProduct(Product product) async {
     await database.insert('Products', product.toMap());
   }

@@ -2,12 +2,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_ecommerce/Application/usecases/search_product_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 
-import 'Repositories_test/sqflite_ffi_product_repository_impl.dart';
+import 'Repositories_test/product_repository_sqflite_ffi_impl.dart';
 
 void main() {
   group('Product Search Usecase', () {
     test('user can search a product', () async {
-      var productRepository = SqfliteFfiProductRepostitoryImpl();
+      var productRepository = ProductRepostitorySqfliteFfiImpl();
       await productRepository.init();
       Product product = Product("iphone X");
       await productRepository.registerProduct(product);
@@ -23,7 +23,7 @@ void main() {
     });
 
     test('search result return multiple products', () async {
-      var productRepository = SqfliteFfiProductRepostitoryImpl();
+      var productRepository = ProductRepostitorySqfliteFfiImpl();
       await productRepository.init();
 
       Product product = Product("iphone 12 red");

@@ -1,4 +1,3 @@
-import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/product_repository.dart';
 
 class SearchProductUsecase {

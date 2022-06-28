@@ -83,7 +83,7 @@ void main() {
       for (int i = 0; i < parsedList.length; i++) {
         Product product = Product(parsedList[i][6]);
         product.setDescription(
-            'lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at magna in velit egestas tristique sit amet est.');
+            'lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at magna in velit egestas tristique sit amet vel est.');
         product.setGender(parsedList[i][0]);
         product.setCategory(parsedList[i][1]);
         product.setSubCategory(parsedList[i][2]);

@@ -33,6 +33,7 @@ dependencies:
   path:
   hive:
   hive_flutter:
+  csv:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -88,6 +89,7 @@ flutter:
     - assets/images/empty_wish_list.png
     - assets/app_languages/
     - assets/databases/
+    - assets/csv_database/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

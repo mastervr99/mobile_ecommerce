@@ -10,23 +10,30 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
   init() async {
     database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
     await database.execute('''
-      CREATE TABLE IF NOT EXISTS Products (
+      CREATE TABLE IF NOT EXISTS products (
         id INTEGER PRIMARY KEY,
         title TEXT,
-        description TEXT
+        description TEXT,
+        colour TEXT,
+        gender TEXT,
+        category TEXT,
+        subCategory TEXT,
+        type TEXT,
+        usage TEXT,
+        imageUrl TEXT
       )
       ''');
   }
 
   registerProduct(Product product) async {
-    await database.insert('Products', product.toMap());
+    await database.insert('products', product.toMap());
   }
 
   @override
   retrieveSingleProductByTitle(String productTitle) async {
     var searchedProduct = await database.rawQuery(
-        "SELECT * FROM Products WHERE title like '%$productTitle%' LIMIT 1");
-    if (searchedProduct.isEmpty) {
+        "SELECT * FROM products WHERE title like '%$productTitle%' LIMIT 1");
+    if (await searchedProduct.isEmpty) {
       return false;
     } else {
       Product product = Product(await searchedProduct[0]['title']);
@@ -37,7 +44,7 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
   @override
   retrieveProductsByTitle(String productTitle) async {
     var searchedProducts = await database
-        .rawQuery("SELECT * FROM Products WHERE title like '%$productTitle%'");
+        .rawQuery("SELECT * FROM products WHERE title like '%$productTitle%'");
     if (searchedProducts.isEmpty) {
       return false;
     } else {

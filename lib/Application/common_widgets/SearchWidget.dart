@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:mobile_ecommerce/Application/screens/SearchBarResultsScreen.dart';
 
 class SearchWidget extends StatefulWidget {
   @override
@@ -11,9 +12,10 @@ class _SearchWidgetState extends State<SearchWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: Theme(
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Theme(
           child: TextField(
             controller: searchController,
             decoration: InputDecoration(
@@ -31,10 +33,16 @@ class _SearchWidgetState extends State<SearchWidget> {
               hintText: translate("label_search"),
             ),
             autofocus: false,
+            onSubmitted: (value) => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SearchBarResultsScreen()),
+            ),
           ),
           data: Theme.of(context).copyWith(
             primaryColor: Colors.grey[600],
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -78,8 +78,6 @@ void main() {
         parsedList[i].removeAt(7);
       }
 
-      //expect(parsedList[0], true);
-
       for (int i = 0; i < parsedList.length; i++) {
         Product product = Product(parsedList[i][6]);
         product.setDescription(

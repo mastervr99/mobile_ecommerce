@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_ecommerce/Application/usecases/search_product_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
@@ -59,7 +58,6 @@ void main() {
 
       final _rawData =
           await rootBundle.loadString("assets/csv_database/fashion.csv");
-      //List<List<dynamic>> data = const CsvToListConverter().convert(_rawData);
 
       var encoded = utf8.encode(_rawData);
       var decoded = utf8.decode(encoded);
@@ -67,6 +65,7 @@ void main() {
           const CsvToListConverter(fieldDelimiter: ',', eol: '\n')
               .convert(decoded);
       var parsedList = [];
+
       for (var items in rowAsListValues) {
         parsedList.add(items);
       }

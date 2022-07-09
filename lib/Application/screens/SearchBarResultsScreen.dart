@@ -21,14 +21,6 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
       appBar: appBarWidget(context),
       body: Column(
         children: <Widget>[
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                textStyle: const TextStyle(fontSize: 20)),
-            onPressed: () async {
-              //await showProduct(context, 'Test button');
-            },
-            child: const Text('Enabled'),
-          ),
           Card(
             child: Padding(
               padding: EdgeInsets.all(10.0),

@@ -30,6 +30,9 @@
 .pub-cache/
 .pub/
 /build/
+/assets/databases/
+/assets/csv_databases/
+
 
 # Web related
 lib/generated_plugin_registrant.dart

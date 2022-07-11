@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/GridTilesProducts.dart';
 import 'package:mobile_ecommerce/Application/usecases/search_product_usecase.dart';
+import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/product_repository_sqflite_impl.dart';
 
 class SearchBarResultsScreen extends StatefulWidget {
@@ -57,6 +59,8 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
           FutureBuilder(
             future: findProducts(searchTerms),
             builder: (context, AsyncSnapshot snapshot) {
+              List<Product>? productsList = snapshot.data;
+
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
                   return Center(
@@ -67,15 +71,36 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
                   if (snapshot.hasError)
                     return Text('Error: ${snapshot.error}');
                   else
+                    // return Expanded(
+                    //   child: ListView.builder(
+                    //     shrinkWrap: true,
+                    //     itemCount: snapshot.data.length,
+                    //     itemBuilder: (context, index) {
+                    //       return ListTile(
+                    //         title: Text('${snapshot.data[index].getImageUrl()}'),
+                    //       );
+                    //     },
+                    //   ),
+                    // );
+                    //List<Results>? results = values.results;
                     return Expanded(
-                      child: ListView.builder(
+                      child: GridView.count(
+                        scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text('${snapshot.data[index].getTitle()}'),
-                          );
-                        },
+                        crossAxisCount: 2,
+//    physics: NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.all(1.0),
+                        childAspectRatio: 8.0 / 12.0,
+                        children: List<Widget>.generate(productsList!.length,
+                            (index) {
+                          return GridTile(
+                              child: GridTilesProducts(
+                            name: productsList[index]!.getTitle(),
+                            imageUrl: productsList[index]!.getImageUrl(),
+                            slug: '',
+                            price: '0,01',
+                          ));
+                        }),
                       ),
                     );
               }

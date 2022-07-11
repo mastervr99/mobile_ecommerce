@@ -18,7 +18,7 @@ class ProductRepostitorySqfliteImpl extends ProductRepository {
           id INTEGER PRIMARY KEY,
           title TEXT,
           description TEXT,
-          colour TEXT,
+          color TEXT,
           gender TEXT,
           category TEXT,
           subCategory TEXT,

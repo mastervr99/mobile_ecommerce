@@ -1,7 +1,7 @@
 class Product {
   String title;
   String description = '';
-  String colour = '';
+  String color = '';
   String gender = '';
   String category = '';
   String subCategory = '';
@@ -12,46 +12,78 @@ class Product {
   Product(this.title);
 
   setDescription(String description) {
-    description = description;
+    this.description = description;
   }
 
   setColor(String color) {
-    colour = color;
+    this.color = color;
   }
 
   setGender(String gender) {
-    gender = gender;
+    this.gender = gender;
   }
 
   setCategory(String category) {
-    category = category;
+    this.category = category;
   }
 
   setSubCategory(String subCategory) {
-    subCategory = subCategory;
+    this.subCategory = subCategory;
   }
 
   setType(String type) {
-    type = type;
+    this.type = type;
   }
 
   setUsage(String usage) {
-    usage = usage;
+    this.usage = usage;
   }
 
   setImageUrl(String imageUrl) {
-    imageUrl = imageUrl;
+    this.imageUrl = imageUrl;
   }
 
   String getTitle() {
     return title;
   }
 
+  getImageUrl() {
+    return imageUrl;
+  }
+
+  getDescription() {
+    return description;
+  }
+
+  getColor() {
+    return color;
+  }
+
+  getGender() {
+    return gender;
+  }
+
+  getCategory() {
+    return category;
+  }
+
+  getSubCategory() {
+    return subCategory;
+  }
+
+  getType() {
+    return type;
+  }
+
+  getUsage() {
+    return usage;
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'title': title,
       'description': description,
-      'colour': colour,
+      'color': color,
       'gender': gender,
       'category': category,
       'subCategory': subCategory,

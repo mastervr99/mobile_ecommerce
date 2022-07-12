@@ -9,7 +9,7 @@ class ProductRepostitorySqfliteImpl extends ProductRepository {
   @override
   init() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, 'eshop.db');
+    final path = join(databasesPath, 'mob_eshop.db');
     database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table
@@ -24,7 +24,8 @@ class ProductRepostitorySqfliteImpl extends ProductRepository {
           subCategory TEXT,
           type TEXT,
           usage TEXT,
-          imageUrl TEXT
+          imageUrl TEXT,
+          price TEXT
         )
       ''');
     });
@@ -65,6 +66,7 @@ class ProductRepostitorySqfliteImpl extends ProductRepository {
       product.setColor(productData['color'] ?? '');
       product.setUsage(productData['usage'] ?? '');
       product.setImageUrl(productData['imageUrl'] ?? '');
+      product.setPrice(productData['price'] ?? '');
 
       searchedProducts.add(product);
     });

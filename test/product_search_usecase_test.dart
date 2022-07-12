@@ -131,6 +131,9 @@ void main() {
         product.setColor(parsedList[i][4]);
         product.setUsage(parsedList[i][5]);
         product.setImageUrl(parsedList[i][7]);
+        product.setPrice('0.01');
+
+        // expect(product.toMap(), 'setting 2 from csv');
 
         await productRepository.registerProduct(product);
       }
@@ -138,11 +141,40 @@ void main() {
       SearchProductUsecase searchProductUsecase =
           SearchProductUsecase(productRepository);
 
+      // ***********************************************
+      var productsTest =
+          await productRepository.retrieveProductsForTest('gini');
+
+      List<Product> searchedProducts = [];
+
+      productsTest.forEach((productData) {
+        Product product = Product(productData['title'] ?? '');
+        product.setDescription(productData['description'] ?? '');
+        product.setGender(productData['gender'] ?? '');
+        product.setCategory(productData['category'] ?? '');
+        product.setSubCategory(productData['subCategory'] ?? '');
+        product.setType(productData['type'] ?? '');
+        product.setColor(productData['color'] ?? '');
+        product.setUsage(productData['usage'] ?? '');
+        product.setImageUrl(productData['imageUrl'] ?? '');
+
+        searchedProducts.add(product);
+      });
+
+      // expect(searchedProducts[0].toMap(), true);
+
+      // ***********************************************
+
       var searchedProduct =
-          await searchProductUsecase.searchSingleProductByTitle("Gini");
-      expect(searchedProduct.runtimeType, Product);
-      expect(await searchedProduct.getTitle(),
-          'Gini and Jony Girls Knit White Top');
+          await searchProductUsecase.searchProductsByTitle("Gini");
+      // expect(searchedProduct.runtimeType, Product);
+      // expect(await searchedProduct.getTitle(),
+      //     'Gini and Jony Girls Knit White Top');
+
+      expect(await searchedProduct[0].toMap(), 'searchedProduct color');
+
+      expect(await searchedProduct.getImageUrl(),
+          'http://assets.myntassets.com/v1/images/style/properties/f3964f76c78edd85f4512d98b26d52e9_images.jpg');
     });
   });
 }

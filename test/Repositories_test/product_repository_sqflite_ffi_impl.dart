@@ -14,13 +14,14 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
         id INTEGER PRIMARY KEY,
         title TEXT,
         description TEXT,
-        colour TEXT,
+        color TEXT,
         gender TEXT,
         category TEXT,
         subCategory TEXT,
         type TEXT,
         usage TEXT,
-        imageUrl TEXT
+        imageUrl TEXT,
+        price TEXT
       )
       ''');
   }
@@ -59,11 +60,19 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
       product.setColor(productData['color'] ?? '');
       product.setUsage(productData['usage'] ?? '');
       product.setImageUrl(productData['imageUrl'] ?? '');
+      product.setPrice(productData['price'] ?? '');
 
       searchedProducts.add(product);
     });
 
     return searchedProducts;
+  }
+
+  retrieveProductsForTest(String productTitle) async {
+    var searchedProductsInDb = [];
+    searchedProductsInDb = await database
+        .rawQuery("SELECT * FROM products WHERE title like '%$productTitle%'");
+    return searchedProductsInDb;
   }
 
   @override

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class Product {
   String title;
   String description = '';
@@ -8,6 +10,7 @@ class Product {
   String type = '';
   String usage = '';
   String imageUrl = '';
+  String price = '';
 
   Product(this.title);
 
@@ -41,6 +44,10 @@ class Product {
 
   setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
+  }
+
+  setPrice(String price) {
+    this.price = price;
   }
 
   String getTitle() {
@@ -79,6 +86,10 @@ class Product {
     return usage;
   }
 
+  getPrice() {
+    return price;
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'title': title,
@@ -89,7 +100,8 @@ class Product {
       'subCategory': subCategory,
       'type': type,
       'usage': usage,
-      'imageUrl': imageUrl
+      'imageUrl': imageUrl,
+      'price': price
     };
   }
 }

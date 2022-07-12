@@ -7,15 +7,23 @@ import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/product_repository_sqflite_impl.dart';
 
 class SearchBarResultsScreen extends StatefulWidget {
+  var searchTerms;
+
+  SearchBarResultsScreen({Key? key, this.searchTerms}) : super(key: key);
+
   @override
-  _SearchBarResultsScreenState createState() => _SearchBarResultsScreenState();
+  _SearchBarResultsScreenState createState() =>
+      _SearchBarResultsScreenState(searchTerms: searchTerms);
 }
 
 class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
-  _SearchBarResultsScreenState();
+  var searchTerms;
+
+  // String searchTerms = '';
+
+  _SearchBarResultsScreenState({this.searchTerms});
 
   TextEditingController searchController = TextEditingController();
-  String searchTerms = 'test';
 
   @override
   Widget build(BuildContext context) {
@@ -64,56 +72,61 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
               ),
             ),
           ),
-          FutureBuilder(
-            future: findProducts(searchTerms),
-            builder: (context, AsyncSnapshot snapshot) {
-              List<Product>? productsList = snapshot.data;
+          if (searchTerms.isNotEmpty)
+            FutureBuilder(
+              future: findProducts(searchTerms),
+              builder: (context, AsyncSnapshot snapshot) {
+                List<Product>? productsList = snapshot.data;
 
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                  return Center(
-                      child: Text('Check your internet connection!!'));
-                case ConnectionState.waiting:
-                  return Center(child: Text('Loading ...'));
-                default:
-                  if (snapshot.hasError)
-                    return Text('Error: ${snapshot.error}');
-                  else
-                    // return Expanded(
-                    //   child: ListView.builder(
-                    //     shrinkWrap: true,
-                    //     itemCount: snapshot.data.length,
-                    //     itemBuilder: (context, index) {
-                    //       return ListTile(
-                    //         title: Text('${snapshot.data[index].getImageUrl()}'),
-                    //       );
-                    //     },
-                    //   ),
-                    // );
-                    //List<Results>? results = values.results;
-                    return Expanded(
-                      child: GridView.count(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        crossAxisCount: 2,
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return Center(
+                        child: Text('Check your internet connection!!'));
+                  case ConnectionState.waiting:
+                    return Center(child: Text('Loading ...'));
+                  default:
+                    if (snapshot.hasError)
+                      return Text('Error: ${snapshot.error}');
+                    else if (productsList!.isEmpty)
+                      return Center(
+                        child: Text(translate('label_product_search_failed')),
+                      );
+                    else
+                      // return Expanded(
+                      //   child: ListView.builder(
+                      //     shrinkWrap: true,
+                      //     itemCount: snapshot.data.length,
+                      //     itemBuilder: (context, index) {
+                      //       return ListTile(
+                      //         title: Text('${snapshot.data[index].getImageUrl()}'),
+                      //       );
+                      //     },
+                      //   ),
+                      // );
+                      //List<Results>? results = values.results;
+                      return Expanded(
+                        child: GridView.count(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          crossAxisCount: 2,
 //    physics: NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.all(1.0),
-                        childAspectRatio: 8.0 / 12.0,
-                        children: List<Widget>.generate(productsList!.length,
-                            (index) {
-                          return GridTile(
-                              child: GridTilesProducts(
-                            name: productsList[index]!.getTitle(),
-                            imageUrl: productsList[index]!.getImageUrl(),
-                            slug: '',
-                            price: '0,01',
-                          ));
-                        }),
-                      ),
-                    );
-              }
-            },
-          ),
+                          padding: EdgeInsets.all(1.0),
+                          childAspectRatio: 8.0 / 12.0,
+                          children: List<Widget>.generate(productsList!.length,
+                              (index) {
+                            return GridTile(
+                                child: GridTilesProducts(
+                              name: productsList[index]!.getTitle(),
+                              imageUrl: productsList[index]!.getImageUrl(),
+                              slug: '',
+                              price: productsList[index]!.getPrice(),
+                            ));
+                          }),
+                        ),
+                      );
+                }
+              },
+            ),
         ],
       ),
     );

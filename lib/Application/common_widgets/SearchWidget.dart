@@ -35,7 +35,9 @@ class _SearchWidgetState extends State<SearchWidget> {
             autofocus: false,
             onSubmitted: (value) => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SearchBarResultsScreen()),
+              MaterialPageRoute(
+                  builder: (context) =>
+                      SearchBarResultsScreen(searchTerms: value)),
             ),
           ),
           data: Theme.of(context).copyWith(

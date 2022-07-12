@@ -5,15 +5,6 @@ class SearchProductUsecase {
 
   SearchProductUsecase(this.productRepository);
 
-  searchSingleProductByTitle(String productTitle) async {
-    await productRepository.init();
-    var product =
-        await productRepository.retrieveSingleProductByTitle(productTitle);
-    await productRepository.close();
-
-    return await product;
-  }
-
   searchProductsByTitle(String productTitle) async {
     await productRepository.init();
     var product = await productRepository.retrieveProductsByTitle(productTitle);

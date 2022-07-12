@@ -36,18 +36,6 @@ class ProductRepostitorySqfliteImpl extends ProductRepository {
   }
 
   @override
-  retrieveSingleProductByTitle(String productTitle) async {
-    var searchedProduct = await database.rawQuery(
-        "SELECT * FROM Products WHERE title like '%$productTitle%' LIMIT 1");
-    if (await searchedProduct.isEmpty) {
-      return false;
-    } else {
-      Product product = Product(await searchedProduct[0]['title']);
-      return product;
-    }
-  }
-
-  @override
   retrieveProductsByTitle(String productTitle) async {
     var searchedProductsInDb = [];
 

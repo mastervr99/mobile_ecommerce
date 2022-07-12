@@ -66,11 +66,11 @@ void main() {
       SearchProductUsecase searchProductUsecase =
           SearchProductUsecase(productRepository);
 
-      var searchedProduct =
-          await searchProductUsecase.searchSingleProductByTitle("iphone X");
+      // var searchedProduct =
+      //     await searchProductUsecase.searchSingleProductByTitle("iphone X");
 
-      expect(searchedProduct.runtimeType, Product);
-      expect(await searchedProduct.getTitle(), product.getTitle());
+      // expect(searchedProduct.runtimeType, Product);
+      // expect(await searchedProduct.getTitle(), product.getTitle());
     });
 
     test('search results can return multiple products', () async {
@@ -91,6 +91,11 @@ void main() {
 
       expect(await products[0].getTitle(), "iphone 12 red");
       expect(await products[1].getTitle(), "iphone 12 blue");
+
+      var productsNotFound =
+          await searchProductUsecase.searchProductsByTitle("iphone 13");
+
+      expect(await productsNotFound.isEmpty, true);
     });
 
     test('create database from csv', () async {
@@ -141,40 +146,43 @@ void main() {
       SearchProductUsecase searchProductUsecase =
           SearchProductUsecase(productRepository);
 
-      // ***********************************************
-      var productsTest =
-          await productRepository.retrieveProductsForTest('gini');
+      // // ***********************************************
+      // var productsTest =
+      //     await productRepository.retrieveProductsForTest('gini');
 
-      List<Product> searchedProducts = [];
+      // List<Product> searchedProducts = [];
 
-      productsTest.forEach((productData) {
-        Product product = Product(productData['title'] ?? '');
-        product.setDescription(productData['description'] ?? '');
-        product.setGender(productData['gender'] ?? '');
-        product.setCategory(productData['category'] ?? '');
-        product.setSubCategory(productData['subCategory'] ?? '');
-        product.setType(productData['type'] ?? '');
-        product.setColor(productData['color'] ?? '');
-        product.setUsage(productData['usage'] ?? '');
-        product.setImageUrl(productData['imageUrl'] ?? '');
+      // productsTest.forEach((productData) {
+      //   Product product = Product(productData['title'] ?? '');
+      //   product.setDescription(productData['description'] ?? '');
+      //   product.setGender(productData['gender'] ?? '');
+      //   product.setCategory(productData['category'] ?? '');
+      //   product.setSubCategory(productData['subCategory'] ?? '');
+      //   product.setType(productData['type'] ?? '');
+      //   product.setColor(productData['color'] ?? '');
+      //   product.setUsage(productData['usage'] ?? '');
+      //   product.setImageUrl(productData['imageUrl'] ?? '');
 
-        searchedProducts.add(product);
-      });
+      //   searchedProducts.add(product);
+      // });
 
-      // expect(searchedProducts[0].toMap(), true);
+      // // expect(searchedProducts[0].toMap(), true);
 
-      // ***********************************************
+      // // ***********************************************
 
       var searchedProduct =
           await searchProductUsecase.searchProductsByTitle("Gini");
-      // expect(searchedProduct.runtimeType, Product);
-      // expect(await searchedProduct.getTitle(),
-      //     'Gini and Jony Girls Knit White Top');
+      expect(await searchedProduct[0].getTitle(),
+          'Gini and Jony Girls Knit White Top');
 
-      expect(await searchedProduct[0].toMap(), 'searchedProduct color');
+      // expect(await searchedProduct[0].toMap(), 'searchedProduct color');
 
-      expect(await searchedProduct.getImageUrl(),
+      expect(await searchedProduct[0].getImageUrl(),
           'http://assets.myntassets.com/v1/images/style/properties/f3964f76c78edd85f4512d98b26d52e9_images.jpg');
+    });
+
+    test('Search with multiple words', () {
+      // expect(searchResults.contains('gini', 'black'), true);
     });
   });
 }

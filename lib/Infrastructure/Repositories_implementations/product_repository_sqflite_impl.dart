@@ -36,11 +36,18 @@ class ProductRepostitorySqfliteImpl extends ProductRepository {
   }
 
   @override
-  retrieveProductsByTitle(String productTitle) async {
+  retrieveProductsByTitle(String searchKeywords) async {
     var searchedProductsInDb = [];
 
-    searchedProductsInDb = await database
-        .rawQuery("SELECT * FROM Products WHERE title like '%$productTitle%'");
+    var searchTerms = searchKeywords.split(' ');
+
+    for (var searchTerm in searchTerms) {
+      var searchResults = await database
+          .rawQuery("SELECT * FROM Products WHERE title like '%$searchTerm%'");
+      for (var searchResult in await searchResults) {
+        searchedProductsInDb.add(await searchResult);
+      }
+    }
 
     List<Product> searchedProducts = [];
 

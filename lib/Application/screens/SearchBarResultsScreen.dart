@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/GridTilesProducts.dart';
-import 'package:mobile_ecommerce/Application/usecases/search_product_usecase.dart';
-import 'package:mobile_ecommerce/Domain/Entity/product.dart';
+import 'package:mobile_ecommerce/Application/usecases/product_search_usecase.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/product_repository_sqflite_impl.dart';
 
 class SearchBarResultsScreen extends StatefulWidget {
@@ -76,7 +75,7 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
             FutureBuilder(
               future: findProducts(searchTerms),
               builder: (context, AsyncSnapshot snapshot) {
-                List<Product>? productsList = snapshot.data;
+                List<dynamic>? productsList = snapshot.data;
 
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:

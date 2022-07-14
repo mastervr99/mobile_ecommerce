@@ -1,7 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_ecommerce/Application/usecases/search_product_usecase.dart';
+import 'package:mobile_ecommerce/Application/usecases/product_search_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 import 'Repositories_test/product_repository_sqflite_ffi_impl.dart';
 import 'package:csv/csv.dart';
@@ -77,8 +76,8 @@ void main() {
       var productRepository = ProductRepostitorySqfliteFfiImpl();
       await productRepository.init();
 
-      Product product = Product("iphone 12 red");
-      Product product2 = Product("iphone 12 blue");
+      Product product = Product("nokia 12");
+      Product product2 = Product("nokia 11");
 
       await productRepository.registerProduct(product);
       await productRepository.registerProduct(product2);
@@ -86,14 +85,13 @@ void main() {
       SearchProductUsecase searchProductUsecase =
           SearchProductUsecase(productRepository);
 
-      var products =
-          await searchProductUsecase.searchProductsByTitle("iphone 12");
+      var products = await searchProductUsecase.searchProductsByTitle("nokia");
 
-      expect(await products[0].getTitle(), "iphone 12 red");
-      expect(await products[1].getTitle(), "iphone 12 blue");
+      expect(await products[0].getTitle(), "nokia 12");
+      expect(await products[1].getTitle(), "nokia 11");
 
       var productsNotFound =
-          await searchProductUsecase.searchProductsByTitle("iphone 13");
+          await searchProductUsecase.searchProductsByTitle("lumia");
 
       expect(await productsNotFound.isEmpty, true);
     });
@@ -181,8 +179,65 @@ void main() {
           'http://assets.myntassets.com/v1/images/style/properties/f3964f76c78edd85f4512d98b26d52e9_images.jpg');
     });
 
-    test('Search with multiple words', () {
-      // expect(searchResults.contains('gini', 'black'), true);
+    test('Search with multiple words', () async {
+      var productRepository = ProductRepostitorySqfliteFfiImpl();
+      await productRepository.init();
+
+      Product product = Product("samsung 10 red");
+      Product product2 = Product("samsung 12 blue");
+
+      await productRepository.registerProduct(product);
+      await productRepository.registerProduct(product2);
+
+      SearchProductUsecase searchProductUsecase =
+          SearchProductUsecase(productRepository);
+
+      var searchResults =
+          await searchProductUsecase.searchProductsByTitle("samsung 12");
+
+      expect(await searchResults[0].getTitle(), "samsung 10 red");
+      expect(await searchResults[1].getTitle(), "samsung 12 blue");
+    });
+
+    test('search return product with all searchs terms in title', () async {
+      var productRepository = ProductRepostitorySqfliteFfiImpl();
+      await productRepository.init();
+
+      Product product = Product("lg 10 red");
+      Product product2 = Product("lg 12 blue");
+
+      await productRepository.registerProduct(product);
+      await productRepository.registerProduct(product2);
+
+      SearchProductUsecase searchProductUsecase =
+          SearchProductUsecase(productRepository);
+
+      var searchResults =
+          await searchProductUsecase.searchProductsByTitle("lg 10");
+
+      var value = "lg 10";
+      var searchTerms = value.split(' ');
+      var foundCorrectProducts = [];
+
+      await searchResults.forEach((product) {
+        var productTitle = product.getTitle();
+
+        bool containsAll = true;
+
+        searchTerms.forEach((searchTerm) {
+          if (!productTitle.contains(searchTerm)) {
+            containsAll = false;
+          }
+        });
+
+        if (containsAll) {
+          foundCorrectProducts.add(product);
+        }
+      });
+
+      Product productTest = foundCorrectProducts[0];
+
+      expect(productTest.getTitle(), "lg 10 red");
     });
   });
 }

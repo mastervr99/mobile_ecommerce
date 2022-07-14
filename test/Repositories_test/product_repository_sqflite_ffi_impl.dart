@@ -31,12 +31,22 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
   }
 
   @override
-  retrieveProductsByTitle(String productTitle) async {
+  retrieveProductsByTitle(String searchKeywords) async {
     var searchedProductsInDb = [];
-    searchedProductsInDb = await database
-        .rawQuery("SELECT * FROM products WHERE title like '%$productTitle%'");
 
-    List<Product> searchedProducts = [];
+    var searchTerms = searchKeywords.split(' ');
+
+    for (var searchTerm in searchTerms) {
+      var searchResults = await database
+          .rawQuery("SELECT * FROM Products WHERE title like '%$searchTerm%'");
+      for (var searchResult in await searchResults) {
+        searchedProductsInDb.add(await searchResult);
+      }
+    }
+
+    // return searchedProductsInDb;
+
+    List<Product> searchResults = [];
 
     searchedProductsInDb.forEach((productData) {
       Product product = Product(productData['title'] ?? '');
@@ -50,10 +60,10 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
       product.setImageUrl(productData['imageUrl'] ?? '');
       product.setPrice(productData['price'] ?? '');
 
-      searchedProducts.add(product);
+      searchResults.add(product);
     });
 
-    return searchedProducts;
+    return searchResults;
   }
 
   retrieveProductsForTest(String productTitle) async {

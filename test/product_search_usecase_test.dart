@@ -56,22 +56,6 @@ void main() {
 //   );
 // }
   group('Product Search Usecase', () {
-    test('user can search a product', () async {
-      var productRepository = ProductRepostitorySqfliteFfiImpl();
-      await productRepository.init();
-      Product product = Product("iphone X");
-      await productRepository.registerProduct(product);
-
-      SearchProductUsecase searchProductUsecase =
-          SearchProductUsecase(productRepository);
-
-      // var searchedProduct =
-      //     await searchProductUsecase.searchSingleProductByTitle("iphone X");
-
-      // expect(searchedProduct.runtimeType, Product);
-      // expect(await searchedProduct.getTitle(), product.getTitle());
-    });
-
     test('search results can return multiple products', () async {
       var productRepository = ProductRepostitorySqfliteFfiImpl();
       await productRepository.init();

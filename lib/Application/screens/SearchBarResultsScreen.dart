@@ -117,7 +117,7 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
                                 child: GridTilesProducts(
                               name: productsList[index]!.getTitle(),
                               imageUrl: productsList[index]!.getImageUrl(),
-                              slug: '',
+                              product: productsList[index]!,
                               price: productsList[index]!.getPrice(),
                             ));
                           }),

@@ -1,0 +1,285 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
+// import 'package:mobile_ecommerce/models/ProductDetails.dart';
+// import 'package:mobile_ecommerce/utils/Urls.dart';
+import 'package:http/http.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
+import 'package:mobile_ecommerce/Domain/Entity/product.dart';
+
+// ProductDetails? productDetails;
+
+class ProductDetailScreen extends StatefulWidget {
+  Product product;
+
+  ProductDetailScreen({Key? key, required this.product}) : super(key: key);
+
+  @override
+  _ProductDetailScreenState createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFFfafafa),
+      appBar: appBarWidget(context),
+      body: FutureBuilder(
+        future: getProduct(widget.product),
+        builder: (context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+              return CircularProgress();
+            default:
+              if (snapshot.hasError)
+                return Text('Error: ${snapshot.error}');
+              else
+                return createDetailView(context, snapshot);
+          }
+        },
+      ),
+      bottomNavigationBar: BottomNavBar(),
+    );
+  }
+}
+
+class BottomNavBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Color(0xFFfef2f2),
+              shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10)),
+                side: BorderSide(color: Color(0xFFfef2f2)),
+              ),
+              minimumSize: Size(300, 50),
+              textStyle: const TextStyle(
+                color: Colors.white,
+              ),
+              elevation: 0,
+            ),
+            onPressed: () {},
+            child: Container(
+              padding: EdgeInsets.only(left: 5, right: 5, top: 15, bottom: 15),
+              child: Text("Add to cart".toUpperCase(),
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFFff665e))),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+Widget createDetailView(BuildContext context, AsyncSnapshot snapshot) {
+  var values = snapshot.data;
+  return DetailScreen(
+    product: values,
+  );
+}
+
+class DetailScreen extends StatefulWidget {
+  Product product;
+
+  DetailScreen({Key? key, required this.product}) : super(key: key);
+
+  @override
+  _DetailScreenState createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          /*Image.network(
+              widget.productDetails.data.productVariants[0].productImages[0]),*/
+          Image.network(
+            widget.product.getImageUrl(),
+            fit: BoxFit.fill,
+            loadingBuilder: (BuildContext context, Widget child,
+                ImageChunkEvent? loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                          loadingProgress.expectedTotalBytes!.toInt()
+                      : null,
+                ),
+              );
+            },
+          ),
+          // Container(
+          //   padding: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
+          //   color: Color(0xFFFFFFFF),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: <Widget>[
+          //       Text("SKU".toUpperCase(),
+          //           style: TextStyle(
+          //               fontSize: 16,
+          //               fontWeight: FontWeight.w700,
+          //               color: Color(0xFF565656))),
+          //       Text(widget.productDetails.data!.productVariants![0].sku!,
+          //           style: TextStyle(
+          //               fontSize: 16,
+          //               fontWeight: FontWeight.w700,
+          //               color: Color(0xFFfd0100))),
+          //       Icon(
+          //         Icons.arrow_forward_ios,
+          //         color: Color(0xFF999999),
+          //       )
+          //     ],
+          //   ),
+          // ),
+          Container(
+            alignment: Alignment.topLeft,
+            width: double.infinity,
+            padding: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
+            color: Color(0xFFFFFFFF),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text("${widget.product.getTitle()}",
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF4c4c4c))),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
+            color: Color(0xFFFFFFFF),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text("Price".toUpperCase(),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF565656))),
+                Text(
+                    "€ ${(widget.product.getPrice() != null) ? widget.product.getPrice() : "Unavailable"}"
+                        .toUpperCase(),
+                    style: TextStyle(
+                        color: (widget.product.getPrice() != null)
+                            ? Color(0xFFf67426)
+                            : Color(0xFF0dc2cd),
+                        fontFamily: 'Roboto-Light.ttf',
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500)),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            alignment: Alignment.topLeft,
+            width: double.infinity,
+            padding: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
+            color: Color(0xFFFFFFFF),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text("Description",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF565656))),
+                SizedBox(
+                  height: 15,
+                ),
+                Text("${widget.product.getDescription()}",
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF4c4c4c))),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          // Container(
+          //   alignment: Alignment.topLeft,
+          //   width: double.infinity,
+          //   padding: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
+          //   color: Color(0xFFFFFFFF),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: <Widget>[
+          //       Text("Specification",
+          //           textAlign: TextAlign.left,
+          //           style: TextStyle(
+          //               fontSize: 16,
+          //               fontWeight: FontWeight.w700,
+          //               color: Color(0xFF565656))),
+          //       SizedBox(
+          //         height: 15,
+          //       ),
+          //       Column(
+          //         children: generateProductSpecification(context),
+          //       )
+          //     ],
+          //   ),
+          // )
+        ],
+      ),
+    );
+  }
+
+  // List<Widget> generateProductSpecification(BuildContext context) {
+  //   List<Widget> list = [];
+  //   int count = 0;
+  //   widget.productDetails.data!.productSpecifications!.forEach((specification) {
+  //     Widget element = Container(
+  //       height: 30,
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: <Widget>[
+  //           Text(specification.specificationName!,
+  //               textAlign: TextAlign.left,
+  //               style: TextStyle(
+  //                   fontSize: 14,
+  //                   fontWeight: FontWeight.w400,
+  //                   color: Color(0xFF444444))),
+  //           Text(specification.specificationValue!,
+  //               textAlign: TextAlign.left,
+  //               style: TextStyle(
+  //                   fontSize: 14,
+  //                   fontWeight: FontWeight.w400,
+  //                   color: Color(0xFF212121))),
+  //         ],
+  //       ),
+  //     );
+  //     list.add(element);
+  //     count++;
+  //   });
+  //   return list;
+  // }
+}
+
+Future<Product?> getProduct(Product product) async {
+  return product;
+}

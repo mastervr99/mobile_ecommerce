@@ -91,18 +91,6 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
                         child: Text(translate('label_product_search_failed')),
                       );
                     else
-                      // return Expanded(
-                      //   child: ListView.builder(
-                      //     shrinkWrap: true,
-                      //     itemCount: snapshot.data.length,
-                      //     itemBuilder: (context, index) {
-                      //       return ListTile(
-                      //         title: Text('${snapshot.data[index].getImageUrl()}'),
-                      //       );
-                      //     },
-                      //   ),
-                      // );
-                      //List<Results>? results = values.results;
                       return Expanded(
                         child: GridView.count(
                           scrollDirection: Axis.vertical,

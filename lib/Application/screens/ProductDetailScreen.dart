@@ -5,6 +5,7 @@ import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 // import 'package:mobile_ecommerce/utils/Urls.dart';
 import 'package:http/http.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
+import 'package:mobile_ecommerce/Application/screens/ShoppingCartScreen.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 
 // ProductDetails? productDetails;
@@ -66,7 +67,12 @@ class BottomNavBar extends StatelessWidget {
               ),
               elevation: 0,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ShoppingCartScreen()),
+              );
+            },
             child: Container(
               padding: EdgeInsets.only(left: 5, right: 5, top: 15, bottom: 15),
               child: Text("Add to cart".toUpperCase(),

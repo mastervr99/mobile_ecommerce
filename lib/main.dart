@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/BottomNavBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/DrawerWidget.dart';
 import 'package:mobile_ecommerce/Application/screens/HomeScreen.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
@@ -92,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
           index: currentIndex,
           children: viewContainer,
         ),
-        //bottomNavigationBar: BottomNavBarWidget(),
+        bottomNavigationBar: BottomNavBarWidget(),
       ),
     );
   }

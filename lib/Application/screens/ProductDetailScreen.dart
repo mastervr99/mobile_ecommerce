@@ -5,8 +5,9 @@ import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 // import 'package:mobile_ecommerce/utils/Urls.dart';
 import 'package:http/http.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
-import 'package:mobile_ecommerce/Application/screens/ShoppingCartScreen.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
+import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
+import 'package:provider/provider.dart';
 
 // ProductDetails? productDetails;
 
@@ -40,12 +41,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           }
         },
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavBar(product: widget.product),
     );
   }
 }
 
-class BottomNavBar extends StatelessWidget {
+class BottomNavBar extends StatefulWidget {
+  Product product;
+
+  BottomNavBar({Key? key, required this.product}) : super(key: key);
+
+  @override
+  _BottomNavBarState createState() => _BottomNavBarState();
+}
+
+class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,10 +78,12 @@ class BottomNavBar extends StatelessWidget {
               elevation: 0,
             ),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ShoppingCartScreen()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => ShoppingCartScreen()),
+              // );
+              var shoppingCart = context.read<ShoppingCart>();
+              shoppingCart.addItem(widget.product);
             },
             child: Container(
               padding: EdgeInsets.only(left: 5, right: 5, top: 15, bottom: 15),

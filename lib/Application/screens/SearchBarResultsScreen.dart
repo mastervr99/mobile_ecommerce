@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:core';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/GridTilesProducts.dart';
@@ -17,8 +18,6 @@ class SearchBarResultsScreen extends StatefulWidget {
 
 class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
   var searchTerms;
-
-  // String searchTerms = '';
 
   _SearchBarResultsScreenState({this.searchTerms});
 

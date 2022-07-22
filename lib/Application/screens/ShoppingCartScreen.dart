@@ -45,14 +45,48 @@ class _CartList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            "Shopping Cart",
-            style: Theme.of(context)
-                .textTheme
-                .headline5!
-                .copyWith(fontWeight: FontWeight.bold, color: Colors.black),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("Shopping Cart",
+                        style: Theme.of(context).textTheme.headline6),
+                    Text("€ 899.01",
+                        style: Theme.of(context).textTheme.headline6),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  height: 40,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFFAC252B),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    ),
+                    child: Text(
+                      "BUY",
+                      style: Theme.of(context).textTheme.button!.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+              )
+            ],
           ),
-          SizedBox(height: 15),
+          const Divider(
+            height: 20,
+            thickness: 1,
+            indent: 20,
+            endIndent: 0,
+            color: Color(0xFFAC252B),
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: shopppingCartItems.length,
@@ -96,41 +130,6 @@ class _CartList extends StatelessWidget {
               },
             ),
           ),
-          Divider(),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text("TOTAL", style: Theme.of(context).textTheme.headline6),
-                    Text("€. 899.01",
-                        style: Theme.of(context).textTheme.headline6),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  height: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                    ),
-                    child: Text(
-                      "BUY",
-                      style: Theme.of(context).textTheme.button!.copyWith(
-                            color: Colors.white,
-                          ),
-                    ),
-                    onPressed: () {},
-                  ),
-                ),
-              )
-            ],
-          ),
         ],
       ),
     );
@@ -158,7 +157,7 @@ class _MyCounterState extends State<MyCounter> {
               padding: const EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.black,
+                color: Color(0xFFAC252B),
               ),
               child: Icon(
                 Icons.remove,
@@ -182,7 +181,7 @@ class _MyCounterState extends State<MyCounter> {
               padding: const EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.black,
+                color: Color(0xFFAC252B),
               ),
               child: Icon(
                 Icons.add,
@@ -200,7 +199,7 @@ class _MyCounterState extends State<MyCounter> {
       SizedBox(height: 15),
       ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Colors.black,
+          primary: Color(0xFFAC252B),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),

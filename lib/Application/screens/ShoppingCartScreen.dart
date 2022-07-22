@@ -172,7 +172,9 @@ class _MyCounterState extends State<MyCounter> {
             ),
             onTap: () {
               setState(() {
-                _currentAmount -= 1;
+                if (_currentAmount > 0) {
+                  _currentAmount -= 1;
+                }
               });
             },
           ),

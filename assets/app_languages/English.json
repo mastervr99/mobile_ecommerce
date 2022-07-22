@@ -27,6 +27,11 @@
   "label_sign_in_password_failed" : "Sorry, but this password is incorrect",
   "label_sign_in_succeded" : "Success",
   "label_email_not_registered" : "new email",
-  "label_product_search_failed" : "Unfortunatly we have no products corresponding to your search"
+  "label_product_search_failed" : "Unfortunatly we have no products corresponding to your search",
+  "label_shopping_cart" : "Shopping Cart",
+  "label_validate_shopping_cart" : "BUY",
+  "label_currency": "$",
+  "label_remove_cart_item" : "DELETE",
+  "label_empty_cart": "Your shopping cart is empty."
 
 }

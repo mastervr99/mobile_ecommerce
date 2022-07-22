@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,9 @@ class ShoppingCartScreen extends StatefulWidget {
 class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   @override
   Widget build(BuildContext context) {
+    var shoppingCart = context.watch<ShoppingCart>();
+    var shopppingCartItems = shoppingCart.getAllCartItems();
+
     return Consumer<ShoppingCart>(builder: (context, settings, child) {
       return Scaffold(
         appBar: appBarWidget(context),
@@ -21,7 +25,9 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(32),
-                  child: _CartList(),
+                  child: shopppingCartItems.isEmpty
+                      ? _emptyShoppingCart(context)
+                      : _CartList(),
                 ),
               ),
             ],
@@ -35,8 +41,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 class _CartList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var itemNameStyle = Theme.of(context).textTheme.headline6;
-
     var shoppingCart = context.watch<ShoppingCart>();
     var shopppingCartItems = shoppingCart.getAllCartItems();
 
@@ -51,9 +55,9 @@ class _CartList extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text("Shopping Cart",
+                    Text(translate("label_shopping_cart"),
                         style: Theme.of(context).textTheme.headline6),
-                    Text("€ 899.01",
+                    Text(translate("label_currency") + "899.01",
                         style: Theme.of(context).textTheme.headline6),
                   ],
                 ),
@@ -69,7 +73,7 @@ class _CartList extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      "BUY",
+                      translate("label_validate_shopping_cart"),
                       style: Theme.of(context).textTheme.button!.copyWith(
                             color: Colors.white,
                           ),
@@ -117,7 +121,9 @@ class _CartList extends StatelessWidget {
                               style: Theme.of(context).textTheme.headline6,
                             ),
                             Text(
-                              "Price : ${shopppingCartItems[index].getPrice()} €",
+                              "${shopppingCartItems[index].getPrice()}" +
+                                  translate("label_currency"),
+                              style: Theme.of(context).textTheme.headline5,
                             ),
                             SizedBox(height: 15),
                             MyCounter(),
@@ -205,7 +211,7 @@ class _MyCounterState extends State<MyCounter> {
           ),
         ),
         child: Text(
-          "DELETE",
+          translate("label_remove_cart_item"),
           style: Theme.of(context).textTheme.button!.copyWith(
                 color: Colors.white,
               ),
@@ -216,7 +222,7 @@ class _MyCounterState extends State<MyCounter> {
   }
 }
 
-Widget emptyShoppingCart(BuildContext context) {
+Widget _emptyShoppingCart(BuildContext context) {
   return Column(
     children: <Widget>[
       SizedBox(
@@ -243,7 +249,7 @@ Widget emptyShoppingCart(BuildContext context) {
       Container(
         width: double.infinity,
         child: Text(
-          "You haven't anything to cart",
+          translate("label_empty_cart"),
           style: TextStyle(
             color: Color(0xFF67778E),
             fontFamily: 'Roboto-Light.ttf',

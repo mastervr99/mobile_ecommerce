@@ -1,9 +1,14 @@
+import 'dart:convert';
+
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:core';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/GridTilesProducts.dart';
-import 'package:mobile_ecommerce/Application/usecases/product_search_usecase.dart';
+import 'package:mobile_ecommerce/Application/usecases/search_product_usecase.dart';
+import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/product_repository_sqflite_impl.dart';
 
 class SearchBarResultsScreen extends StatefulWidget {
@@ -105,7 +110,7 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
                               name: productsList[index]!.getTitle(),
                               imageUrl: productsList[index]!.getImageUrl(),
                               product: productsList[index]!,
-                              price: productsList[index]!.getPrice(),
+                              price: productsList[index]!.getPrice().toString(),
                             ));
                           }),
                         ),
@@ -159,6 +164,7 @@ findProducts(var value) async {
 //   }
 
 //   for (int i = 0; i < parsedList.length; i++) {
+//     var sku = i + 100;
 //     Product product = Product(parsedList[i][6]);
 //     product.setDescription(
 //         'lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at magna in velit egestas tristique sit  vel est.');
@@ -169,7 +175,8 @@ findProducts(var value) async {
 //     product.setColor(parsedList[i][4]);
 //     product.setUsage(parsedList[i][5]);
 //     product.setImageUrl(parsedList[i][7]);
-//     product.setPrice('0.01');
+//     product.setPrice(0.01);
+//     product.setSku(sku);
 
 //     await productRepository.registerProduct(product);
 //   }

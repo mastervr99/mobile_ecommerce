@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_ecommerce/Application/usecases/product_search_usecase.dart';
+import 'package:mobile_ecommerce/Application/usecases/search_product_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 import 'Repositories_test/product_repository_sqflite_ffi_impl.dart';
 import 'package:csv/csv.dart';
@@ -55,7 +55,7 @@ void main() {
 //     ),
 //   );
 // }
-  group('Product Search Usecase', () {
+  group('Search Product Usecase', () {
     test('search results can return multiple products', () async {
       var productRepository = ProductRepostitorySqfliteFfiImpl();
       await productRepository.init();
@@ -118,8 +118,8 @@ void main() {
         product.setColor(parsedList[i][4]);
         product.setUsage(parsedList[i][5]);
         product.setImageUrl(parsedList[i][7]);
-        product.setPrice('0.01');
-
+        product.setPrice(0.01);
+        product.setSku(100 + i);
         // expect(product.toMap(), 'setting 2 from csv');
 
         await productRepository.registerProduct(product);

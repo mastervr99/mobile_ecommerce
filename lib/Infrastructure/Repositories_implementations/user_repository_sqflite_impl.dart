@@ -10,7 +10,7 @@ class UserRepositorySqfliteImpl extends UserRepository {
   @override
   init() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, 'mobile_ecom.db');
+    final path = join(databasesPath, 'users.db');
     database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table

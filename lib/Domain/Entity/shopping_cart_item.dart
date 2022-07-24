@@ -1,4 +1,4 @@
-class Product {
+class ShoppingCartItem {
   String title;
   String description = '';
   String color = '';
@@ -9,9 +9,10 @@ class Product {
   String usage = '';
   String imageUrl = '';
   double price = 0;
+  int quantity = 0;
   int sku = 0;
 
-  Product(this.title);
+  ShoppingCartItem(this.title);
 
   setDescription(String description) {
     this.description = description;
@@ -47,6 +48,10 @@ class Product {
 
   setPrice(double price) {
     this.price = price;
+  }
+
+  setQuantity(int quantity) {
+    this.quantity = quantity;
   }
 
   setSku(int sku) {
@@ -93,23 +98,28 @@ class Product {
     return price;
   }
 
+  getQuantity() {
+    return quantity;
+  }
+
   getSku() {
     return sku;
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'title': title,
-      'description': description,
-      'color': color,
-      'gender': gender,
-      'category': category,
-      'subCategory': subCategory,
-      'type': type,
-      'usage': usage,
-      'imageUrl': imageUrl,
-      'price': price,
-      'sku': sku
-    };
-  }
+  // Map<String, dynamic> toMap() {
+  //   return {
+  //     'title': title,
+  //     'description': description,
+  //     'color': color,
+  //     'gender': gender,
+  //     'category': category,
+  //     'subCategory': subCategory,
+  //     'type': type,
+  //     'usage': usage,
+  //     'imageUrl': imageUrl,
+  //     'price': price,
+  //     'quantity': quantity,
+  //     'sku': sku
+  //   };
+  // }
 }

@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var localizationDelegate = LocalizedApp.of(context).delegate;
+
     return LocalizationProvider(
         state: LocalizationProvider.of(context).state,
         child: MultiProvider(

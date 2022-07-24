@@ -21,7 +21,8 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
         type TEXT,
         usage TEXT,
         imageUrl TEXT,
-        price TEXT
+        price FLOAT,
+        sku INT
       )
       ''');
   }
@@ -44,8 +45,6 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
       }
     }
 
-    // return searchedProductsInDb;
-
     List<Product> searchResults = [];
 
     searchedProductsInDb.forEach((productData) {
@@ -58,7 +57,8 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
       product.setColor(productData['color'] ?? '');
       product.setUsage(productData['usage'] ?? '');
       product.setImageUrl(productData['imageUrl'] ?? '');
-      product.setPrice(productData['price'] ?? '');
+      product.setPrice(productData['price'] ?? 0);
+      product.setSku(productData['sku'] ?? 100);
 
       searchResults.add(product);
     });
@@ -66,12 +66,12 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
     return searchResults;
   }
 
-  retrieveProductsForTest(String productTitle) async {
-    var searchedProductsInDb = [];
-    searchedProductsInDb = await database
-        .rawQuery("SELECT * FROM products WHERE title like '%$productTitle%'");
-    return searchedProductsInDb;
-  }
+  // retrieveProductsForTest(String productTitle) async {
+  //   var searchedProductsInDb = [];
+  //   searchedProductsInDb = await database
+  //       .rawQuery("SELECT * FROM products WHERE title like '%$productTitle%'");
+  //   return searchedProductsInDb;
+  // }
 
   @override
   close() {}

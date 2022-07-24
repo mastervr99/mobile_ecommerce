@@ -5,8 +5,11 @@ import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 // import 'package:mobile_ecommerce/utils/Urls.dart';
 import 'package:http/http.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
+import 'package:mobile_ecommerce/Application/usecases/add_product_to_shopping_cart_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/shopping_cart_item_repository_sqflite_impl.dart';
 import 'package:provider/provider.dart';
 
 // ProductDetails? productDetails;
@@ -77,13 +80,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ),
               elevation: 0,
             ),
-            onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => ShoppingCartScreen()),
-              // );
-              var shoppingCart = context.read<ShoppingCart>();
-              shoppingCart.addItem(widget.product);
+            onPressed: () async {
+              // var shoppingCart = context.read<ShoppingCart>();
+              // shoppingCart.addItem(widget.product);
+              ShoppingCartItemRepository shoppingCartItemRepository =
+                  ShoppingCartItemRepositorySqfliteImpl();
+
+              AddProductToShoppingCartUsecase addProductToShoppingCartUsecase =
+                  AddProductToShoppingCartUsecase(shoppingCartItemRepository);
+
+              await addProductToShoppingCartUsecase.addCartItem(widget.product);
             },
             child: Container(
               padding: EdgeInsets.only(left: 5, right: 5, top: 15, bottom: 15),

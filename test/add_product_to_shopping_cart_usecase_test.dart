@@ -1,0 +1,57 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile_ecommerce/Application/usecases/add_product_to_shopping_cart_usecase.dart';
+import 'package:mobile_ecommerce/Domain/Entity/product.dart';
+import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
+import 'Repositories_test/shopping_cart_item_repository_sqflite_ffi_impl.dart';
+
+void main() {
+  group('Shopping Cart Usecase : ', () {
+    test('add product to cart', () async {
+      Product product = Product("iphone X");
+      product.setSku(100);
+      Product product2 = Product("samsung 12");
+      product2.setSku(101);
+
+      ShoppingCartItemRepository shoppingCartItemRepository =
+          ShoppingCartItemRepositorySqfliteFfiImpl();
+
+      AddProductToShoppingCartUsecase addProductToShoppingCartUsecase =
+          AddProductToShoppingCartUsecase(shoppingCartItemRepository);
+
+      await addProductToShoppingCartUsecase.addCartItem(product);
+      await addProductToShoppingCartUsecase.addCartItem(product2);
+
+      ShoppingCart shoppingCart = ShoppingCart();
+      shoppingCart.setItemRepository(shoppingCartItemRepository);
+
+      var shoppingCartProducts = await shoppingCart.getAllCartItems();
+
+      expect(await shoppingCartProducts[0].getTitle(), 'iphone X');
+      expect(await shoppingCartProducts[1].getTitle(), 'samsung 12');
+    });
+
+    test('augment quantity of existing cart item', () async {
+      Product product = Product("lg X");
+
+      ShoppingCartItemRepository shoppingCartItemRepository =
+          ShoppingCartItemRepositorySqfliteFfiImpl();
+
+      AddProductToShoppingCartUsecase addProductToShoppingCartUsecase =
+          AddProductToShoppingCartUsecase(shoppingCartItemRepository);
+
+      await addProductToShoppingCartUsecase.addCartItem(product);
+
+      ShoppingCart shoppingCart = ShoppingCart();
+      shoppingCart.setItemRepository(shoppingCartItemRepository);
+
+      var shoppingCartProducts = await shoppingCart.getAllCartItems();
+
+      expect(await shoppingCartProducts[0].getQuantity(), 1);
+
+      await addProductToShoppingCartUsecase.addCartItem(product);
+
+      // expect(await shoppingCartProducts[0].getQuantity(), 2);
+    });
+  });
+}

@@ -58,7 +58,7 @@ class ShoppingCartItem {
     this.sku = sku;
   }
 
-  String getTitle() {
+  getTitle() {
     return title;
   }
 
@@ -106,20 +106,20 @@ class ShoppingCartItem {
     return sku;
   }
 
-  // Map<String, dynamic> toMap() {
-  //   return {
-  //     'title': title,
-  //     'description': description,
-  //     'color': color,
-  //     'gender': gender,
-  //     'category': category,
-  //     'subCategory': subCategory,
-  //     'type': type,
-  //     'usage': usage,
-  //     'imageUrl': imageUrl,
-  //     'price': price,
-  //     'quantity': quantity,
-  //     'sku': sku
-  //   };
-  // }
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'description': description,
+      'color': color,
+      'gender': gender,
+      'category': category,
+      'subCategory': subCategory,
+      'type': type,
+      'usage': usage,
+      'imageUrl': imageUrl,
+      'price': price,
+      'quantity': quantity,
+      'sku': sku
+    };
+  }
 }

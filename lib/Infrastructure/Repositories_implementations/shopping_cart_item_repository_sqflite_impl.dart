@@ -37,8 +37,20 @@ class ShoppingCartItemRepositorySqfliteImpl extends ShoppingCartItemRepository {
   @override
   registerItem(Product product) async {
     var productData = product.toMap();
-    productData['quantity'] = 1;
-    await database.insert('shoppingCartItems', productData);
+    ShoppingCartItem shoppingCartItem =
+        ShoppingCartItem(productData['title'] ?? '');
+    shoppingCartItem.setDescription(productData['description'] ?? '');
+    shoppingCartItem.setGender(productData['gender'] ?? '');
+    shoppingCartItem.setCategory(productData['category'] ?? '');
+    shoppingCartItem.setSubCategory(productData['subCategory'] ?? '');
+    shoppingCartItem.setType(productData['type'] ?? '');
+    shoppingCartItem.setColor(productData['color'] ?? '');
+    shoppingCartItem.setUsage(productData['usage'] ?? '');
+    shoppingCartItem.setImageUrl(productData['imageUrl'] ?? '');
+    shoppingCartItem.setPrice(productData['price'] ?? 0);
+    shoppingCartItem.setSku(productData['sku'] ?? 100);
+    shoppingCartItem.setQuantity(1);
+    await database.insert('shoppingCartItems', shoppingCartItem.toMap());
   }
 
   @override
@@ -60,25 +72,59 @@ class ShoppingCartItemRepositorySqfliteImpl extends ShoppingCartItemRepository {
 
     List<ShoppingCartItem> allCartItems = [];
 
-    await allCartItemsinDB.forEach((itemData) {
-      ShoppingCartItem shoppingCartItem =
-          ShoppingCartItem(itemData['title'] ?? '');
-      shoppingCartItem.setDescription(itemData['description'] ?? '');
-      shoppingCartItem.setGender(itemData['gender'] ?? '');
-      shoppingCartItem.setCategory(itemData['category'] ?? '');
-      shoppingCartItem.setSubCategory(itemData['subCategory'] ?? '');
-      shoppingCartItem.setType(itemData['type'] ?? '');
-      shoppingCartItem.setColor(itemData['color'] ?? '');
-      shoppingCartItem.setUsage(itemData['usage'] ?? '');
-      shoppingCartItem.setImageUrl(itemData['imageUrl'] ?? '');
-      shoppingCartItem.setPrice(itemData['price'] ?? '');
-      shoppingCartItem.setSku(itemData['sku'] ?? 100);
-      shoppingCartItem.setQuantity(itemData['quantity'] ?? '');
+    if (await allCartItemsinDB.isNotEmpty) {
+      await allCartItemsinDB.forEach((itemData) {
+        ShoppingCartItem shoppingCartItem =
+            ShoppingCartItem(itemData['title'] ?? '');
+        shoppingCartItem.setDescription(itemData['description'] ?? '');
+        shoppingCartItem.setGender(itemData['gender'] ?? '');
+        shoppingCartItem.setCategory(itemData['category'] ?? '');
+        shoppingCartItem.setSubCategory(itemData['subCategory'] ?? '');
+        shoppingCartItem.setType(itemData['type'] ?? '');
+        shoppingCartItem.setColor(itemData['color'] ?? '');
+        shoppingCartItem.setUsage(itemData['usage'] ?? '');
+        shoppingCartItem.setImageUrl(itemData['imageUrl'] ?? '');
+        shoppingCartItem.setPrice(itemData['price'] ?? 0);
+        shoppingCartItem.setSku(itemData['sku'] ?? 100);
+        shoppingCartItem.setQuantity(itemData['quantity'] ?? 1);
 
-      allCartItems.add(shoppingCartItem);
-    });
+        allCartItems.add(shoppingCartItem);
+      });
+    }
 
     return allCartItems;
+  }
+
+  @override
+  findItemWithSku(int sku) async {
+    var itemData = await database
+        .rawQuery('SELECT * FROM shoppingCartItems WHERE sku = ?', [sku]);
+
+    if (await itemData.isNotEmpty) {
+      ShoppingCartItem shoppingCartItem =
+          ShoppingCartItem(await itemData[0]['title'] ?? '');
+      shoppingCartItem.setDescription(await itemData[0]['description'] ?? '');
+      shoppingCartItem.setGender(await itemData[0]['gender'] ?? '');
+      shoppingCartItem.setCategory(await itemData[0]['category'] ?? '');
+      shoppingCartItem.setSubCategory(await itemData[0]['subCategory'] ?? '');
+      shoppingCartItem.setType(await itemData[0]['type'] ?? '');
+      shoppingCartItem.setColor(await itemData[0]['color'] ?? '');
+      shoppingCartItem.setUsage(await itemData[0]['usage'] ?? '');
+      shoppingCartItem.setImageUrl(await itemData[0]['imageUrl'] ?? '');
+      shoppingCartItem.setPrice(await itemData[0]['price'] ?? 0);
+      shoppingCartItem.setQuantity(await itemData[0]['quantity'] ?? 1);
+      shoppingCartItem.setSku(itemData[0]['sku'] ?? 100);
+
+      return shoppingCartItem;
+    } else {
+      return [];
+    }
+  }
+
+  @override
+  updateItemData(ShoppingCartItem item) async {
+    await database.update('shoppingCartItems', item.toMap(),
+        where: "sku = ?", whereArgs: [item.getSku()]);
   }
 
   @override

@@ -2,10 +2,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_up_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
+import 'package:sqflite/sqlite_api.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'Repositories_test/user_repository_sqflite_ffi_impl.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
 
 void main() {
+  closeSqfliteFfiDatabase() async {
+    var db = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
+    await db.close();
+  }
+
   group('Sign In Usecase : ', () {
     test('check if user email is registered', () async {
       User user = User();
@@ -25,6 +32,8 @@ void main() {
       await signUpUsecase.signUp(user);
 
       expect(await signInUsecase.checkIfEmailRegistered(user), true);
+
+      await closeSqfliteFfiDatabase();
     });
 
     test('registered user can sign in', () async {
@@ -56,6 +65,8 @@ void main() {
       var isUserConnected = await signInUsecase.checkUserStatus();
 
       expect(await isUserConnected, true);
+
+      await closeSqfliteFfiDatabase();
     });
   });
 }

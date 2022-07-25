@@ -2,59 +2,18 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_ecommerce/Application/usecases/search_product_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
+import 'package:sqflite/sqlite_api.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'Repositories_test/product_repository_sqflite_ffi_impl.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 void main() {
-  // createProductTable() async {
-//   var productRepository = ProductRepostitorySqfliteImpl();
-//   await productRepository.init();
+  closeSqfliteFfiDatabase() async {
+    var db = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
+    await db.close();
+  }
 
-//   WidgetsFlutterBinding.ensureInitialized();
-
-//   final _rawData =
-//       await rootBundle.loadString("assets/csv_database/fashion.csv");
-
-//   var encoded = utf8.encode(_rawData);
-//   var decoded = utf8.decode(encoded);
-//   var rowAsListValues =
-//       const CsvToListConverter(fieldDelimiter: ',', eol: '\n').convert(decoded);
-//   var parsedList = [];
-
-//   for (var items in rowAsListValues) {
-//     parsedList.add(items);
-//   }
-
-//   parsedList.removeAt(0);
-
-//   for (int i = 0; i < parsedList.length; i++) {
-//     parsedList[i].removeAt(0);
-//     parsedList[i].removeAt(7);
-//   }
-
-//   for (int i = 0; i < parsedList.length; i++) {
-//     Product product = Product(parsedList[i][6]);
-//     product.setDescription(
-//         'lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at magna in velit egestas tristique sit  vel est.');
-//     product.setGender(parsedList[i][0]);
-//     product.setCategory(parsedList[i][1]);
-//     product.setSubCategory(parsedList[i][2]);
-//     product.setType(parsedList[i][3]);
-//     product.setColor(parsedList[i][4]);
-//     product.setUsage(parsedList[i][5]);
-//     product.setImageUrl(parsedList[i][7]);
-
-//     await productRepository.registerProduct(product);
-//   }
-
-//   return AlertDialog(
-//     content: Text(
-//       translate('OK'),
-//       textAlign: TextAlign.center,
-//     ),
-//   );
-// }
   group('Search Product Usecase', () {
     test('search results can return multiple products', () async {
       var productRepository = ProductRepostitorySqfliteFfiImpl();
@@ -78,6 +37,8 @@ void main() {
           await searchProductUsecase.searchProductsByTitle("lumia");
 
       expect(await productsNotFound.isEmpty, true);
+
+      await closeSqfliteFfiDatabase();
     });
 
     test('create database from csv', () async {
@@ -161,6 +122,8 @@ void main() {
 
       expect(await searchedProduct[0].getImageUrl(),
           'http://assets.myntassets.com/v1/images/style/properties/f3964f76c78edd85f4512d98b26d52e9_images.jpg');
+
+      await closeSqfliteFfiDatabase();
     });
 
     test('Search with multiple words', () async {
@@ -181,6 +144,8 @@ void main() {
 
       expect(await searchResults[0].getTitle(), "samsung 10 red");
       expect(await searchResults[1].getTitle(), "samsung 12 blue");
+
+      await closeSqfliteFfiDatabase();
     });
 
     test('search return product with all searchs terms in title', () async {
@@ -222,6 +187,8 @@ void main() {
       Product productTest = foundCorrectProducts[0];
 
       expect(productTest.getTitle(), "lg 10 red");
+
+      await closeSqfliteFfiDatabase();
     });
   });
 }

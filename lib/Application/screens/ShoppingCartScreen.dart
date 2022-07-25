@@ -3,6 +3,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
+import 'package:mobile_ecommerce/Domain/Entity/shopping_cart_item.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/shopping_cart_item_repository_sqflite_impl.dart';
 import 'package:provider/provider.dart';
@@ -156,7 +157,9 @@ class _CartList extends StatelessWidget {
                                             .headline5,
                                       ),
                                       SizedBox(height: 15),
-                                      MyCounter(),
+                                      MyCounter(
+                                          shoppingCartItem:
+                                              snapshot.data[index]),
                                     ],
                                   ),
                                 ),
@@ -188,9 +191,8 @@ getAllCartItems(BuildContext context) async {
 }
 
 class MyCounter extends StatefulWidget {
-  const MyCounter({
-    Key? key,
-  }) : super(key: key);
+  ShoppingCartItem shoppingCartItem;
+  MyCounter({Key? key, required this.shoppingCartItem}) : super(key: key);
 
   @override
   _MyCounterState createState() => _MyCounterState();
@@ -225,7 +227,7 @@ class _MyCounterState extends State<MyCounter> {
           ),
           SizedBox(width: 15),
           Text(
-            "$_currentAmount",
+            "${widget.shoppingCartItem.getQuantity()}",
             style: Theme.of(context).textTheme.headline6,
           ),
           SizedBox(width: 15),

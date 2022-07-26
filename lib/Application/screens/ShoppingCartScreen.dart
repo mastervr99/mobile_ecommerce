@@ -53,6 +53,47 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   }
 }
 
+Widget _emptyShoppingCart(BuildContext context) {
+  return Column(
+    children: <Widget>[
+      SizedBox(
+        height: 70,
+        child: Container(
+          color: Color(0xFFFFFFFF),
+        ),
+      ),
+      Container(
+        width: double.infinity,
+        height: 250,
+        child: Image.asset(
+          "assets/images/empty_shopping_cart.png",
+          height: 250,
+          width: double.infinity,
+        ),
+      ),
+      SizedBox(
+        height: 40,
+        child: Container(
+          color: Color(0xFFFFFFFF),
+        ),
+      ),
+      Container(
+        width: double.infinity,
+        child: Text(
+          translate("label_empty_cart"),
+          style: TextStyle(
+            color: Color(0xFF67778E),
+            fontFamily: 'Roboto-Light.ttf',
+            fontSize: 20,
+            fontStyle: FontStyle.normal,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      )
+    ],
+  );
+}
+
 class _CartList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -199,7 +240,6 @@ class MyCounter extends StatefulWidget {
 }
 
 class _MyCounterState extends State<MyCounter> {
-  int _currentAmount = 0;
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -217,12 +257,15 @@ class _MyCounterState extends State<MyCounter> {
                 color: Colors.white,
               ),
             ),
-            onTap: () {
-              setState(() {
-                if (_currentAmount > 0) {
-                  _currentAmount -= 1;
-                }
-              });
+            onTap: () async {
+              if (widget.shoppingCartItem.getQuantity() > 0) {
+                var decrementedQuantity =
+                    widget.shoppingCartItem.getQuantity() - 1;
+
+                widget.shoppingCartItem.setQuantity(decrementedQuantity);
+                await updateCartItems(widget.shoppingCartItem);
+                setState(() {});
+              }
             },
           ),
           SizedBox(width: 15),
@@ -243,10 +286,13 @@ class _MyCounterState extends State<MyCounter> {
                 color: Colors.white,
               ),
             ),
-            onTap: () {
-              setState(() {
-                _currentAmount += 1;
-              });
+            onTap: () async {
+              var incrementedQuantity =
+                  widget.shoppingCartItem.getQuantity() + 1;
+
+              widget.shoppingCartItem.setQuantity(incrementedQuantity);
+              await updateCartItems(widget.shoppingCartItem);
+              setState(() {});
             },
           ),
         ],
@@ -271,43 +317,11 @@ class _MyCounterState extends State<MyCounter> {
   }
 }
 
-Widget _emptyShoppingCart(BuildContext context) {
-  return Column(
-    children: <Widget>[
-      SizedBox(
-        height: 70,
-        child: Container(
-          color: Color(0xFFFFFFFF),
-        ),
-      ),
-      Container(
-        width: double.infinity,
-        height: 250,
-        child: Image.asset(
-          "assets/images/empty_shopping_cart.png",
-          height: 250,
-          width: double.infinity,
-        ),
-      ),
-      SizedBox(
-        height: 40,
-        child: Container(
-          color: Color(0xFFFFFFFF),
-        ),
-      ),
-      Container(
-        width: double.infinity,
-        child: Text(
-          translate("label_empty_cart"),
-          style: TextStyle(
-            color: Color(0xFF67778E),
-            fontFamily: 'Roboto-Light.ttf',
-            fontSize: 20,
-            fontStyle: FontStyle.normal,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      )
-    ],
-  );
+updateCartItems(ShoppingCartItem shoppingCartItem) async {
+  ShoppingCartItemRepository shoppingCartItemRepository =
+      ShoppingCartItemRepositorySqfliteImpl();
+  await shoppingCartItemRepository.init();
+
+  await shoppingCartItemRepository.updateItemData(shoppingCartItem);
+  await shoppingCartItemRepository.close();
 }

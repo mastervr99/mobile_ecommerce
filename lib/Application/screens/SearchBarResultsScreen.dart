@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'dart:core';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/BottomNavBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/GridTilesProducts.dart';
 import 'package:mobile_ecommerce/Application/usecases/search_product_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
@@ -120,6 +121,7 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
             ),
         ],
       ),
+      bottomNavigationBar: BottomNavBarWidget(),
     );
   }
 }

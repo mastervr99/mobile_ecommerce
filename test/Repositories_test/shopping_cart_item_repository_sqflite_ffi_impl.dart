@@ -135,5 +135,11 @@ class ShoppingCartItemRepositorySqfliteFfiImpl
   }
 
   @override
+  deleteItemData(ShoppingCartItem item) async {
+    await database.delete('shoppingCartItems',
+        where: "sku = ?", whereArgs: [item.getSku()]);
+  }
+
+  @override
   close() {}
 }

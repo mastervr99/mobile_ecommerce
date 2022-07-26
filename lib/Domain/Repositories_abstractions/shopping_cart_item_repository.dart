@@ -14,5 +14,7 @@ abstract class ShoppingCartItemRepository {
 
   retrieveAllItems();
 
+  deleteItemData(ShoppingCartItem shoppingCartItem);
+
   close();
 }

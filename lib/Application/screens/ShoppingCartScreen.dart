@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
+import 'package:mobile_ecommerce/Application/usecases/update_shopping_cart_item_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart_item.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
@@ -320,8 +321,9 @@ class _MyCounterState extends State<MyCounter> {
 updateCartItems(ShoppingCartItem shoppingCartItem) async {
   ShoppingCartItemRepository shoppingCartItemRepository =
       ShoppingCartItemRepositorySqfliteImpl();
-  await shoppingCartItemRepository.init();
 
-  await shoppingCartItemRepository.updateItemData(shoppingCartItem);
-  await shoppingCartItemRepository.close();
+  UpdateShoppingCartItemUsecase updateShoppingCartItemUsecase =
+      UpdateShoppingCartItemUsecase(shoppingCartItemRepository);
+
+  updateShoppingCartItemUsecase.updateItem(shoppingCartItem);
 }

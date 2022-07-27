@@ -3,7 +3,9 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
 import 'package:mobile_ecommerce/Application/components/sign_up_component.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/connected_user_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
 import 'package:mobile_ecommerce/main.dart';
@@ -99,13 +101,16 @@ signInPasswordFailed(BuildContext context) {
   );
 }
 
+UserRepository userRepository = UserRepositorySqfliteImpl();
+ConnectedUserRepository connectedUserRepository =
+    ConnectedUserRepositorySqfliteImpl();
+SignInUsecase signInUsecase =
+    SignInUsecase(userRepository, connectedUserRepository);
+
 class _SignInComponentState extends State<SignInComponent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
-  UserRepository userRepository = UserRepositorySqfliteImpl();
-  late SignInUsecase signInUsecase = SignInUsecase(userRepository);
 
   var formFieldValidator = CustomFormFieldValidator();
   bool _passwordhidden = true;

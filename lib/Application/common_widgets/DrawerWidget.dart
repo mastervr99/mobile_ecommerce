@@ -1,21 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
-import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
-import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/main.dart';
 import 'package:mobile_ecommerce/Application/components/sign_in_component.dart';
 
 class DrawerWidget extends StatefulWidget {
   @override
   _DrawerWidgetState createState() => _DrawerWidgetState();
-}
-
-_checkUserStatus() async {
-  UserRepository userRepository = UserRepositorySqfliteImpl();
-  SignInUsecase signInUsecase = SignInUsecase(userRepository);
-
-  return await signInUsecase.checkUserStatus();
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> {

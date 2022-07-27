@@ -135,8 +135,6 @@ class _CartList extends StatelessWidget {
                             children: <Widget>[
                               Text(translate("label_shopping_cart"),
                                   style: Theme.of(context).textTheme.headline6),
-                              // Text(translate("label_currency") + "899.01",
-                              //     style: Theme.of(context).textTheme.headline6),
                               _showCartTotalprice(context)
                             ],
                           ),
@@ -343,7 +341,14 @@ class _MyCounterState extends State<MyCounter> {
 
                 widget.shoppingCartItem.setQuantity(decrementedQuantity);
                 await updateCartItem(widget.shoppingCartItem);
-                setState(() {});
+                // setState(() {});
+
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            ShoppingCartScreen()));
               }
             },
           ),
@@ -371,7 +376,13 @@ class _MyCounterState extends State<MyCounter> {
 
               widget.shoppingCartItem.setQuantity(incrementedQuantity);
               await updateCartItem(widget.shoppingCartItem);
-              setState(() {});
+              // setState(() {});
+
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => ShoppingCartScreen()));
             },
           ),
         ],

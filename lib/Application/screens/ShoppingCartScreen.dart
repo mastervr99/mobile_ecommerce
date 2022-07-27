@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
+import 'package:mobile_ecommerce/Application/usecases/remove_shopping_cart_item_usecase.dart';
 import 'package:mobile_ecommerce/Application/usecases/update_shopping_cart_item_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart_item.dart';
@@ -202,6 +203,35 @@ class _CartList extends StatelessWidget {
                                       MyCounter(
                                           shoppingCartItem:
                                               snapshot.data[index]),
+                                      SizedBox(height: 15),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Color(0xFFAC252B),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          translate("label_remove_cart_item"),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .button!
+                                              .copyWith(
+                                                color: Colors.white,
+                                              ),
+                                        ),
+                                        onPressed: () async {
+                                          await removeCartItem(
+                                              snapshot.data[index]);
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (BuildContext
+                                                          context) =>
+                                                      ShoppingCartScreen()));
+                                        },
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -264,7 +294,7 @@ class _MyCounterState extends State<MyCounter> {
                     widget.shoppingCartItem.getQuantity() - 1;
 
                 widget.shoppingCartItem.setQuantity(decrementedQuantity);
-                await updateCartItems(widget.shoppingCartItem);
+                await updateCartItem(widget.shoppingCartItem);
                 setState(() {});
               }
             },
@@ -292,33 +322,40 @@ class _MyCounterState extends State<MyCounter> {
                   widget.shoppingCartItem.getQuantity() + 1;
 
               widget.shoppingCartItem.setQuantity(incrementedQuantity);
-              await updateCartItems(widget.shoppingCartItem);
+              await updateCartItem(widget.shoppingCartItem);
               setState(() {});
             },
           ),
         ],
       ),
       SizedBox(height: 15),
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: Color(0xFFAC252B),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-        ),
-        child: Text(
-          translate("label_remove_cart_item"),
-          style: Theme.of(context).textTheme.button!.copyWith(
-                color: Colors.white,
-              ),
-        ),
-        onPressed: () {},
-      ),
+      // ElevatedButton(
+      //   style: ElevatedButton.styleFrom(
+      //     primary: Color(0xFFAC252B),
+      //     shape: RoundedRectangleBorder(
+      //       borderRadius: BorderRadius.circular(15.0),
+      //     ),
+      //   ),
+      //   child: Text(
+      //     translate("label_remove_cart_item"),
+      //     style: Theme.of(context).textTheme.button!.copyWith(
+      //           color: Colors.white,
+      //         ),
+      //   ),
+      //   onPressed: () async {
+      //     await removeCartItem(widget.shoppingCartItem);
+
+      //     Navigator.pushReplacement(
+      //         context,
+      //         MaterialPageRoute(
+      //             builder: (BuildContext context) => ShoppingCartScreen()));
+      //   },
+      // ),
     ]);
   }
 }
 
-updateCartItems(ShoppingCartItem shoppingCartItem) async {
+updateCartItem(ShoppingCartItem shoppingCartItem) async {
   ShoppingCartItemRepository shoppingCartItemRepository =
       ShoppingCartItemRepositorySqfliteImpl();
 
@@ -326,4 +363,14 @@ updateCartItems(ShoppingCartItem shoppingCartItem) async {
       UpdateShoppingCartItemUsecase(shoppingCartItemRepository);
 
   updateShoppingCartItemUsecase.updateItem(shoppingCartItem);
+}
+
+removeCartItem(ShoppingCartItem shoppingCartItem) async {
+  ShoppingCartItemRepository shoppingCartItemRepository =
+      ShoppingCartItemRepositorySqfliteImpl();
+
+  RemoveShoppingCartItemUsecase removeShoppingCartItemUsecase =
+      RemoveShoppingCartItemUsecase(shoppingCartItemRepository);
+
+  removeShoppingCartItemUsecase.removeItem(shoppingCartItem);
 }

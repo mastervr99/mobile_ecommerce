@@ -128,6 +128,12 @@ class ShoppingCartItemRepositorySqfliteImpl extends ShoppingCartItemRepository {
   }
 
   @override
+  deleteItemData(ShoppingCartItem item) async {
+    await database.delete('shoppingCartItems',
+        where: "sku = ?", whereArgs: [item.getSku()]);
+  }
+
+  @override
   close() async {
     await database.close();
   }

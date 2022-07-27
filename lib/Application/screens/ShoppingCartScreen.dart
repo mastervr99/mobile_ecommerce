@@ -26,6 +26,18 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
           builder: (context, AsyncSnapshot snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
+                return Container(
+                  decoration: BoxDecoration(color: Colors.white),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                            padding: const EdgeInsets.all(32),
+                            child: _emptyShoppingCart(context)),
+                      ),
+                    ],
+                  ),
+                );
               case ConnectionState.waiting:
                 return CircularProgress();
               default:
@@ -83,7 +95,7 @@ Widget _emptyShoppingCart(BuildContext context) {
         width: double.infinity,
         child: Text(
           translate("label_empty_cart"),
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFF67778E),
             fontFamily: 'Roboto-Light.ttf',
             fontSize: 20,
@@ -123,8 +135,9 @@ class _CartList extends StatelessWidget {
                             children: <Widget>[
                               Text(translate("label_shopping_cart"),
                                   style: Theme.of(context).textTheme.headline6),
-                              Text(translate("label_currency") + "899.01",
-                                  style: Theme.of(context).textTheme.headline6),
+                              // Text(translate("label_currency") + "899.01",
+                              //     style: Theme.of(context).textTheme.headline6),
+                              _showCartTotalprice(context)
                             ],
                           ),
                         ),
@@ -224,7 +237,9 @@ class _CartList extends StatelessWidget {
                                         onPressed: () async {
                                           await removeCartItem(
                                               snapshot.data[index]);
-                                          Navigator.pushReplacement(
+                                          Navigator.pop(context);
+                                          // CircularProgress();
+                                          Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (BuildContext
@@ -260,6 +275,39 @@ getAllCartItems(BuildContext context) async {
 
   var shopppingCartItems = await shoppingCart.getAllCartItems();
   return await shopppingCartItems;
+}
+
+Widget _showCartTotalprice(BuildContext context) {
+  return FutureBuilder(
+    future: getCartTotalPrice(context),
+    builder: (context, AsyncSnapshot snapshot) {
+      switch (snapshot.connectionState) {
+        case ConnectionState.none:
+          return Text(translate("label_currency") + "0.00",
+              style: Theme.of(context).textTheme.headline6);
+        case ConnectionState.waiting:
+          return CircularProgress();
+        default:
+          if (snapshot.hasError)
+            return Text('Error: ${snapshot.error}');
+          else
+            return Text(translate("label_currency") + snapshot.data.toString(),
+                style: Theme.of(context).textTheme.headline6);
+      }
+    },
+  );
+}
+
+getCartTotalPrice(BuildContext context) async {
+  ShoppingCartItemRepository shoppingCartItemRepository =
+      ShoppingCartItemRepositorySqfliteImpl();
+
+  var shoppingCart = context.watch<ShoppingCart>();
+
+  await shoppingCart.setItemRepository(shoppingCartItemRepository);
+
+  var cartTotalPrice = await shoppingCart.getCartTotalPrice();
+  return await cartTotalPrice;
 }
 
 class MyCounter extends StatefulWidget {

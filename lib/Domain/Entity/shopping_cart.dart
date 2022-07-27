@@ -15,4 +15,18 @@ class ShoppingCart extends ChangeNotifier {
     await shoppingCartItemRepository.close();
     return await _cartItems;
   }
+
+  getCartTotalPrice() async {
+    var cartTotalPrice = 0.00;
+    var cartItems = await getAllCartItems();
+
+    for (var i = 0; i < await cartItems.length; i++) {
+      var itemTotalPrice =
+          await cartItems[i].getQuantity() * await cartItems[i].getPrice();
+
+      cartTotalPrice += await itemTotalPrice;
+    }
+
+    return cartTotalPrice;
+  }
 }

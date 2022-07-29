@@ -27,6 +27,9 @@ class ShoppingCart extends ChangeNotifier {
       cartTotalPrice += await itemTotalPrice;
     }
 
-    return cartTotalPrice;
+    //Limit decimals to 2
+    cartTotalPrice = double.parse((await cartTotalPrice).toStringAsFixed(2));
+
+    return await cartTotalPrice;
   }
 }

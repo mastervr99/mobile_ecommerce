@@ -3,6 +3,7 @@ import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_
 
 class ShoppingCart extends ChangeNotifier {
   late ShoppingCartItemRepository shoppingCartItemRepository;
+  // double cartTotalPrice = 0.00;
 
   setItemRepository(ShoppingCartItemRepository shoppingCartItemRepository) {
     this.shoppingCartItemRepository = shoppingCartItemRepository;
@@ -15,6 +16,24 @@ class ShoppingCart extends ChangeNotifier {
     await shoppingCartItemRepository.close();
     return await _cartItems;
   }
+
+  // updateCartTotalPrice() async {
+  //   var localCartTotalPrice = 0.00;
+  //   var cartItems = await getAllCartItems();
+
+  //   for (var i = 0; i < await cartItems.length; i++) {
+  //     var itemTotalPrice =
+  //         await cartItems[i].getQuantity() * await cartItems[i].getPrice();
+
+  //     localCartTotalPrice += await itemTotalPrice;
+  //   }
+
+  //   //Limit decimals numbers to 2
+  //   cartTotalPrice =
+  //       double.parse((await localCartTotalPrice).toStringAsFixed(2));
+
+  //   notifyListeners();
+  // }
 
   getCartTotalPrice() async {
     var cartTotalPrice = 0.00;
@@ -31,5 +50,18 @@ class ShoppingCart extends ChangeNotifier {
     cartTotalPrice = double.parse((await cartTotalPrice).toStringAsFixed(2));
 
     return await cartTotalPrice;
+  }
+
+  getItemsTotalQuantity() async {
+    var itemsTotalQuantity = 0;
+    var cartItems = await getAllCartItems();
+
+    for (var i = 0; i < await cartItems.length; i++) {
+      int itemQuantity = await cartItems[i].getQuantity();
+
+      itemsTotalQuantity += await itemQuantity;
+    }
+
+    return await itemsTotalQuantity;
   }
 }

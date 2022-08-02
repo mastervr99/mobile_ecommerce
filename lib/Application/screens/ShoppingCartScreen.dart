@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
+import 'package:mobile_ecommerce/Application/screens/OrderCheckoutScreen.dart';
 import 'package:mobile_ecommerce/Application/usecases/remove_shopping_cart_item_usecase.dart';
 import 'package:mobile_ecommerce/Application/usecases/update_shopping_cart_item_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
@@ -158,7 +159,13 @@ class _CartList extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            OrderCheckoutScreen()));
+                              },
                             ),
                           ),
                         )

@@ -42,5 +42,45 @@ void main() {
 
       closeSqfliteFfiDatabase();
     });
+
+    test('Get Shopping Cart Total Items quantity', () async {
+      ShoppingCartItemRepository shoppingCartItemRepository =
+          ShoppingCartItemRepositorySqfliteFfiImpl();
+
+      Product product = Product("lg X");
+      product.setSku(100);
+      product.setPrice(44);
+
+      Product product2 = Product("samsung X");
+      product2.setSku(101);
+      product2.setPrice(55);
+
+      AddProductToShoppingCartUsecase addProductToShoppingCartUsecase =
+          AddProductToShoppingCartUsecase(shoppingCartItemRepository);
+
+      await addProductToShoppingCartUsecase.addCartItem(product);
+      await addProductToShoppingCartUsecase.addCartItem(product2);
+
+      var shoppingCart = ShoppingCart();
+
+      await shoppingCart.setItemRepository(shoppingCartItemRepository);
+
+      var cartItemsTotalQuantity = await shoppingCart.getItemsTotalQuantity();
+
+      expect(await cartItemsTotalQuantity, 2);
+
+      Product product3 = Product("samsung 2");
+      product2.setSku(102);
+      product2.setPrice(55);
+
+      await addProductToShoppingCartUsecase.addCartItem(product3);
+
+      var newCartItemsTotalQuantity =
+          await shoppingCart.getItemsTotalQuantity();
+
+      expect(await newCartItemsTotalQuantity, 3);
+
+      closeSqfliteFfiDatabase();
+    });
   });
 }

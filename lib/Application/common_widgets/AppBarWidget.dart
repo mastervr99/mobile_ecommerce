@@ -44,14 +44,8 @@ PreferredSizeWidget appBarWidget(context) {
 }
 
 Widget displayAccountOrConnectionIcon(BuildContext context) {
-  UserRepository userRepository = UserRepositorySqfliteImpl();
-  ConnectedUserRepository connectedUserRepository =
-      ConnectedUserRepositorySqfliteImpl();
-  SignInUsecase signInUsecase =
-      SignInUsecase(userRepository, connectedUserRepository);
-
   return FutureBuilder(
-    future: signInUsecase.checkIfUserConnected(),
+    future: checkIfUserConnected(),
     builder: (context, AsyncSnapshot snapshot) {
       switch (snapshot.connectionState) {
         case ConnectionState.none:
@@ -77,4 +71,14 @@ Widget displayAccountOrConnectionIcon(BuildContext context) {
       }
     },
   );
+}
+
+checkIfUserConnected() async {
+  UserRepository userRepository = UserRepositorySqfliteImpl();
+  ConnectedUserRepository connectedUserRepository =
+      ConnectedUserRepositorySqfliteImpl();
+  SignInUsecase signInUsecase =
+      SignInUsecase(userRepository, connectedUserRepository);
+
+  return await signInUsecase.checkIfUserConnected();
 }

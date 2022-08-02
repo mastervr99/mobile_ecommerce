@@ -1,15 +1,15 @@
 import 'dart:convert';
-
 import 'package:csv/csv.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mobile_ecommerce/Domain/Entity/product.dart';
+
 import 'dart:core';
+import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/BottomNavBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/GridTilesProducts.dart';
 import 'package:mobile_ecommerce/Application/usecases/search_product_usecase.dart';
-import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/product_repository_sqflite_impl.dart';
 
 class SearchBarResultsScreen extends StatefulWidget {

@@ -331,6 +331,7 @@ class DeliveryAdressSelection extends StatefulWidget {
 }
 
 class _DeliveryAdressSelectionState extends State<DeliveryAdressSelection> {
+  bool? value = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -423,14 +424,14 @@ class _DeliveryAdressSelectionState extends State<DeliveryAdressSelection> {
                                       ),
                                     ),
                                     // _verticalD(),
-                                    // Checkbox(
-                                    //   value: checkboxValueA,
-                                    //   onChanged: (bool value) {
-                                    //     setState(() {
-                                    //       checkboxValueA = value;
-                                    //     });
-                                    //   },
-                                    // ),
+                                    Checkbox(
+                                      value: this.value,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          this.value = value;
+                                        });
+                                      },
+                                    ),
                                   ],
                                 ),
                               )
@@ -511,14 +512,14 @@ class _DeliveryAdressSelectionState extends State<DeliveryAdressSelection> {
                                       ),
                                     ),
                                     // _verticalD(),
-                                    // Checkbox(
-                                    //   value: checkboxValueB,
-                                    //   onChanged: (bool value) {
-                                    //     setState(() {
-                                    //       checkboxValueB = value;
-                                    //     });
-                                    //   },
-                                    // ),
+                                    Checkbox(
+                                      value: this.value,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          this.value = value;
+                                        });
+                                      },
+                                    ),
                                   ],
                                 ),
                               )
@@ -599,14 +600,14 @@ class _DeliveryAdressSelectionState extends State<DeliveryAdressSelection> {
                                       ),
                                     ),
                                     // _verticalD(),
-                                    // Checkbox(
-                                    //   value: checkboxValueC,
-                                    //   onChanged: (bool value) {
-                                    //     setState(() {
-                                    //       checkboxValueC = value;
-                                    //     });
-                                    //   },
-                                    // ),
+                                    Checkbox(
+                                      value: this.value,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          this.value = value;
+                                        });
+                                      },
+                                    ),
                                   ],
                                 ),
                               )

@@ -12,252 +12,260 @@ class OrderCheckoutScreen extends StatefulWidget {
 }
 
 class _OrderCheckoutScreenState extends State<OrderCheckoutScreen> {
+  int? deliveryMethodRadioButtonChoiceValue = -1;
+  int? paymentMethodRadioButtonChoiceValue = -1;
   @override
   Widget build(BuildContext context) {
-    return Consumer<ShoppingCart>(builder: (context, settings, child) {
-      return FutureBuilder(
-        future: getShoppingCartTotalQuantity(context),
-        builder: (context, AsyncSnapshot snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return CircularProgress();
-            default:
-              if (snapshot.hasError)
-                return Text('Error: ${snapshot.error}');
-              else
-                // return createDetailView(context, snapshot);
-                return Scaffold(
-                  backgroundColor: Colors.white,
-                  // appBar: AppBar(
-                  //   backgroundColor: Colors.transparent,
-                  //   elevation: 0.0,
-                  //   iconTheme: IconThemeData(color: Colors.grey),
-                  //   actions: <Widget>[
-                  //     // IconButton(
-                  //     //   icon: Image.asset('assets/icons/denied_wallet.png'),
-                  //     //   onPressed: () => Navigator.of(context)
-                  //     //       .push(MaterialPageRoute(builder: (_) => UnpaidPage())),
-                  //     // )
-                  //   ],
-                  //   title: Text(
-                  //     'Checkout',
-                  //     style: TextStyle(
-                  //         color: Colors.grey, fontWeight: FontWeight.w500, fontSize: 18.0),
-                  //   ),
-                  // ),
-                  appBar: appBarWidget(context),
-                  body: LayoutBuilder(
-                    builder: (_, constraints) => SingleChildScrollView(
-                      physics: ClampingScrollPhysics(),
-                      child: ConstrainedBox(
-                        constraints:
-                            BoxConstraints(minHeight: constraints.maxHeight),
+    // return Consumer<ShoppingCart>(builder: (context, settings, child) {
+    //   return FutureBuilder(
+    //     future: getShoppingCartTotalQuantity(context),
+    //     builder: (context, AsyncSnapshot snapshot) {
+    //       switch (snapshot.connectionState) {
+    //         case ConnectionState.none:
+    //         case ConnectionState.waiting:
+    //           return CircularProgress();
+    //         default:
+    //           if (snapshot.hasError)
+    //             return Text('Error: ${snapshot.error}');
+    //           else
+    // return createDetailView(context, snapshot);
+    return Scaffold(
+      backgroundColor: Colors.white,
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0.0,
+      //   iconTheme: IconThemeData(color: Colors.grey),
+      //   actions: <Widget>[
+      //     // IconButton(
+      //     //   icon: Image.asset('assets/icons/denied_wallet.png'),
+      //     //   onPressed: () => Navigator.of(context)
+      //     //       .push(MaterialPageRoute(builder: (_) => UnpaidPage())),
+      //     // )
+      //   ],
+      //   title: Text(
+      //     'Checkout',
+      //     style: TextStyle(
+      //         color: Colors.grey, fontWeight: FontWeight.w500, fontSize: 18.0),
+      //   ),
+      // ),
+      appBar: appBarWidget(context),
+      body: LayoutBuilder(
+        builder: (_, constraints) => SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                // SizedBox(
+                //   height: 300,
+                //   child: Scrollbar(
+                //     child: ListView.builder(
+                //       itemBuilder: (_, index) => ShopItemList(
+                //         products[index],
+                //         onRemove: () {
+                //           setState(() {
+                //             products.remove(products[index]);
+                //           });
+                //         },
+                //       ),
+                //       itemCount: products.length,
+                //     ),
+                //   ),
+                // ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'Select Delivery method',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Container(
+                  // height: 264.0,
+                  margin: EdgeInsets.all(10.0),
+                  child: Card(
+                    child: Container(
+                      child: Container(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            // SizedBox(
-                            //   height: 300,
-                            //   child: Scrollbar(
-                            //     child: ListView.builder(
-                            //       itemBuilder: (_, index) => ShopItemList(
-                            //         products[index],
-                            //         onRemove: () {
-                            //           setState(() {
-                            //             products.remove(products[index]);
-                            //           });
-                            //         },
-                            //       ),
-                            //       itemCount: products.length,
-                            //     ),
-                            //   ),
-                            // ),
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Text(
-                                'Select Delivery method',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold),
+                            // _verticalD(),
+                            Container(
+                              padding: EdgeInsets.only(left: 10.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Container(
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text("Home delivery",
+                                            maxLines: 10,
+                                            style: TextStyle(
+                                                fontSize: 15.0,
+                                                color: Colors.black)),
+                                        Radio<int>(
+                                            value: 1,
+                                            groupValue:
+                                                deliveryMethodRadioButtonChoiceValue,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                deliveryMethodRadioButtonChoiceValue =
+                                                    value;
+                                              });
+                                            }),
+                                        DeliveryAdressSelection(),
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
                             Container(
-                              // height: 264.0,
-                              margin: EdgeInsets.all(10.0),
-                              child: Card(
-                                child: Container(
-                                  child: Container(
-                                      child: Column(
-                                    children: <Widget>[
-                                      // _verticalD(),
-                                      Container(
-                                        padding: EdgeInsets.only(left: 10.0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            Text("Home delivery",
-                                                maxLines: 10,
-                                                style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    color: Colors.black)),
-                                            Radio<int>(
-                                                value: 0,
-                                                groupValue: 0,
-                                                onChanged: null),
-                                          ],
-                                        ),
-                                      ),
-                                      DeliveryAdressSelection()
-                                      // Divider(),
-                                    ],
-                                  )),
-                                ),
+                              padding: EdgeInsets.only(left: 10.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text("Store Pick Up",
+                                      maxLines: 10,
+                                      style: TextStyle(
+                                          fontSize: 15.0, color: Colors.black)),
+                                  Radio<int>(
+                                      value: 1,
+                                      groupValue:
+                                          deliveryMethodRadioButtonChoiceValue,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          deliveryMethodRadioButtonChoiceValue =
+                                              value;
+                                        });
+                                      }),
+                                ],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Text(
-                                'Select Payment method',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            // _verticalDivider(),
-                            Container(
-                              height: 264.0,
-                              margin: EdgeInsets.all(10.0),
-                              child: Card(
-                                child: Container(
-                                  child: Container(
-                                      child: Column(
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.only(left: 10.0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            Text("Wallet / UPI",
-                                                maxLines: 10,
-                                                style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    color: Colors.black)),
-                                            Radio<int>(
-                                                value: 0,
-                                                groupValue: 0,
-                                                onChanged: null),
-                                          ],
-                                        ),
-                                      ),
-                                      Divider(),
-                                      // _verticalD(),
-                                      Container(
-                                          padding: EdgeInsets.only(left: 10.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Text("Net Banking",
-                                                  maxLines: 10,
-                                                  style: TextStyle(
-                                                      fontSize: 15.0,
-                                                      color: Colors.black)),
-                                              Radio<int>(
-                                                  value: 0,
-                                                  groupValue: 0,
-                                                  onChanged: null),
-                                            ],
-                                          )),
-                                      Divider(),
-                                      // _verticalD(),
-                                      Container(
-                                          padding: EdgeInsets.only(left: 10.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Text("Credit / Debit / ATM Card",
-                                                  maxLines: 10,
-                                                  style: TextStyle(
-                                                      fontSize: 15.0,
-                                                      color: Colors.black)),
-                                              Radio<int>(
-                                                  value: 0,
-                                                  groupValue: 0,
-                                                  onChanged: null),
-                                            ],
-                                          )),
-                                      Divider(),
-                                      // _verticalD(),
-                                      Container(
-                                          padding: EdgeInsets.only(left: 10.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Text("Cash on Delivery",
-                                                  maxLines: 10,
-                                                  style: TextStyle(
-                                                      fontSize: 15.0,
-                                                      color: Colors.black)),
-                                              Radio<int>(
-                                                  value: 0,
-                                                  groupValue: 0,
-                                                  onChanged: null),
-                                            ],
-                                          )),
-                                      Divider(),
-                                    ],
-                                  )),
-                                ),
-                              ),
-                            ),
-                            // SizedBox(
-                            //   height: 250,
-                            //   child: Swiper(
-                            //     itemCount: 2,
-                            //     itemBuilder: (_, index) {
-                            //       return CreditCard();
-                            //     },
-                            //     scale: 0.8,
-                            //     controller: swiperController,
-                            //     viewportFraction: 0.6,
-                            //     loop: false,
-                            //     fade: 0.7,
-                            //   ),
-                            // ),
-                            // SizedBox(height: 24),
-                            // Center(
-                            //     child: Padding(
-                            //   padding: EdgeInsets.only(
-                            //       bottom:
-                            //           MediaQuery.of(context).padding.bottom == 0
-                            //               ? 20
-                            //               : MediaQuery.of(context)
-                            //                   .padding
-                            //                   .bottom),
-                            //   child: ElevatedButton,
-                            // ))
+                            // Divider(),
                           ],
                         ),
                       ),
                     ),
                   ),
-                  bottomNavigationBar: OrderCheckoutScreenBottomBar(),
-                );
-          }
-        },
-      );
-    });
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'Select Payment method',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                // _verticalDivider(),
+                Container(
+                  height: 264.0,
+                  margin: EdgeInsets.all(10.0),
+                  child: Card(
+                    child: Container(
+                      child: Container(
+                          child: Column(
+                        children: <Widget>[
+                          // _verticalD(),
+                          Container(
+                              padding: EdgeInsets.only(left: 10.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text("Credit / Debit / ATM Card",
+                                      maxLines: 10,
+                                      style: TextStyle(
+                                          fontSize: 15.0, color: Colors.black)),
+                                  Radio<int>(
+                                      value: 1,
+                                      groupValue:
+                                          paymentMethodRadioButtonChoiceValue,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          paymentMethodRadioButtonChoiceValue =
+                                              value;
+                                        });
+                                      }),
+                                ],
+                              )),
+                          Divider(),
+                          // _verticalD(),
+                          Container(
+                              padding: EdgeInsets.only(left: 10.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text("Cash on Delivery",
+                                      maxLines: 10,
+                                      style: TextStyle(
+                                          fontSize: 15.0, color: Colors.black)),
+                                  Radio<int>(
+                                      value: 2,
+                                      groupValue:
+                                          paymentMethodRadioButtonChoiceValue,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          paymentMethodRadioButtonChoiceValue =
+                                              value;
+                                        });
+                                      }),
+                                ],
+                              )),
+                          Divider(),
+                        ],
+                      )),
+                    ),
+                  ),
+                ),
+                // SizedBox(
+                //   height: 250,
+                //   child: Swiper(
+                //     itemCount: 2,
+                //     itemBuilder: (_, index) {
+                //       return CreditCard();
+                //     },
+                //     scale: 0.8,
+                //     controller: swiperController,
+                //     viewportFraction: 0.6,
+                //     loop: false,
+                //     fade: 0.7,
+                //   ),
+                // ),
+                // SizedBox(height: 24),
+                // Center(
+                //     child: Padding(
+                //   padding: EdgeInsets.only(
+                //       bottom:
+                //           MediaQuery.of(context).padding.bottom == 0
+                //               ? 20
+                //               : MediaQuery.of(context)
+                //                   .padding
+                //                   .bottom),
+                //   child: ElevatedButton,
+                // ))
+              ],
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: OrderCheckoutScreenBottomBar(),
+    );
+    //       }
+    //     },
+    //   );
+    // });
   }
 }
 

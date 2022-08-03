@@ -38,7 +38,7 @@ class SignInUsecase {
     await userRepository.init();
     await connectedUserRepository.init();
     User registeredUser = await userRepository.retrieveUser(userToConnect);
-    await connectedUserRepository.registerUser(registeredUser);
+    await connectedUserRepository.registerUser(await registeredUser);
 
     await userRepository.close();
     await connectedUserRepository.close();

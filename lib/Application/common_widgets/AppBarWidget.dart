@@ -80,5 +80,7 @@ checkIfUserConnected() async {
   SignInUsecase signInUsecase =
       SignInUsecase(userRepository, connectedUserRepository);
 
-  return await signInUsecase.checkIfUserConnected();
+  var isUserConnected = await signInUsecase.checkIfUserConnected();
+
+  return await isUserConnected;
 }

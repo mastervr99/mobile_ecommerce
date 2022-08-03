@@ -46,8 +46,10 @@ class SignInUsecase {
 
   checkIfUserConnected() async {
     await connectedUserRepository.init();
-    var connectedUser = await connectedUserRepository.retrieveConnectedUser();
-    await connectedUserRepository.close();
+    var connectedUser =
+        await connectedUserRepository.retrieveConnectedUser().then(() async {
+      await connectedUserRepository.close();
+    });
 
     if (await connectedUser.runtimeType == User) {
       return true;

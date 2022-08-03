@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
@@ -87,72 +88,73 @@ class _OrderCheckoutScreenState extends State<OrderCheckoutScreen> {
                   // height: 264.0,
                   margin: EdgeInsets.all(10.0),
                   child: Card(
-                    child: Container(
-                      child: Container(
-                        child: Column(
-                          children: <Widget>[
-                            // _verticalD(),
-                            Container(
-                              padding: EdgeInsets.only(left: 10.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Container(
-                                    child: Column(
-                                      children: <Widget>[
+                    // child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        // _verticalD(),
+                        Container(
+                          padding: EdgeInsets.only(left: 10.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      children: [
                                         Text("Home delivery",
                                             maxLines: 10,
                                             style: TextStyle(
                                                 fontSize: 15.0,
                                                 color: Colors.black)),
                                         Radio<int>(
-                                            value: 1,
-                                            groupValue:
-                                                deliveryMethodRadioButtonChoiceValue,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                deliveryMethodRadioButtonChoiceValue =
-                                                    value;
-                                              });
-                                            }),
-                                        DeliveryAdressSelection(),
+                                          value: 1,
+                                          groupValue:
+                                              deliveryMethodRadioButtonChoiceValue,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              deliveryMethodRadioButtonChoiceValue =
+                                                  value;
+                                            });
+                                          },
+                                        ),
                                       ],
                                     ),
-                                  )
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(left: 10.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text("Store Pick Up",
-                                      maxLines: 10,
-                                      style: TextStyle(
-                                          fontSize: 15.0, color: Colors.black)),
-                                  Radio<int>(
-                                      value: 1,
-                                      groupValue:
-                                          deliveryMethodRadioButtonChoiceValue,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          deliveryMethodRadioButtonChoiceValue =
-                                              value;
-                                        });
-                                      }),
-                                ],
-                              ),
-                            ),
-                            // Divider(),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
+                        DeliveryAdressSelection(),
+                        Container(
+                          padding: EdgeInsets.only(left: 10.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text("Store Pick Up",
+                                  maxLines: 10,
+                                  style: TextStyle(
+                                      fontSize: 15.0, color: Colors.black)),
+                              Radio<int>(
+                                  value: 1,
+                                  groupValue:
+                                      deliveryMethodRadioButtonChoiceValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      deliveryMethodRadioButtonChoiceValue =
+                                          value;
+                                    });
+                                  }),
+                            ],
+                          ),
+                        ),
+                        // Divider(),
+                      ],
                     ),
+                    // ),
                   ),
                 ),
                 Padding(
@@ -322,7 +324,12 @@ class _OrderCheckoutScreenBottomBarState
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 16),
-                        )
+                        ),
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Color(0xFFAC252B)),
+                            child: Text(translate('PAY')),
+                            onPressed: (() {}))
                       ],
                     ),
                   );

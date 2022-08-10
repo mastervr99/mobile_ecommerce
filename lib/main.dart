@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/BottomNavBarWidget.dart';
@@ -6,8 +7,15 @@ import 'package:mobile_ecommerce/Application/common_widgets/DrawerWidget.dart';
 import 'package:mobile_ecommerce/Application/screens/HomeScreen.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:provider/provider.dart';
+import 'package:mobile_ecommerce/.env.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = stripePublishableKey;
+  Stripe.merchantIdentifier = 'merchant.flutter.stripe.test';
+  Stripe.urlScheme = 'flutterstripe';
+  await Stripe.instance.applySettings();
+
   var delegate = await LocalizationDelegate.create(
       fallbackLocale: 'French',
       supportedLocales: ['English', 'French'],

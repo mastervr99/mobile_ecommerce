@@ -35,6 +35,7 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
       appBar: appBarWidget(context),
       body: Column(
         children: <Widget>[
+          //**************** TO REMOVE **************** */
           // ElevatedButton(
           //   style: ElevatedButton.styleFrom(
           //       textStyle: const TextStyle(fontSize: 20)),
@@ -139,6 +140,7 @@ findProducts(var value) async {
   return await searchedProducts;
 }
 
+//**************** TO REMOVE **************** */
 // createProductTable() async {
 //   var productRepository = ProductRepostitorySqfliteImpl();
 //   await productRepository.init();

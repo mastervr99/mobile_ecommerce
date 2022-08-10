@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:get/get.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
-import 'package:mobile_ecommerce/Application/payment_controller.dart';
+import 'package:mobile_ecommerce/Infrastructure/payment_controller.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/shopping_cart_item_repository_sqflite_impl.dart';

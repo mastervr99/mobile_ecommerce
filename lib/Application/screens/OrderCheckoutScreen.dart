@@ -3,7 +3,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:get/get.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
-import 'package:mobile_ecommerce/Infrastructure/payment_controller.dart';
+import 'package:mobile_ecommerce/Infrastructure/stripe_payment_controller.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/shopping_cart_item_repository_sqflite_impl.dart';
@@ -33,8 +33,6 @@ class _OrderCheckoutScreenState extends State<OrderCheckoutScreen> {
     //             return Text('Error: ${snapshot.error}');
     //           else
     // return createDetailView(context, snapshot);
-
-    final PaymentController controller = Get.put(PaymentController());
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -244,24 +242,7 @@ class _OrderCheckoutScreenState extends State<OrderCheckoutScreen> {
                   ),
                   // ),
                 ),
-                //**************** TO REMOVE **************** */
-                // ElevatedButton(
-                //   style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
-                //   child: Text(translate('PAY')),
-                //   onPressed: () async {
-                //     var test = await controller.makePayment(
-                //         amount: '5', currency: 'USD');
-                //     showDialog(
-                //       context: context,
-                //       builder: (context) {
-                //         return AlertDialog(
-                //           content: Text(test.toString()),
-                //         );
-                //       },
-                //     );
-                //   },
-                // ),
-                //******************************** */
+
                 // SizedBox(
                 //   height: 250,
                 //   child: Swiper(
@@ -323,7 +304,8 @@ class _OrderCheckoutScreenBottomBarState
     extends State<OrderCheckoutScreenBottomBar> {
   @override
   Widget build(BuildContext context) {
-    final PaymentController controller = Get.put(PaymentController());
+    final StripePaymentController controller =
+        Get.put(StripePaymentController());
     return Consumer<ShoppingCart>(builder: (context, settings, child) {
       return FutureBuilder(
           future: getShoppingCartTotalQuantity(context),

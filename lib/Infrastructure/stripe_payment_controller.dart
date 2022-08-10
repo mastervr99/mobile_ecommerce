@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:mobile_ecommerce/main.dart';
 import 'package:mobile_ecommerce/.env.dart';
 
-class PaymentController extends GetxController {
+class StripePaymentController extends GetxController {
   Map<String, dynamic>? paymentIntentData;
 
   Future<void> makePayment(

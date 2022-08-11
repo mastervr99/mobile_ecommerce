@@ -44,6 +44,10 @@ class ConnectedUserRepositorySqfliteFfiImpl extends ConnectedUserRepository {
     }
   }
 
+  removeConnectedUser() async {
+    await database.rawQuery('DELETE FROM ConnectedUser');
+  }
+
   @override
   close() {}
 }

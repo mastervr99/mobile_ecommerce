@@ -7,5 +7,7 @@ abstract class ConnectedUserRepository {
 
   retrieveConnectedUser();
 
+  removeConnectedUser();
+
   close();
 }

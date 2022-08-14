@@ -31,8 +31,6 @@ dependencies:
     sdk: flutter
   sqflite:
   path:
-  hive:
-  hive_flutter:
   csv:
   font_awesome_flutter:
   carousel_pro:

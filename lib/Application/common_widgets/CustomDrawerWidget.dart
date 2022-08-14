@@ -5,12 +5,12 @@ import 'package:mobile_ecommerce/Application/components/sign_up_component.dart';
 import 'package:mobile_ecommerce/main.dart';
 import 'package:mobile_ecommerce/Application/components/sign_in_component.dart';
 
-class DrawerWidget extends StatefulWidget {
+class CustomDrawerWidget extends StatefulWidget {
   @override
-  _DrawerWidgetState createState() => _DrawerWidgetState();
+  _CustomDrawerWidgetState createState() => _CustomDrawerWidgetState();
 }
 
-class _DrawerWidgetState extends State<DrawerWidget> {
+class _CustomDrawerWidgetState extends State<CustomDrawerWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(

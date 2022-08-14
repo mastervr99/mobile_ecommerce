@@ -32,7 +32,13 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
             MaterialPageRoute(builder: (context) => SearchBarResultsScreen()),
           );
           break;
-        case 2:
+        case 1:
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SearchBarResultsScreen()),
+          );
+          break;
+        case 3:
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => ShoppingCartScreen()),
@@ -51,6 +57,10 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
         BottomNavigationBarItem(
           icon: Icon(Icons.search),
           label: 'Search',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.account_circle),
+          label: 'Account',
         ),
         BottomNavigationBarItem(
           icon: Icon(FontAwesomeIcons.shoppingBag),

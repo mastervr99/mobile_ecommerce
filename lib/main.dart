@@ -3,7 +3,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/BottomNavBarWidget.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/DrawerWidget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/CustomDrawerWidget.dart';
 import 'package:mobile_ecommerce/Application/screens/HomeScreen.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:provider/provider.dart';
@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 3,
       child: Scaffold(
         appBar: appBarWidget(context),
-        endDrawer: DrawerWidget(),
+        endDrawer: CustomDrawerWidget(),
         body: IndexedStack(
           index: currentIndex,
           children: viewContainer,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/DrawerWidget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/CustomDrawerWidget.dart';
 import 'package:mobile_ecommerce/Application/screens/HomeScreen.dart';
 
 int currentIndex = 0;
@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 3,
       child: Scaffold(
         appBar: appBarWidget(context),
-        drawer: DrawerWidget(),
+        drawer: CustomDrawerWidget(),
         body: IndexedStack(
           index: currentIndex,
           children: viewContainer,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mobile_ecommerce/Application/components/sign_in_component.dart';
-import 'package:mobile_ecommerce/Application/components/language_selection_component.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
@@ -18,69 +17,50 @@ PreferredSizeWidget appBarWidget(context) {
       width: 80,
       height: 40,
     ),
-    actions: <Widget>[
-      // IconButton(
-      //   onPressed: () {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => SignInComponent()),
-      //     );
-      //   },
-      //   icon: const Icon(FontAwesomeIcons.user),
-      //   color: const Color(0xFF323232),
-      // ),
-      displayAccountOrConnectionIcon(context),
-      IconButton(
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (context) => LanguageSelectionComponent());
-        },
-        icon: const Icon(FontAwesomeIcons.language),
-        color: const Color(0xFF323232),
-      ),
-    ],
+    leading: (ModalRoute.of(context)?.canPop ?? false) ? BackButton() : null,
   );
 }
 
-Widget displayAccountOrConnectionIcon(BuildContext context) {
-  return FutureBuilder(
-    future: checkIfUserConnected(),
-    builder: (context, AsyncSnapshot snapshot) {
-      switch (snapshot.connectionState) {
-        case ConnectionState.none:
-        case ConnectionState.waiting:
-        default:
-          if (snapshot.hasError)
-            return Text('Error: ${snapshot.error}');
-          else if (snapshot.data == true)
-            return IconButton(
-                onPressed: () {},
-                icon: const Icon(FontAwesomeIcons.userNinja),
-                color: const Color(0xFF323232));
-          else
-            return IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignInComponent()),
-                  );
-                },
-                icon: const Icon(FontAwesomeIcons.user),
-                color: const Color(0xFF323232));
-      }
-    },
-  );
-}
+// Widget displayAccountOrConnectionIcon(BuildContext context) {
+//   return FutureBuilder(
+//     future: checkIfUserConnected(),
+//     builder: (context, AsyncSnapshot snapshot) {
+//       switch (snapshot.connectionState) {
+//         case ConnectionState.none:
+//         case ConnectionState.waiting:
+//         default:
+//           if (snapshot.hasError)
+//             return Text('Error: ${snapshot.error}');
+//           else if (snapshot.data == true)
+//             return IconButton(
+//               onPressed: () {},
+//               icon: const Icon(FontAwesomeIcons.userNinja),
+//               color: const Color(0xFF323232),
+//             );
+//           else
+//             return IconButton(
+//               onPressed: () {
+//                 Navigator.push(
+//                   context,
+//                   MaterialPageRoute(builder: (context) => SignInComponent()),
+//                 );
+//               },
+//               icon: const Icon(FontAwesomeIcons.user),
+//               color: const Color(0xFF323232),
+//             );
+//       }
+//     },
+//   );
+// }
 
-checkIfUserConnected() async {
-  UserRepository userRepository = UserRepositorySqfliteImpl();
-  ConnectedUserRepository connectedUserRepository =
-      ConnectedUserRepositorySqfliteImpl();
-  SignInUsecase signInUsecase =
-      SignInUsecase(userRepository, connectedUserRepository);
+// checkIfUserConnected() async {
+//   UserRepository userRepository = UserRepositorySqfliteImpl();
+//   ConnectedUserRepository connectedUserRepository =
+//       ConnectedUserRepositorySqfliteImpl();
+//   SignInUsecase signInUsecase =
+//       SignInUsecase(userRepository, connectedUserRepository);
 
-  var isUserConnected = await signInUsecase.checkIfUserConnected();
+//   var isUserConnected = await signInUsecase.checkIfUserConnected();
 
-  return await isUserConnected;
-}
+//   return await isUserConnected;
+// }

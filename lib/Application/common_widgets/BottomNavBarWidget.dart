@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_ecommerce/Application/screens/HomeScreen.dart';
+import 'package:mobile_ecommerce/Application/screens/SearchBarResultsScreen.dart';
 import 'package:mobile_ecommerce/Application/screens/ShoppingCartScreen.dart';
 import 'package:mobile_ecommerce/main.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,28 +21,22 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
 
       switch (index) {
         case 0:
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => HomeScreen()),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MyHomePage(title: 'ESHOP')),
+          );
           break;
         case 1:
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => HomeScreen()),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SearchBarResultsScreen()),
+          );
           break;
         case 2:
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => ShoppingCartScreen()),
           );
-          break;
-        case 3:
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => HomeScreen()),
-          // );
           break;
       }
     }
@@ -55,17 +49,17 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(FontAwesomeIcons.heart),
-          label: 'Wish List',
+          icon: Icon(Icons.search),
+          label: 'Search',
         ),
         BottomNavigationBarItem(
           icon: Icon(FontAwesomeIcons.shoppingBag),
           label: 'Cart',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(FontAwesomeIcons.dashcube),
-          label: 'Dashboard',
-        ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(FontAwesomeIcons.dashcube),
+        //   label: 'Dashboard',
+        // ),
       ],
       currentIndex: _selectedIndex,
       selectedItemColor: Color(0xFFAA292E),

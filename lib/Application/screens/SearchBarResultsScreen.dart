@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/DrawerWidget.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 
 import 'dart:core';
@@ -33,6 +34,7 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(context),
+      endDrawer: DrawerWidget(),
       body: Column(
         children: <Widget>[
           //**************** TO REMOVE **************** */
@@ -77,7 +79,7 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
               ),
             ),
           ),
-          if (searchTerms.isNotEmpty)
+          if (searchTerms != null && searchTerms.isNotEmpty)
             FutureBuilder(
               future: findProducts(searchTerms),
               builder: (context, AsyncSnapshot snapshot) {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:mobile_ecommerce/Application/components/language_selection_component.dart';
+import 'package:mobile_ecommerce/Application/components/sign_up_component.dart';
 import 'package:mobile_ecommerce/main.dart';
 import 'package:mobile_ecommerce/Application/components/sign_in_component.dart';
 
@@ -35,6 +37,39 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           builder: (context) =>
                               /**EmptyWishListScreen()*/ SignInComponent()),
                     )),
+            _createDrawerItem(
+              icon: Icons.language,
+              text: translate('SELECT LANGUAGE'),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LanguageSelectionComponent()),
+              ),
+            ),
+            _createDrawerItem(
+              icon: Icons.login,
+              text: translate('SIGN IN'),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignInComponent()),
+              ),
+            ),
+            _createDrawerItem(
+              icon: Icons.app_registration,
+              text: translate('SIGN UP'),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignUpComponent()),
+              ),
+            ),
+            _createDrawerItem(
+              icon: Icons.app_registration,
+              text: translate('SIGN UP'),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignUpComponent()),
+              ),
+            ),
           ],
         ),
       ),

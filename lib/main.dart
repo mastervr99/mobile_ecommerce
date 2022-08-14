@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 3,
       child: Scaffold(
         appBar: appBarWidget(context),
-        drawer: DrawerWidget(),
+        endDrawer: DrawerWidget(),
         body: IndexedStack(
           index: currentIndex,
           children: viewContainer,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/BottomNavBarWidget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/CustomDrawerWidget.dart';
 import 'package:mobile_ecommerce/Application/screens/OrderCheckoutScreen.dart';
 import 'package:mobile_ecommerce/Application/usecases/remove_shopping_cart_item_usecase.dart';
 import 'package:mobile_ecommerce/Application/usecases/update_shopping_cart_item_usecase.dart';
@@ -22,6 +24,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     return Consumer<ShoppingCart>(builder: (context, settings, child) {
       return Scaffold(
         appBar: appBarWidget(context),
+        endDrawer: CustomDrawerWidget(),
+        bottomNavigationBar: BottomNavBarWidget(),
         body: FutureBuilder(
           future: getAllCartItems(context),
           builder: (context, AsyncSnapshot snapshot) {

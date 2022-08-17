@@ -35,6 +35,7 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
     return Scaffold(
       appBar: appBarWidget(context),
       endDrawer: CustomDrawerWidget(),
+      bottomNavigationBar: BottomNavBarWidget(),
       body: Column(
         children: <Widget>[
           //**************** TO REMOVE **************** */
@@ -124,7 +125,6 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
             ),
         ],
       ),
-      bottomNavigationBar: BottomNavBarWidget(),
     );
   }
 }

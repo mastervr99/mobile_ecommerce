@@ -63,13 +63,9 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
           label: 'Account',
         ),
         BottomNavigationBarItem(
-          icon: Icon(FontAwesomeIcons.shoppingBag),
+          icon: Icon(Icons.shopping_cart),
           label: 'Cart',
         ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(FontAwesomeIcons.dashcube),
-        //   label: 'Dashboard',
-        // ),
       ],
       currentIndex: _selectedIndex,
       selectedItemColor: Color(0xFFAA292E),

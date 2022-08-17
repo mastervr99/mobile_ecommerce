@@ -53,7 +53,7 @@ class Product {
     this.sku = sku;
   }
 
-  String getTitle() {
+  getTitle() {
     return title;
   }
 

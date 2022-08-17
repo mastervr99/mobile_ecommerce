@@ -5,6 +5,7 @@ import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
 // import 'package:mobile_ecommerce/utils/Urls.dart';
 import 'package:http/http.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/CustomDrawerWidget.dart';
 import 'package:mobile_ecommerce/Application/usecases/add_product_to_shopping_cart_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
@@ -29,6 +30,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return Scaffold(
       backgroundColor: Color(0xFFfafafa),
       appBar: appBarWidget(context),
+      endDrawer: CustomDrawerWidget(),
+      bottomNavigationBar: BottomNavBar(product: widget.product),
       body: FutureBuilder(
         future: getProduct(widget.product),
         builder: (context, AsyncSnapshot snapshot) {
@@ -44,7 +47,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           }
         },
       ),
-      bottomNavigationBar: BottomNavBar(product: widget.product),
     );
   }
 }

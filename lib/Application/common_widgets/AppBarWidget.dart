@@ -34,7 +34,7 @@ PreferredSizeWidget appBarWidget(context) {
 //           else if (snapshot.data == true)
 //             return IconButton(
 //               onPressed: () {},
-//               icon: const Icon(FontAwesomeIcons.userNinja),
+//               icon: const Icon(Icons.verified_user),
 //               color: const Color(0xFF323232),
 //             );
 //           else
@@ -45,7 +45,7 @@ PreferredSizeWidget appBarWidget(context) {
 //                   MaterialPageRoute(builder: (context) => SignInComponent()),
 //                 );
 //               },
-//               icon: const Icon(FontAwesomeIcons.user),
+//               icon: const Icon(Icons.account_box_outlined,
 //               color: const Color(0xFF323232),
 //             );
 //       }

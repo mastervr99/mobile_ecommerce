@@ -2,10 +2,10 @@ import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart_item.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
 
-class AddProductToShoppingCartUsecase {
+class Add_Product_To_Shopping_Cart_Usecase {
   ShoppingCartItemRepository shoppingCartItemRepository;
 
-  AddProductToShoppingCartUsecase(this.shoppingCartItemRepository);
+  Add_Product_To_Shopping_Cart_Usecase(this.shoppingCartItemRepository);
 
   addCartItem(Product product) async {
     await shoppingCartItemRepository.init();

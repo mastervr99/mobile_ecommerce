@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_ecommerce/Application/screens/SearchBarResultsScreen.dart';
-import 'package:mobile_ecommerce/Application/screens/ShoppingCartScreen.dart';
+import 'package:mobile_ecommerce/Application/screens/Products_Search_Screen.dart';
+import 'package:mobile_ecommerce/Application/screens/Shopping_Cart_Screen.dart';
 import 'package:mobile_ecommerce/main.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class BottomNavBarWidget extends StatefulWidget {
+class Bottom_Navbar_Widget extends StatefulWidget {
   @override
-  _BottomNavBarWidgetState createState() => _BottomNavBarWidgetState();
+  _Bottom_Navbar_Widget_State createState() => _Bottom_Navbar_Widget_State();
 }
 
-class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
+class _Bottom_Navbar_Widget_State extends State<Bottom_Navbar_Widget> {
   @override
   Widget build(BuildContext context) {
     int _selectedIndex = 0;
@@ -29,19 +28,19 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
         case 1:
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SearchBarResultsScreen()),
+            MaterialPageRoute(builder: (context) => Products_Search_Screen()),
           );
           break;
         case 1:
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SearchBarResultsScreen()),
+            MaterialPageRoute(builder: (context) => Products_Search_Screen()),
           );
           break;
         case 3:
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ShoppingCartScreen()),
+            MaterialPageRoute(builder: (context) => Shopping_Cart_Screen()),
           );
           break;
       }

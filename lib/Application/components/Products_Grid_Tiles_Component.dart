@@ -1,19 +1,18 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:mobile_ecommerce/Application/screens/ProductDetailScreen.dart';
+import 'package:mobile_ecommerce/Application/screens/Product_Detail_Screen.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 // import 'package:mobile_ecommerce/screens/ProductDetailScreen.dart';
 // import 'package:mobile_ecommerce/screens/ProductsScreen.dart';
 // import 'package:mobile_ecommerce/screens/SubCategoryScreen.dart';
 
-class GridTilesProducts extends StatelessWidget {
+class Products_Grid_Tiles_Component extends StatelessWidget {
   String name;
   String imageUrl;
   Product product;
   String price;
   bool? fromSubProducts = false;
 
-  GridTilesProducts(
+  Products_Grid_Tiles_Component(
       {Key? key,
       required this.name,
       required this.imageUrl,
@@ -47,7 +46,7 @@ class GridTilesProducts extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ProductDetailScreen(
+              builder: (context) => Product_Detail_Screen(
                     product: product,
                   )),
         );

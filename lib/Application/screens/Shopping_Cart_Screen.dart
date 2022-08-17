@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/BottomNavBarWidget.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/CustomDrawerWidget.dart';
-import 'package:mobile_ecommerce/Application/screens/OrderCheckoutScreen.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
+import 'package:mobile_ecommerce/Application/screens/Order_Checkout_Screen.dart';
 import 'package:mobile_ecommerce/Application/usecases/remove_shopping_cart_item_usecase.dart';
 import 'package:mobile_ecommerce/Application/usecases/update_shopping_cart_item_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
@@ -13,19 +13,19 @@ import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/shopping_cart_item_repository_sqflite_impl.dart';
 import 'package:provider/provider.dart';
 
-class ShoppingCartScreen extends StatefulWidget {
+class Shopping_Cart_Screen extends StatefulWidget {
   @override
-  _ShoppingCartScreenState createState() => _ShoppingCartScreenState();
+  _Shopping_Cart_Screen_State createState() => _Shopping_Cart_Screen_State();
 }
 
-class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
+class _Shopping_Cart_Screen_State extends State<Shopping_Cart_Screen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<ShoppingCart>(builder: (context, settings, child) {
       return Scaffold(
-        appBar: appBarWidget(context),
-        endDrawer: CustomDrawerWidget(),
-        bottomNavigationBar: BottomNavBarWidget(),
+        appBar: Appbar_Widget(context),
+        endDrawer: Drawer_Widget(),
+        bottomNavigationBar: Bottom_Navbar_Widget(),
         body: FutureBuilder(
           future: getAllCartItems(context),
           builder: (context, AsyncSnapshot snapshot) {
@@ -44,7 +44,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                   ),
                 );
               case ConnectionState.waiting:
-                return CircularProgress();
+                return Circular_Progress_Widget();
               default:
                 if (snapshot.hasError)
                   return Text('Error: ${snapshot.error}');
@@ -122,7 +122,7 @@ class _CartList extends StatelessWidget {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
           case ConnectionState.waiting:
-            return CircularProgress();
+            return Circular_Progress_Widget();
           default:
             if (snapshot.hasError)
               return Text('Error: ${snapshot.error}');
@@ -168,7 +168,7 @@ class _CartList extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            OrderCheckoutScreen()));
+                                            Order_Checkout_Screen()));
                               },
                             ),
                           ),
@@ -253,7 +253,7 @@ class _CartList extends StatelessWidget {
                                               MaterialPageRoute(
                                                   builder: (BuildContext
                                                           context) =>
-                                                      ShoppingCartScreen()));
+                                                      Shopping_Cart_Screen()));
                                         },
                                       ),
                                     ],
@@ -295,7 +295,7 @@ Widget _showCartTotalprice(BuildContext context) {
           return Text(translate("label_currency") + "0.00",
               style: Theme.of(context).textTheme.headline6);
         case ConnectionState.waiting:
-          return CircularProgress();
+          return Circular_Progress_Widget();
         default:
           if (snapshot.hasError)
             return Text('Error: ${snapshot.error}');
@@ -359,7 +359,7 @@ class _MyCounterState extends State<MyCounter> {
                     context,
                     MaterialPageRoute(
                         builder: (BuildContext context) =>
-                            ShoppingCartScreen()));
+                            Shopping_Cart_Screen()));
               }
             },
           ),
@@ -393,7 +393,8 @@ class _MyCounterState extends State<MyCounter> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) => ShoppingCartScreen()));
+                      builder: (BuildContext context) =>
+                          Shopping_Cart_Screen()));
             },
           ),
         ],
@@ -439,8 +440,8 @@ removeCartItem(ShoppingCartItem shoppingCartItem) async {
   ShoppingCartItemRepository shoppingCartItemRepository =
       ShoppingCartItemRepositorySqfliteImpl();
 
-  RemoveShoppingCartItemUsecase removeShoppingCartItemUsecase =
-      RemoveShoppingCartItemUsecase(shoppingCartItemRepository);
+  Remove_Shopping_Cart_Item_Usecase remove_shopping_cart_item_usecase =
+      Remove_Shopping_Cart_Item_Usecase(shoppingCartItemRepository);
 
-  removeShoppingCartItemUsecase.removeItem(shoppingCartItem);
+  remove_shopping_cart_item_usecase.removeItem(shoppingCartItem);
 }

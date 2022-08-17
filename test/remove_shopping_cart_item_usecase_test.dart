@@ -23,10 +23,11 @@ void main() {
       ShoppingCartItemRepository shoppingCartItemRepository =
           ShoppingCartItemRepositorySqfliteFfiImpl();
 
-      AddProductToShoppingCartUsecase addProductToShoppingCartUsecase =
-          AddProductToShoppingCartUsecase(shoppingCartItemRepository);
+      Add_Product_To_Shopping_Cart_Usecase
+          add_product_to_shopping_cart_usecase =
+          Add_Product_To_Shopping_Cart_Usecase(shoppingCartItemRepository);
 
-      await addProductToShoppingCartUsecase.addCartItem(product);
+      await add_product_to_shopping_cart_usecase.addCartItem(product);
 
       ShoppingCart shoppingCart = ShoppingCart();
       shoppingCart.setItemRepository(shoppingCartItemRepository);
@@ -35,10 +36,10 @@ void main() {
 
       expect(await shoppingCartProducts[0].getSku(), product.getSku());
 
-      RemoveShoppingCartItemUsecase removeShoppingCartItemUsecase =
-          RemoveShoppingCartItemUsecase(shoppingCartItemRepository);
+      Remove_Shopping_Cart_Item_Usecase remove_shopping_cart_item_usecase =
+          Remove_Shopping_Cart_Item_Usecase(shoppingCartItemRepository);
 
-      await removeShoppingCartItemUsecase
+      await remove_shopping_cart_item_usecase
           .removeItem(await shoppingCartProducts[0]);
 
       var shoppingCartProductsAfterRemoval =

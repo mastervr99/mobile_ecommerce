@@ -27,11 +27,12 @@ void main() {
       product2.setSku(101);
       product2.setPrice(55);
 
-      AddProductToShoppingCartUsecase addProductToShoppingCartUsecase =
-          AddProductToShoppingCartUsecase(shoppingCartItemRepository);
+      Add_Product_To_Shopping_Cart_Usecase
+          add_product_to_shopping_cart_usecase =
+          Add_Product_To_Shopping_Cart_Usecase(shoppingCartItemRepository);
 
-      await addProductToShoppingCartUsecase.addCartItem(product);
-      await addProductToShoppingCartUsecase.addCartItem(product2);
+      await add_product_to_shopping_cart_usecase.addCartItem(product);
+      await add_product_to_shopping_cart_usecase.addCartItem(product2);
 
       var shoppingCart = ShoppingCart();
 
@@ -55,11 +56,12 @@ void main() {
       product2.setSku(101);
       product2.setPrice(55);
 
-      AddProductToShoppingCartUsecase addProductToShoppingCartUsecase =
-          AddProductToShoppingCartUsecase(shoppingCartItemRepository);
+      Add_Product_To_Shopping_Cart_Usecase
+          add_product_to_shopping_cart_usecase =
+          Add_Product_To_Shopping_Cart_Usecase(shoppingCartItemRepository);
 
-      await addProductToShoppingCartUsecase.addCartItem(product);
-      await addProductToShoppingCartUsecase.addCartItem(product2);
+      await add_product_to_shopping_cart_usecase.addCartItem(product);
+      await add_product_to_shopping_cart_usecase.addCartItem(product2);
 
       var shoppingCart = ShoppingCart();
 
@@ -73,7 +75,7 @@ void main() {
       product2.setSku(102);
       product2.setPrice(55);
 
-      await addProductToShoppingCartUsecase.addCartItem(product3);
+      await add_product_to_shopping_cart_usecase.addCartItem(product3);
 
       var newCartItemsTotalQuantity =
           await shoppingCart.getItemsTotalQuantity();

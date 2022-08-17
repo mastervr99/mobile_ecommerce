@@ -1,9 +1,9 @@
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/product_repository.dart';
 
-class SearchProductUsecase {
+class Search_Product_Usecase {
   ProductRepository productRepository;
 
-  SearchProductUsecase(this.productRepository);
+  Search_Product_Usecase(this.productRepository);
 
   searchProductsByTitle(String productTitle) async {
     await productRepository.init();

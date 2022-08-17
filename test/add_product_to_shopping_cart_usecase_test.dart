@@ -23,11 +23,12 @@ void main() {
       ShoppingCartItemRepository shoppingCartItemRepository =
           ShoppingCartItemRepositorySqfliteFfiImpl();
 
-      AddProductToShoppingCartUsecase addProductToShoppingCartUsecase =
-          AddProductToShoppingCartUsecase(shoppingCartItemRepository);
+      Add_Product_To_Shopping_Cart_Usecase
+          add_product_to_shopping_cart_usecase =
+          Add_Product_To_Shopping_Cart_Usecase(shoppingCartItemRepository);
 
-      await addProductToShoppingCartUsecase.addCartItem(product);
-      await addProductToShoppingCartUsecase.addCartItem(product2);
+      await add_product_to_shopping_cart_usecase.addCartItem(product);
+      await add_product_to_shopping_cart_usecase.addCartItem(product2);
 
       ShoppingCart shoppingCart = ShoppingCart();
       shoppingCart.setItemRepository(shoppingCartItemRepository);
@@ -47,10 +48,11 @@ void main() {
       ShoppingCartItemRepository shoppingCartItemRepository =
           ShoppingCartItemRepositorySqfliteFfiImpl();
 
-      AddProductToShoppingCartUsecase addProductToShoppingCartUsecase =
-          AddProductToShoppingCartUsecase(shoppingCartItemRepository);
+      Add_Product_To_Shopping_Cart_Usecase
+          add_product_to_shopping_cart_usecase =
+          Add_Product_To_Shopping_Cart_Usecase(shoppingCartItemRepository);
 
-      await addProductToShoppingCartUsecase.addCartItem(product);
+      await add_product_to_shopping_cart_usecase.addCartItem(product);
 
       ShoppingCart shoppingCart = ShoppingCart();
       shoppingCart.setItemRepository(shoppingCartItemRepository);
@@ -59,7 +61,7 @@ void main() {
 
       expect(await shoppingCartProducts[0].getQuantity(), 1);
 
-      await addProductToShoppingCartUsecase.addCartItem(product);
+      await add_product_to_shopping_cart_usecase.addCartItem(product);
 
       var shoppingCartProducts2 = await shoppingCart.getAllCartItems();
 

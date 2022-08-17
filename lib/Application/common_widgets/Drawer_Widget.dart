@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:mobile_ecommerce/Application/components/language_selection_component.dart';
-import 'package:mobile_ecommerce/Application/components/sign_up_component.dart';
+import 'package:mobile_ecommerce/Application/components/Language_Selection_Component.dart';
+import 'package:mobile_ecommerce/Application/components/Sign_Up_Component.dart';
+import 'package:mobile_ecommerce/Application/screens/User_Orders_Screen.dart';
 import 'package:mobile_ecommerce/main.dart';
-import 'package:mobile_ecommerce/Application/components/sign_in_component.dart';
+import 'package:mobile_ecommerce/Application/components/Sign_In_Component.dart';
 
-class CustomDrawerWidget extends StatefulWidget {
+class Drawer_Widget extends StatefulWidget {
   @override
-  _CustomDrawerWidgetState createState() => _CustomDrawerWidgetState();
+  _Drawer_Widget_State createState() => _Drawer_Widget_State();
 }
 
-class _CustomDrawerWidgetState extends State<CustomDrawerWidget> {
+class _Drawer_Widget_State extends State<Drawer_Widget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -35,7 +36,7 @@ class _CustomDrawerWidgetState extends State<CustomDrawerWidget> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              /**EmptyWishListScreen()*/ SignInComponent()),
+                              /**EmptyWishListScreen()*/ Sign_In_Component()),
                     )),
             _createDrawerItem(
               icon: Icons.language,
@@ -43,7 +44,7 @@ class _CustomDrawerWidgetState extends State<CustomDrawerWidget> {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => LanguageSelectionComponent()),
+                    builder: (context) => Language_Selection_Component()),
               ),
             ),
             _createDrawerItem(
@@ -51,7 +52,7 @@ class _CustomDrawerWidgetState extends State<CustomDrawerWidget> {
               text: translate('SIGN IN'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SignInComponent()),
+                MaterialPageRoute(builder: (context) => Sign_In_Component()),
               ),
             ),
             _createDrawerItem(
@@ -59,7 +60,7 @@ class _CustomDrawerWidgetState extends State<CustomDrawerWidget> {
               text: translate('SIGN UP'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SignUpComponent()),
+                MaterialPageRoute(builder: (context) => Sign_Up_Component()),
               ),
             ),
             _createDrawerItem(
@@ -67,7 +68,15 @@ class _CustomDrawerWidgetState extends State<CustomDrawerWidget> {
               text: translate('SIGN UP'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SignUpComponent()),
+                MaterialPageRoute(builder: (context) => Sign_Up_Component()),
+              ),
+            ),
+            _createDrawerItem(
+              icon: Icons.shopping_bag_outlined,
+              text: translate('MY ORDERS'),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => User_Orders_Screen()),
               ),
             ),
           ],

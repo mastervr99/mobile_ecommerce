@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/BottomNavBarWidget.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/CustomDrawerWidget.dart';
-import 'package:mobile_ecommerce/Application/screens/HomeScreen.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
+import 'package:mobile_ecommerce/Application/screens/Home_Screen.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_ecommerce/.env.dart';
@@ -85,7 +85,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> viewContainer = [
-    HomeScreen(),
+    Home_Screen(),
     //WishListScreen(),
     //ShoppingCartScreen(),
     //HomeScreen()
@@ -96,13 +96,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: appBarWidget(context),
-        endDrawer: CustomDrawerWidget(),
+        appBar: Appbar_Widget(context),
+        endDrawer: Drawer_Widget(),
         body: IndexedStack(
           index: currentIndex,
           children: viewContainer,
         ),
-        bottomNavigationBar: BottomNavBarWidget(),
+        bottomNavigationBar: Bottom_Navbar_Widget(),
       ),
     );
   }

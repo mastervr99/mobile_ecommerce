@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:mobile_ecommerce/Application/screens/SearchBarResultsScreen.dart';
+import 'package:mobile_ecommerce/Application/screens/Products_Search_Screen.dart';
 
-class SearchWidget extends StatefulWidget {
+class Search_Widget extends StatefulWidget {
   @override
-  _SearchWidgetState createState() => _SearchWidgetState();
+  _Search_Widget_State createState() => _Search_Widget_State();
 }
 
-class _SearchWidgetState extends State<SearchWidget> {
+class _Search_Widget_State extends State<Search_Widget> {
   TextEditingController searchController = TextEditingController();
 
   @override
@@ -37,7 +37,7 @@ class _SearchWidgetState extends State<SearchWidget> {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      SearchBarResultsScreen(searchTerms: value)),
+                      Products_Search_Screen(searchTerms: value)),
             ),
           ),
           data: Theme.of(context).copyWith(

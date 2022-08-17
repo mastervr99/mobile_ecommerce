@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
-import 'package:mobile_ecommerce/Application/components/sign_up_component.dart';
+import 'package:mobile_ecommerce/Application/components/Sign_Up_Component.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
@@ -10,9 +10,9 @@ import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/use
 import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
 import 'package:mobile_ecommerce/main.dart';
 
-class SignInComponent extends StatefulWidget {
+class Sign_In_Component extends StatefulWidget {
   @override
-  _SignInComponentState createState() => _SignInComponentState();
+  _Sign_In_Component_State createState() => _Sign_In_Component_State();
 }
 
 signInSucceded(BuildContext context) {
@@ -64,7 +64,7 @@ emailNotRegistered(BuildContext context) {
                 Navigator.pop(context);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SignUpComponent()),
+                  MaterialPageRoute(builder: (context) => Sign_Up_Component()),
                 );
               }))
         ],
@@ -107,7 +107,7 @@ ConnectedUserRepository connectedUserRepository =
 SignInUsecase signInUsecase =
     SignInUsecase(userRepository, connectedUserRepository);
 
-class _SignInComponentState extends State<SignInComponent> {
+class _Sign_In_Component_State extends State<Sign_In_Component> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -336,7 +336,7 @@ class _SignInComponentState extends State<SignInComponent> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignUpComponent()),
+                                    builder: (context) => Sign_Up_Component()),
                               )
                             },
                             child: Container(

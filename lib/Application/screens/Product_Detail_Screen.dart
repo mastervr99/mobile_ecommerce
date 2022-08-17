@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 // import 'package:mobile_ecommerce/models/ProductDetails.dart';
 // import 'package:mobile_ecommerce/utils/Urls.dart';
 import 'package:http/http.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/CustomDrawerWidget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
 import 'package:mobile_ecommerce/Application/usecases/add_product_to_shopping_cart_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
@@ -15,22 +15,22 @@ import 'package:provider/provider.dart';
 
 // ProductDetails? productDetails;
 
-class ProductDetailScreen extends StatefulWidget {
+class Product_Detail_Screen extends StatefulWidget {
   Product product;
 
-  ProductDetailScreen({Key? key, required this.product}) : super(key: key);
+  Product_Detail_Screen({Key? key, required this.product}) : super(key: key);
 
   @override
-  _ProductDetailScreenState createState() => _ProductDetailScreenState();
+  _Product_Detail_Screen_State createState() => _Product_Detail_Screen_State();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class _Product_Detail_Screen_State extends State<Product_Detail_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFfafafa),
-      appBar: appBarWidget(context),
-      endDrawer: CustomDrawerWidget(),
+      appBar: Appbar_Widget(context),
+      endDrawer: Drawer_Widget(),
       bottomNavigationBar: BottomNavBar(product: widget.product),
       body: FutureBuilder(
         future: getProduct(widget.product),
@@ -38,7 +38,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
             case ConnectionState.waiting:
-              return CircularProgress();
+              return Circular_Progress_Widget();
             default:
               if (snapshot.hasError)
                 return Text('Error: ${snapshot.error}');
@@ -88,10 +88,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ShoppingCartItemRepository shoppingCartItemRepository =
                   ShoppingCartItemRepositorySqfliteImpl();
 
-              AddProductToShoppingCartUsecase addProductToShoppingCartUsecase =
-                  AddProductToShoppingCartUsecase(shoppingCartItemRepository);
+              Add_Product_To_Shopping_Cart_Usecase
+                  add_product_to_shopping_cart_usecase =
+                  Add_Product_To_Shopping_Cart_Usecase(
+                      shoppingCartItemRepository);
 
-              await addProductToShoppingCartUsecase.addCartItem(widget.product);
+              await add_product_to_shopping_cart_usecase
+                  .addCartItem(widget.product);
             },
             child: Container(
               padding: EdgeInsets.only(left: 5, right: 5, top: 15, bottom: 15),

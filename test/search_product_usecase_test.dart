@@ -25,16 +25,17 @@ void main() {
       await productRepository.registerProduct(product);
       await productRepository.registerProduct(product2);
 
-      SearchProductUsecase searchProductUsecase =
-          SearchProductUsecase(productRepository);
+      Search_Product_Usecase search_product_usecase =
+          Search_Product_Usecase(productRepository);
 
-      var products = await searchProductUsecase.searchProductsByTitle("nokia");
+      var products =
+          await search_product_usecase.searchProductsByTitle("nokia");
 
       expect(await products[0].getTitle(), "nokia 12");
       expect(await products[1].getTitle(), "nokia 11");
 
       var productsNotFound =
-          await searchProductUsecase.searchProductsByTitle("lumia");
+          await search_product_usecase.searchProductsByTitle("lumia");
 
       expect(await productsNotFound.isEmpty, true);
 
@@ -86,8 +87,8 @@ void main() {
         await productRepository.registerProduct(product);
       }
 
-      SearchProductUsecase searchProductUsecase =
-          SearchProductUsecase(productRepository);
+      Search_Product_Usecase search_product_usecase =
+          Search_Product_Usecase(productRepository);
 
       // // ***********************************************
       // var productsTest =
@@ -114,7 +115,7 @@ void main() {
       // // ***********************************************
 
       var searchedProduct =
-          await searchProductUsecase.searchProductsByTitle("Gini");
+          await search_product_usecase.searchProductsByTitle("Gini");
       expect(await searchedProduct[0].getTitle(),
           'Gini and Jony Girls Knit White Top');
 
@@ -136,11 +137,11 @@ void main() {
       await productRepository.registerProduct(product);
       await productRepository.registerProduct(product2);
 
-      SearchProductUsecase searchProductUsecase =
-          SearchProductUsecase(productRepository);
+      Search_Product_Usecase search_product_usecase =
+          Search_Product_Usecase(productRepository);
 
       var searchResults =
-          await searchProductUsecase.searchProductsByTitle("samsung 12");
+          await search_product_usecase.searchProductsByTitle("samsung 12");
 
       expect(await searchResults[0].getTitle(), "samsung 10 red");
       expect(await searchResults[1].getTitle(), "samsung 12 blue");
@@ -158,11 +159,11 @@ void main() {
       await productRepository.registerProduct(product);
       await productRepository.registerProduct(product2);
 
-      SearchProductUsecase searchProductUsecase =
-          SearchProductUsecase(productRepository);
+      Search_Product_Usecase search_product_usecase =
+          Search_Product_Usecase(productRepository);
 
       var searchResults =
-          await searchProductUsecase.searchProductsByTitle("lg 10");
+          await search_product_usecase.searchProductsByTitle("lg 10");
 
       var value = "lg 10";
       var searchTerms = value.split(' ');

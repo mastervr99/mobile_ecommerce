@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:get/get.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/CircularProgress.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Infrastructure/stripe_payment_controller.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/shopping_cart_item_repository_sqflite_impl.dart';
 import 'package:provider/provider.dart';
 
-class OrderCheckoutScreen extends StatefulWidget {
+class Order_Checkout_Screen extends StatefulWidget {
   @override
-  _OrderCheckoutScreenState createState() => _OrderCheckoutScreenState();
+  _Order_Checkout_Screen_State createState() => _Order_Checkout_Screen_State();
 }
 
-class _OrderCheckoutScreenState extends State<OrderCheckoutScreen> {
+class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
   int? deliveryMethodRadioButtonChoiceValue = -1;
   int? paymentMethodRadioButtonChoiceValue = -1;
 
@@ -53,7 +53,7 @@ class _OrderCheckoutScreenState extends State<OrderCheckoutScreen> {
       //         color: Colors.grey, fontWeight: FontWeight.w500, fontSize: 18.0),
       //   ),
       // ),
-      appBar: appBarWidget(context),
+      appBar: Appbar_Widget(context),
       body: LayoutBuilder(
         builder: (_, constraints) => SingleChildScrollView(
           physics: ClampingScrollPhysics(),
@@ -313,7 +313,7 @@ class _OrderCheckoutScreenBottomBarState
             switch (snapshot.connectionState) {
               case ConnectionState.none:
               case ConnectionState.waiting:
-                return CircularProgress();
+                return Circular_Progress_Widget();
               default:
                 if (snapshot.hasError)
                   return Text('Error: ${snapshot.error}');

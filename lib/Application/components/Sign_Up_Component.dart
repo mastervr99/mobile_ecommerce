@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
-import 'package:mobile_ecommerce/Application/components/sign_in_component.dart';
+import 'package:mobile_ecommerce/Application/components/Sign_In_Component.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_up_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
 
-class SignUpComponent extends StatefulWidget {
+class Sign_Up_Component extends StatefulWidget {
   @override
-  _SignUpComponentState createState() => _SignUpComponentState();
+  _Sign_Up_Component_State createState() => _Sign_Up_Component_State();
 }
 
 registrationSucceded(BuildContext context) {
@@ -31,7 +31,7 @@ registrationSucceded(BuildContext context) {
                 Navigator.pop(context);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SignInComponent()),
+                  MaterialPageRoute(builder: (context) => Sign_In_Component()),
                 );
               }))
         ],
@@ -54,7 +54,7 @@ registrationFailed(BuildContext context) {
   );
 }
 
-class _SignUpComponentState extends State<SignUpComponent> {
+class _Sign_Up_Component_State extends State<Sign_Up_Component> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
@@ -359,7 +359,8 @@ class _SignUpComponentState extends State<SignUpComponent> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SignInComponent()),
+                                      builder: (context) =>
+                                          Sign_In_Component()),
                                 );
                               },
                               child: Container(

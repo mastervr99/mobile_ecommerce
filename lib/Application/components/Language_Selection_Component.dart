@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
-class LanguageSelectionComponent extends StatefulWidget {
+class Language_Selection_Component extends StatefulWidget {
   @override
-  _LanguageSelectionComponentState createState() =>
-      _LanguageSelectionComponentState();
+  _Language_Selection_Component_State createState() =>
+      _Language_Selection_Component_State();
 }
 
-class _LanguageSelectionComponentState
-    extends State<LanguageSelectionComponent> {
+class _Language_Selection_Component_State
+    extends State<Language_Selection_Component> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

@@ -1,41 +1,41 @@
 import 'dart:convert';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/CustomDrawerWidget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/AppBarWidget.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/BottomNavBarWidget.dart';
-import 'package:mobile_ecommerce/Application/common_widgets/GridTilesProducts.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
+import 'package:mobile_ecommerce/Application/components/Products_Grid_Tiles_Component.dart';
 import 'package:mobile_ecommerce/Application/usecases/search_product_usecase.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/product_repository_sqflite_impl.dart';
 
-class SearchBarResultsScreen extends StatefulWidget {
+class Products_Search_Screen extends StatefulWidget {
   var searchTerms;
 
-  SearchBarResultsScreen({Key? key, this.searchTerms}) : super(key: key);
+  Products_Search_Screen({Key? key, this.searchTerms}) : super(key: key);
 
   @override
-  _SearchBarResultsScreenState createState() =>
-      _SearchBarResultsScreenState(searchTerms: searchTerms);
+  _Products_Search_Screen_State createState() =>
+      _Products_Search_Screen_State(searchTerms: searchTerms);
 }
 
-class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
+class _Products_Search_Screen_State extends State<Products_Search_Screen> {
   var searchTerms;
 
-  _SearchBarResultsScreenState({this.searchTerms});
+  _Products_Search_Screen_State({this.searchTerms});
 
   TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(context),
-      endDrawer: CustomDrawerWidget(),
-      bottomNavigationBar: BottomNavBarWidget(),
+      appBar: Appbar_Widget(context),
+      endDrawer: Drawer_Widget(),
+      bottomNavigationBar: Bottom_Navbar_Widget(),
       body: Column(
         children: <Widget>[
           //**************** TO REMOVE **************** */
@@ -111,7 +111,7 @@ class _SearchBarResultsScreenState extends State<SearchBarResultsScreen> {
                           children: List<Widget>.generate(productsList!.length,
                               (index) {
                             return GridTile(
-                                child: GridTilesProducts(
+                                child: Products_Grid_Tiles_Component(
                               name: productsList[index]!.getTitle(),
                               imageUrl: productsList[index]!.getImageUrl(),
                               product: productsList[index]!,
@@ -133,11 +133,11 @@ findProducts(var value) async {
   var productRepository = ProductRepostitorySqfliteImpl();
   await productRepository.init();
 
-  SearchProductUsecase searchProductUsecase =
-      SearchProductUsecase(productRepository);
+  Search_Product_Usecase search_product_usecase =
+      Search_Product_Usecase(productRepository);
 
   var searchedProducts =
-      await searchProductUsecase.searchProductsByTitle(value);
+      await search_product_usecase.searchProductsByTitle(value);
 
   return await searchedProducts;
 }

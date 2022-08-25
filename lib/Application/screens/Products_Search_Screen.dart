@@ -38,7 +38,7 @@ class _Products_Search_Screen_State extends State<Products_Search_Screen> {
       bottomNavigationBar: Bottom_Navbar_Widget(),
       body: Column(
         children: <Widget>[
-          //**************** TO REMOVE **************** */
+          // **************** TO REMOVE **************** */
           // ElevatedButton(
           //   style: ElevatedButton.styleFrom(
           //       textStyle: const TextStyle(fontSize: 20)),
@@ -47,6 +47,8 @@ class _Products_Search_Screen_State extends State<Products_Search_Screen> {
           //   },
           //   child: const Text('Enabled'),
           // ),
+          // ******************************** */
+
           Card(
             child: Padding(
               padding: EdgeInsets.all(10.0),
@@ -142,7 +144,7 @@ findProducts(var value) async {
   return await searchedProducts;
 }
 
-//**************** TO REMOVE **************** */
+// **************** TO REMOVE **************** */
 // createProductTable() async {
 //   var productRepository = ProductRepostitorySqfliteImpl();
 //   await productRepository.init();
@@ -181,7 +183,7 @@ findProducts(var value) async {
 //     product.setColor(parsedList[i][4]);
 //     product.setUsage(parsedList[i][5]);
 //     product.setImageUrl(parsedList[i][7]);
-//     product.setPrice(0.01);
+//     product.setPrice(1);
 //     product.setSku(sku);
 
 //     await productRepository.registerProduct(product);

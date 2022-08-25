@@ -5,20 +5,20 @@ import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
 
-class User_Orders_Screen extends StatefulWidget {
+class Order_History_Screen extends StatefulWidget {
   @override
-  _User_Orders_Screen_State createState() => _User_Orders_Screen_State();
+  _Order_History_Screen_State createState() => _Order_History_Screen_State();
 }
 
-class _User_Orders_Screen_State extends State<User_Orders_Screen> {
+class _Order_History_Screen_State extends State<Order_History_Screen> {
   final List<Widget> tabs = <Widget>[
     Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Tab(text: 'Delivered'),
+      child: Tab(text: 'Processing'),
     ),
     Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Tab(text: 'Processing'),
+      child: Tab(text: 'Delivered'),
     ),
     Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),

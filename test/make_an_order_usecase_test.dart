@@ -14,36 +14,7 @@ void main() {
     await db.close();
   }
 
-  group('Shopping Cart :', () {
-    test('Get Shopping Cart Total Price', () async {
-      ShoppingCartItemRepository shoppingCartItemRepository =
-          ShoppingCartItemRepositorySqfliteFfiImpl();
-
-      Product product = Product("lg X");
-      product.setSku(100);
-      product.setPrice(44);
-
-      Product product2 = Product("samsung X");
-      product2.setSku(101);
-      product2.setPrice(55);
-
-      Add_Product_To_Shopping_Cart_Usecase
-          add_product_to_shopping_cart_usecase =
-          Add_Product_To_Shopping_Cart_Usecase(shoppingCartItemRepository);
-
-      await add_product_to_shopping_cart_usecase.addCartItem(product);
-      await add_product_to_shopping_cart_usecase.addCartItem(product2);
-
-      var shoppingCart = ShoppingCart();
-
-      await shoppingCart.setItemRepository(shoppingCartItemRepository);
-
-      var cartItemsPricesTotal = await shoppingCart.getCartTotalPrice();
-      expect(await cartItemsPricesTotal, 99);
-
-      closeSqfliteFfiDatabase();
-    });
-
+  group('Make An Order Usecase :', () {
     test('Get Shopping Cart Total Items quantity', () async {
       ShoppingCartItemRepository shoppingCartItemRepository =
           ShoppingCartItemRepositorySqfliteFfiImpl();
@@ -81,6 +52,34 @@ void main() {
           await shoppingCart.getItemsTotalQuantity();
 
       expect(await newCartItemsTotalQuantity, 3);
+
+      closeSqfliteFfiDatabase();
+    });
+    test('Get Shopping Cart Total Price', () async {
+      ShoppingCartItemRepository shoppingCartItemRepository =
+          ShoppingCartItemRepositorySqfliteFfiImpl();
+
+      Product product = Product("lg X");
+      product.setSku(100);
+      product.setPrice(44);
+
+      Product product2 = Product("samsung X");
+      product2.setSku(101);
+      product2.setPrice(55);
+
+      Add_Product_To_Shopping_Cart_Usecase
+          add_product_to_shopping_cart_usecase =
+          Add_Product_To_Shopping_Cart_Usecase(shoppingCartItemRepository);
+
+      await add_product_to_shopping_cart_usecase.addCartItem(product);
+      await add_product_to_shopping_cart_usecase.addCartItem(product2);
+
+      var shoppingCart = ShoppingCart();
+
+      await shoppingCart.setItemRepository(shoppingCartItemRepository);
+
+      var cartItemsPricesTotal = await shoppingCart.getCartTotalPrice();
+      expect(await cartItemsPricesTotal, 99);
 
       closeSqfliteFfiDatabase();
     });

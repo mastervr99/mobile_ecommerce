@@ -9,7 +9,7 @@ class ProductRepostitorySqfliteImpl extends ProductRepository {
   @override
   init() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, 'products.db');
+    final path = join(databasesPath, 'shopProducts.db');
     database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:mobile_ecommerce/main.dart';
+import 'package:mobile_ecommerce/Application/screens/Order_History_Screen.dart';
 import 'package:mobile_ecommerce/.env.dart';
 
-class StripePaymentController extends GetxController {
+class Stripe_Payment_Controller extends GetxController {
   Map<String, dynamic>? paymentIntentData;
 
   Future<void> makePayment(
@@ -44,7 +44,9 @@ class StripePaymentController extends GetxController {
           duration: const Duration(seconds: 2));
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MyHomePage(title: 'ESHOP')),
+        MaterialPageRoute(
+          builder: (context) => Order_History_Screen(),
+        ),
       );
     } on Exception catch (e) {
       if (e is StripeException) {
@@ -79,7 +81,7 @@ class StripePaymentController extends GetxController {
   }
 
   calculateAmount(String amount) {
-    final a = (int.parse(amount)) * 100;
+    final a = (double.parse(amount)).ceil() * 100;
     return a.toString();
   }
 }

@@ -291,7 +291,22 @@ getShoppingCartTotalQuantity(BuildContext context) async {
 
   await shoppingCart.setItemRepository(shoppingCartItemRepository);
 
-  return await shoppingCart.getItemsTotalQuantity();
+  var shopping_cart_total_quantity = await shoppingCart.getItemsTotalQuantity();
+
+  return await shopping_cart_total_quantity;
+}
+
+getShoppingCartTotalPrice(BuildContext context) async {
+  ShoppingCartItemRepository shoppingCartItemRepository =
+      ShoppingCartItemRepositorySqfliteImpl();
+
+  var shoppingCart = context.watch<ShoppingCart>();
+
+  await shoppingCart.setItemRepository(shoppingCartItemRepository);
+
+  var shopping_cart_total_price = await shoppingCart.getCartTotalPrice();
+
+  return await shopping_cart_total_price;
 }
 
 class OrderCheckoutScreenBottomBar extends StatefulWidget {
@@ -304,36 +319,58 @@ class _OrderCheckoutScreenBottomBarState
     extends State<OrderCheckoutScreenBottomBar> {
   @override
   Widget build(BuildContext context) {
-    final StripePaymentController controller =
-        Get.put(StripePaymentController());
+    final Stripe_Payment_Controller controller =
+        Get.put(Stripe_Payment_Controller());
     return Consumer<ShoppingCart>(builder: (context, settings, child) {
-      return FutureBuilder(
-          future: getShoppingCartTotalQuantity(context),
-          builder: (context, AsyncSnapshot snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-              case ConnectionState.waiting:
-                return Circular_Progress_Widget();
-              default:
-                if (snapshot.hasError)
-                  return Text('Error: ${snapshot.error}');
-                else
-                  return Container(
-                    padding: EdgeInsets.symmetric(horizontal: 32.0),
-                    height: 48.0,
-                    color: Colors.red,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 32.0),
+        height: 48.0,
+        color: Colors.red,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              'Subtotal',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16),
+            ),
+            FutureBuilder(
+              future: getShoppingCartTotalQuantity(context),
+              builder: (context, AsyncSnapshot snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                  case ConnectionState.waiting:
+                    return Circular_Progress_Widget();
+                  default:
+                    if (snapshot.hasError)
+                      return Text('Error: ${snapshot.error}');
+                    else
+                      return Text(
+                        snapshot.data.toString() + ' items',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      );
+                }
+              },
+            ),
+            FutureBuilder(
+              future: getShoppingCartTotalPrice(context),
+              builder: (context, AsyncSnapshot snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                  case ConnectionState.waiting:
+                    return Circular_Progress_Widget();
+                  default:
+                    if (snapshot.hasError)
+                      return Text('Error: ${snapshot.error}');
+                    else
+                      return Row(children: [
                         Text(
-                          'Subtotal',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
-                        ),
-                        Text(
-                          snapshot.data.toString() + ' items',
+                          snapshot.data.toString() + '€',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -345,28 +382,93 @@ class _OrderCheckoutScreenBottomBarState
                           child: Text(translate('PAY')),
                           onPressed: (() async {
                             await controller.makePayment(
-                                context: context, amount: '5', currency: 'USD');
+                                context: context,
+                                amount: snapshot.data.toString(),
+                                currency: 'USD');
                           }),
                         ),
-                        // CardField(
-                        //   onCardChanged: (card) {
-                        //     print(card);
-                        //   },
-                        // ),
-                        // TextButton(
-                        //   onPressed: () async {
-                        //     // create payment method
-                        //     // final paymentMethod = await Stripe.instance
-                        //     //     .createPaymentMethod(
-                        //     //         PaymentMethodParams.card());
-                        //   },
-                        //   child: Text('pay'),
-                        // ),
-                      ],
-                    ),
-                  );
-            }
-          });
+                      ]);
+                }
+              },
+            ),
+            // CardField(
+            //   onCardChanged: (card) {
+            //     print(card);
+            //   },
+            // ),
+            // TextButton(
+            //   onPressed: () async {
+            //     // create payment method
+            //     // final paymentMethod = await Stripe.instance
+            //     //     .createPaymentMethod(
+            //     //         PaymentMethodParams.card());
+            //   },
+            //   child: Text('pay'),
+            // ),
+          ],
+        ),
+      );
+
+      // return FutureBuilder(
+      //     future: getShoppingCartTotalQuantity(context),
+      //     builder: (context, AsyncSnapshot snapshot) {
+      //       switch (snapshot.connectionState) {
+      //         case ConnectionState.none:
+      //         case ConnectionState.waiting:
+      //           return Circular_Progress_Widget();
+      //         default:
+      //           if (snapshot.hasError)
+      //             return Text('Error: ${snapshot.error}');
+      //           else
+      //             return Container(
+      //               padding: EdgeInsets.symmetric(horizontal: 32.0),
+      //               height: 48.0,
+      //               color: Colors.red,
+      //               child: Row(
+      //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                 children: <Widget>[
+      //                   Text(
+      //                     'Subtotal',
+      //                     style: TextStyle(
+      //                         color: Colors.white,
+      //                         fontWeight: FontWeight.bold,
+      //                         fontSize: 16),
+      //                   ),
+      //                   Text(
+      //                     snapshot.data.toString() + ' items',
+      //                     style: TextStyle(
+      //                         color: Colors.white,
+      //                         fontWeight: FontWeight.bold,
+      //                         fontSize: 16),
+      //                   ),
+      //                   ElevatedButton(
+      //                     style: ElevatedButton.styleFrom(
+      //                         primary: Color(0xFFAC252B)),
+      //                     child: Text(translate('PAY')),
+      //                     onPressed: (() async {
+      //                       await controller.makePayment(
+      //                           context: context, amount: '5', currency: 'USD');
+      //                     }),
+      //                   ),
+      //                   // CardField(
+      //                   //   onCardChanged: (card) {
+      //                   //     print(card);
+      //                   //   },
+      //                   // ),
+      //                   // TextButton(
+      //                   //   onPressed: () async {
+      //                   //     // create payment method
+      //                   //     // final paymentMethod = await Stripe.instance
+      //                   //     //     .createPaymentMethod(
+      //                   //     //         PaymentMethodParams.card());
+      //                   //   },
+      //                   //   child: Text('pay'),
+      //                   // ),
+      //                 ],
+      //               ),
+      //             );
+      //       }
+      //     });
     });
   }
 }

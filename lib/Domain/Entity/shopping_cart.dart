@@ -37,7 +37,9 @@ class ShoppingCart extends ChangeNotifier {
 
   getCartTotalPrice() async {
     var cartTotalPrice = 0.00;
-    var cartItems = await getAllCartItems();
+
+    await shoppingCartItemRepository.init();
+    var cartItems = await shoppingCartItemRepository.retrieveAllItems();
 
     for (var i = 0; i < await cartItems.length; i++) {
       var itemTotalPrice =
@@ -49,18 +51,24 @@ class ShoppingCart extends ChangeNotifier {
     //Limit decimals to 2
     cartTotalPrice = double.parse((await cartTotalPrice).toStringAsFixed(2));
 
+    await shoppingCartItemRepository.close();
+
     return await cartTotalPrice;
   }
 
   getItemsTotalQuantity() async {
     var itemsTotalQuantity = 0;
-    var cartItems = await getAllCartItems();
+
+    await shoppingCartItemRepository.init();
+    var cartItems = await shoppingCartItemRepository.retrieveAllItems();
 
     for (var i = 0; i < await cartItems.length; i++) {
       int itemQuantity = await cartItems[i].getQuantity();
 
       itemsTotalQuantity += await itemQuantity;
     }
+
+    await shoppingCartItemRepository.close();
 
     return await itemsTotalQuantity;
   }

@@ -5,9 +5,10 @@ import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'Repositories_impl_test/connected_user_repository_sqflite_ffi_impl.dart';
-import 'Repositories_impl_test/user_repository_sqflite_ffi_impl.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
+
+import 'Repositories_test/connected_user_repository_sqflite_ffi_impl.dart';
+import 'Repositories_test/user_repository_sqflite_ffi_impl.dart';
 
 void main() {
   closeSqfliteFfiDatabase() async {

@@ -8,8 +8,8 @@ import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repositor
 import 'package:sqflite/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-import 'Repositories_test/connected_user_repository_sqflite_ffi_impl.dart';
-import 'Repositories_test/user_repository_sqflite_ffi_impl.dart';
+import 'Repositories_impl_test/connected_user_repository_sqflite_ffi_impl.dart';
+import 'Repositories_impl_test/user_repository_sqflite_ffi_impl.dart';
 
 void main() {
   closeSqfliteFfiDatabase() async {

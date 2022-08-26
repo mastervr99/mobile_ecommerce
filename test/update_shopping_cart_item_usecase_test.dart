@@ -7,7 +7,7 @@ import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_
 import 'package:sqflite/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-import 'Repositories_test/shopping_cart_item_repository_sqflite_ffi_impl.dart';
+import 'Repositories_impl_test/shopping_cart_item_repository_sqflite_ffi_impl.dart';
 
 void main() {
   closeSqfliteFfiDatabase() async {

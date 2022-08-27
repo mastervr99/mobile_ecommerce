@@ -89,36 +89,10 @@ void main() {
       Search_Product_Usecase search_product_usecase =
           Search_Product_Usecase(productRepository);
 
-      // // ***********************************************
-      // var productsTest =
-      //     await productRepository.retrieveProductsForTest('gini');
-
-      // List<Product> searchedProducts = [];
-
-      // productsTest.forEach((productData) {
-      //   Product product = Product(productData['title'] ?? '');
-      //   product.setDescription(productData['description'] ?? '');
-      //   product.setGender(productData['gender'] ?? '');
-      //   product.setCategory(productData['category'] ?? '');
-      //   product.setSubCategory(productData['subCategory'] ?? '');
-      //   product.setType(productData['type'] ?? '');
-      //   product.setColor(productData['color'] ?? '');
-      //   product.setUsage(productData['usage'] ?? '');
-      //   product.setImageUrl(productData['imageUrl'] ?? '');
-
-      //   searchedProducts.add(product);
-      // });
-
-      // // expect(searchedProducts[0].toMap(), true);
-
-      // // ***********************************************
-
       var searchedProduct =
           await search_product_usecase.searchProductsByTitle("Gini");
       expect(await searchedProduct[0].getTitle(),
           'Gini and Jony Girls Knit White Top');
-
-      // expect(await searchedProduct[0].toMap(), 'searchedProduct color');
 
       expect(await searchedProduct[0].getImageUrl(),
           'http://assets.myntassets.com/v1/images/style/properties/f3964f76c78edd85f4512d98b26d52e9_images.jpg');

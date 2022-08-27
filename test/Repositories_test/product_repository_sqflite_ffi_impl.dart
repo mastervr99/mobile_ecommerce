@@ -74,13 +74,6 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
     return searchResults;
   }
 
-  // retrieveProductsForTest(String productTitle) async {
-  //   var searchedProductsInDb = [];
-  //   searchedProductsInDb = await database
-  //       .rawQuery("SELECT * FROM products WHERE title like '%$productTitle%'");
-  //   return searchedProductsInDb;
-  // }
-
   @override
   _close_database() {}
 }

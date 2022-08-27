@@ -71,16 +71,6 @@ class ShoppingCartItemRepositorySqfliteFfiImpl
     }
   }
 
-  // @override
-  // incrementItemQuantityByOne(Product product) async {
-  //   var itemInDb = await database.rawQuery(
-  //       'SELECT * FROM shoppingCartItems WHERE sku = ?', [product.getSku()]);
-  //   var newItemQuantity = await itemInDb[0]['quantity'] + 1;
-  //   await database.rawUpdate(
-  //       'UPDATE shoppingCartItems SET quantity = ? WHERE sku = ?',
-  //       [await newItemQuantity, product.getSku()]);
-  // }
-
   @override
   retrieveAllItems() async {
     await _init_database();

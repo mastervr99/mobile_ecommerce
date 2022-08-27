@@ -20,39 +20,8 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
 
   @override
   Widget build(BuildContext context) {
-    // return Consumer<ShoppingCart>(builder: (context, settings, child) {
-    //   return FutureBuilder(
-    //     future: getShoppingCartTotalQuantity(context),
-    //     builder: (context, AsyncSnapshot snapshot) {
-    //       switch (snapshot.connectionState) {
-    //         case ConnectionState.none:
-    //         case ConnectionState.waiting:
-    //           return CircularProgress();
-    //         default:
-    //           if (snapshot.hasError)
-    //             return Text('Error: ${snapshot.error}');
-    //           else
-    // return createDetailView(context, snapshot);
-
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0.0,
-      //   iconTheme: IconThemeData(color: Colors.grey),
-      //   actions: <Widget>[
-      //     // IconButton(
-      //     //   icon: Image.asset('assets/icons/denied_wallet.png'),
-      //     //   onPressed: () => Navigator.of(context)
-      //     //       .push(MaterialPageRoute(builder: (_) => UnpaidPage())),
-      //     // )
-      //   ],
-      //   title: Text(
-      //     'Checkout',
-      //     style: TextStyle(
-      //         color: Colors.grey, fontWeight: FontWeight.w500, fontSize: 18.0),
-      //   ),
-      // ),
       appBar: Appbar_Widget(context),
       body: LayoutBuilder(
         builder: (_, constraints) => SingleChildScrollView(
@@ -62,22 +31,6 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                // SizedBox(
-                //   height: 300,
-                //   child: Scrollbar(
-                //     child: ListView.builder(
-                //       itemBuilder: (_, index) => ShopItemList(
-                //         products[index],
-                //         onRemove: () {
-                //           setState(() {
-                //             products.remove(products[index]);
-                //           });
-                //         },
-                //       ),
-                //       itemCount: products.length,
-                //     ),
-                //   ),
-                // ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
@@ -205,9 +158,6 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
                                       }),
                                 ],
                               ),
-                              //**************** TO REMOVE **************** */
-                              // CardFormField(
-                              //     controller: CardFormEditController()),
                             ],
                           ),
                         ),
@@ -242,33 +192,6 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
                   ),
                   // ),
                 ),
-
-                // SizedBox(
-                //   height: 250,
-                //   child: Swiper(
-                //     itemCount: 2,
-                //     itemBuilder: (_, index) {
-                //       return CreditCard();
-                //     },
-                //     scale: 0.8,
-                //     controller: swiperController,
-                //     viewportFraction: 0.6,
-                //     loop: false,
-                //     fade: 0.7,
-                //   ),
-                // ),
-                // SizedBox(height: 24),
-                // Center(
-                //     child: Padding(
-                //   padding: EdgeInsets.only(
-                //       bottom:
-                //           MediaQuery.of(context).padding.bottom == 0
-                //               ? 20
-                //               : MediaQuery.of(context)
-                //                   .padding
-                //                   .bottom),
-                //   child: ElevatedButton,
-                // ))
               ],
             ),
           ),
@@ -391,84 +314,9 @@ class _OrderCheckoutScreenBottomBarState
                 }
               },
             ),
-            // CardField(
-            //   onCardChanged: (card) {
-            //     print(card);
-            //   },
-            // ),
-            // TextButton(
-            //   onPressed: () async {
-            //     // create payment method
-            //     // final paymentMethod = await Stripe.instance
-            //     //     .createPaymentMethod(
-            //     //         PaymentMethodParams.card());
-            //   },
-            //   child: Text('pay'),
-            // ),
           ],
         ),
       );
-
-      // return FutureBuilder(
-      //     future: getShoppingCartTotalQuantity(context),
-      //     builder: (context, AsyncSnapshot snapshot) {
-      //       switch (snapshot.connectionState) {
-      //         case ConnectionState.none:
-      //         case ConnectionState.waiting:
-      //           return Circular_Progress_Widget();
-      //         default:
-      //           if (snapshot.hasError)
-      //             return Text('Error: ${snapshot.error}');
-      //           else
-      //             return Container(
-      //               padding: EdgeInsets.symmetric(horizontal: 32.0),
-      //               height: 48.0,
-      //               color: Colors.red,
-      //               child: Row(
-      //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                 children: <Widget>[
-      //                   Text(
-      //                     'Subtotal',
-      //                     style: TextStyle(
-      //                         color: Colors.white,
-      //                         fontWeight: FontWeight.bold,
-      //                         fontSize: 16),
-      //                   ),
-      //                   Text(
-      //                     snapshot.data.toString() + ' items',
-      //                     style: TextStyle(
-      //                         color: Colors.white,
-      //                         fontWeight: FontWeight.bold,
-      //                         fontSize: 16),
-      //                   ),
-      //                   ElevatedButton(
-      //                     style: ElevatedButton.styleFrom(
-      //                         primary: Color(0xFFAC252B)),
-      //                     child: Text(translate('PAY')),
-      //                     onPressed: (() async {
-      //                       await controller.makePayment(
-      //                           context: context, amount: '5', currency: 'USD');
-      //                     }),
-      //                   ),
-      //                   // CardField(
-      //                   //   onCardChanged: (card) {
-      //                   //     print(card);
-      //                   //   },
-      //                   // ),
-      //                   // TextButton(
-      //                   //   onPressed: () async {
-      //                   //     // create payment method
-      //                   //     // final paymentMethod = await Stripe.instance
-      //                   //     //     .createPaymentMethod(
-      //                   //     //         PaymentMethodParams.card());
-      //                   //   },
-      //                   //   child: Text('pay'),
-      //                   // ),
-      //                 ],
-      //               ),
-      //             );
-      //       }
-      //     });
     });
   }
 }
@@ -492,8 +340,6 @@ class _DeliveryAdressSelectionState extends State<DeliveryAdressSelection> {
             Container(
               height: 165.0,
               width: 56.0,
-              // child: Card(
-              //   elevation: 3.0,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
@@ -503,14 +349,11 @@ class _DeliveryAdressSelectionState extends State<DeliveryAdressSelection> {
                           IconButton(icon: Icon(Icons.add), onPressed: null)),
                 ],
               ),
-              // ),
             ),
             Container(
               height: 165.0,
               width: 200.0,
               margin: EdgeInsets.all(7.0),
-              // child: Card(
-              //   elevation: 3.0,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -591,14 +434,11 @@ class _DeliveryAdressSelectionState extends State<DeliveryAdressSelection> {
                   ),
                 ],
               ),
-              // ),
             ),
             Container(
               height: 130.0,
               width: 200.0,
               margin: EdgeInsets.all(7.0),
-              // child: Card(
-              //   elevation: 3.0,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -679,14 +519,11 @@ class _DeliveryAdressSelectionState extends State<DeliveryAdressSelection> {
                   ),
                 ],
               ),
-              // ),
             ),
             Container(
               height: 130.0,
               width: 200.0,
               margin: EdgeInsets.all(7.0),
-              // child: Card(
-              //   elevation: 3.0,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -767,7 +604,6 @@ class _DeliveryAdressSelectionState extends State<DeliveryAdressSelection> {
                   ),
                 ],
               ),
-              // ),
             ),
           ],
         ));

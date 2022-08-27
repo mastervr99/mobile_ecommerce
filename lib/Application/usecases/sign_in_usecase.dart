@@ -36,8 +36,6 @@ class SignInUsecase {
 
   checkIfUserConnected() async {
     var connectedUser = await connectedUserRepository.retrieveConnectedUser();
-    // **************** REMOVED BECAUSE OF A PROBLEM - TO REMOVE *****************
-    // await connectedUserRepository.close();
 
     if (await connectedUser.runtimeType == User) {
       return true;

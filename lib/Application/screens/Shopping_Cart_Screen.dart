@@ -400,28 +400,6 @@ class _MyCounterState extends State<MyCounter> {
         ],
       ),
       SizedBox(height: 15),
-      // ElevatedButton(
-      //   style: ElevatedButton.styleFrom(
-      //     primary: Color(0xFFAC252B),
-      //     shape: RoundedRectangleBorder(
-      //       borderRadius: BorderRadius.circular(15.0),
-      //     ),
-      //   ),
-      //   child: Text(
-      //     translate("label_remove_cart_item"),
-      //     style: Theme.of(context).textTheme.button!.copyWith(
-      //           color: Colors.white,
-      //         ),
-      //   ),
-      //   onPressed: () async {
-      //     await removeCartItem(widget.shoppingCartItem);
-
-      //     Navigator.pushReplacement(
-      //         context,
-      //         MaterialPageRoute(
-      //             builder: (BuildContext context) => ShoppingCartScreen()));
-      //   },
-      // ),
     ]);
   }
 }

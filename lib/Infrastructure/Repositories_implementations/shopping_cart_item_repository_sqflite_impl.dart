@@ -8,7 +8,7 @@ class ShoppingCartItemRepositorySqfliteImpl extends ShoppingCartItemRepository {
   late var database;
 
   @override
-  init() async {
+  _init_database() async {
     final databasesPath = await getDatabasesPath();
     final path = join(databasesPath, 'shoppingCartItems.db');
     database = await openDatabase(path, version: 1,
@@ -36,6 +36,8 @@ class ShoppingCartItemRepositorySqfliteImpl extends ShoppingCartItemRepository {
 
   @override
   registerItem(Product product) async {
+    await _init_database();
+
     var productData = product.toMap();
     ShoppingCartItem shoppingCartItem =
         ShoppingCartItem(productData['title'] ?? '');
@@ -51,22 +53,31 @@ class ShoppingCartItemRepositorySqfliteImpl extends ShoppingCartItemRepository {
     shoppingCartItem.setSku(productData['sku'] ?? 100);
     shoppingCartItem.setQuantity(1);
     await database.insert('shoppingCartItems', shoppingCartItem.toMap());
+    await _close_database();
   }
 
   @override
   checkIfProductIsAlreadyInCart(Product product) async {
+    await _init_database();
+
     var itemInDb = await database.rawQuery(
         'SELECT * FROM shoppingCartItems WHERE sku = ?', [product.getSku()]);
 
     if (await itemInDb.isEmpty) {
+      await _close_database();
+
       return false;
     } else {
+      await _close_database();
+
       return true;
     }
   }
 
   @override
   retrieveAllItems() async {
+    await _init_database();
+
     var allCartItemsinDB =
         await database.rawQuery("SELECT * FROM shoppingCartItems");
 
@@ -91,12 +102,15 @@ class ShoppingCartItemRepositorySqfliteImpl extends ShoppingCartItemRepository {
         allCartItems.add(shoppingCartItem);
       });
     }
+    await _close_database();
 
     return allCartItems;
   }
 
   @override
   findItemWithSku(int sku) async {
+    await _init_database();
+
     var itemData = await database
         .rawQuery('SELECT * FROM shoppingCartItems WHERE sku = ?', [sku]);
 
@@ -115,26 +129,38 @@ class ShoppingCartItemRepositorySqfliteImpl extends ShoppingCartItemRepository {
       shoppingCartItem.setQuantity(await itemData[0]['quantity'] ?? 1);
       shoppingCartItem.setSku(itemData[0]['sku'] ?? 100);
 
+      await _close_database();
+
       return shoppingCartItem;
     } else {
+      await _close_database();
+
       return [];
     }
   }
 
   @override
   updateItemData(ShoppingCartItem item) async {
+    await _init_database();
+
     await database.update('shoppingCartItems', item.toMap(),
         where: "sku = ?", whereArgs: [item.getSku()]);
+
+    await _close_database();
   }
 
   @override
   deleteItemData(ShoppingCartItem item) async {
+    await _init_database();
+
     await database.delete('shoppingCartItems',
         where: "sku = ?", whereArgs: [item.getSku()]);
+
+    await _close_database();
   }
 
   @override
-  close() async {
+  _close_database() async {
     await database.close();
   }
 }

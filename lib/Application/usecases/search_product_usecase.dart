@@ -6,10 +6,8 @@ class Search_Product_Usecase {
   Search_Product_Usecase(this.productRepository);
 
   searchProductsByTitle(String productTitle) async {
-    await productRepository.init();
     var productList =
         await productRepository.retrieveProductsByTitle(productTitle);
-    await productRepository.close();
 
     return await productList;
   }

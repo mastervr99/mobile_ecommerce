@@ -7,10 +7,7 @@ class SignUpUsecase {
   SignUpUsecase(this.userRepository);
 
   checkIfNewUser(User user) async {
-    await userRepository.init();
-
     var registeredUser = await userRepository.retrieveUser(user);
-    await userRepository.close();
 
     if (registeredUser is User) {
       return false;
@@ -20,10 +17,7 @@ class SignUpUsecase {
   }
 
   signUp(User newUser) async {
-    await userRepository.init();
-
     var result = await userRepository.registerUser(newUser);
-    await userRepository.close();
 
     return result;
   }

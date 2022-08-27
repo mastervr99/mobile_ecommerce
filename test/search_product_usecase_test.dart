@@ -18,7 +18,6 @@ void main() {
   group('Search Product Usecase', () {
     test('search results can return multiple products', () async {
       var productRepository = ProductRepostitorySqfliteFfiImpl();
-      await productRepository.init();
 
       Product product = Product("nokia 12");
       Product product2 = Product("nokia 11");
@@ -45,7 +44,6 @@ void main() {
 
     test('create database from csv', () async {
       var productRepository = ProductRepostitorySqfliteFfiImpl();
-      await productRepository.init();
 
       TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -130,7 +128,6 @@ void main() {
 
     test('Search with multiple words', () async {
       var productRepository = ProductRepostitorySqfliteFfiImpl();
-      await productRepository.init();
 
       Product product = Product("samsung 10 red");
       Product product2 = Product("samsung 12 blue");
@@ -152,7 +149,6 @@ void main() {
 
     test('search return product with all searchs terms in title', () async {
       var productRepository = ProductRepostitorySqfliteFfiImpl();
-      await productRepository.init();
 
       Product product = Product("lg 10 red");
       Product product2 = Product("lg 12 blue");

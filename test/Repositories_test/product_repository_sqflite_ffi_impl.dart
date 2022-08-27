@@ -7,7 +7,7 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
   late var database;
 
   @override
-  init() async {
+  _init_database() async {
     database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
     await database.execute('''
       CREATE TABLE IF NOT EXISTS products (
@@ -28,11 +28,17 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
   }
 
   registerProduct(Product product) async {
+    await _init_database();
+
     await database.insert('products', product.toMap());
+
+    await _close_database();
   }
 
   @override
   retrieveProductsByTitle(String searchKeywords) async {
+    await _init_database();
+
     var searchedProductsInDb = [];
 
     var searchTerms = searchKeywords.split(' ');
@@ -63,6 +69,8 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
       searchResults.add(product);
     });
 
+    await _close_database();
+
     return searchResults;
   }
 
@@ -74,5 +82,5 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
   // }
 
   @override
-  close() {}
+  _close_database() {}
 }

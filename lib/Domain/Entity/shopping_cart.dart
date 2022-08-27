@@ -3,7 +3,6 @@ import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_
 
 class ShoppingCart extends ChangeNotifier {
   late ShoppingCartItemRepository shoppingCartItemRepository;
-  // double cartTotalPrice = 0.00;
 
   setItemRepository(ShoppingCartItemRepository shoppingCartItemRepository) {
     this.shoppingCartItemRepository = shoppingCartItemRepository;
@@ -11,34 +10,13 @@ class ShoppingCart extends ChangeNotifier {
 
   getAllCartItems() async {
     var _cartItems = [];
-    await shoppingCartItemRepository.init();
     _cartItems = await shoppingCartItemRepository.retrieveAllItems();
-    await shoppingCartItemRepository.close();
     return await _cartItems;
   }
-
-  // updateCartTotalPrice() async {
-  //   var localCartTotalPrice = 0.00;
-  //   var cartItems = await getAllCartItems();
-
-  //   for (var i = 0; i < await cartItems.length; i++) {
-  //     var itemTotalPrice =
-  //         await cartItems[i].getQuantity() * await cartItems[i].getPrice();
-
-  //     localCartTotalPrice += await itemTotalPrice;
-  //   }
-
-  //   //Limit decimals numbers to 2
-  //   cartTotalPrice =
-  //       double.parse((await localCartTotalPrice).toStringAsFixed(2));
-
-  //   notifyListeners();
-  // }
 
   getCartTotalPrice() async {
     var cartTotalPrice = 0.00;
 
-    await shoppingCartItemRepository.init();
     var cartItems = await shoppingCartItemRepository.retrieveAllItems();
 
     for (var i = 0; i < await cartItems.length; i++) {
@@ -51,15 +29,12 @@ class ShoppingCart extends ChangeNotifier {
     //Limit decimals to 2
     cartTotalPrice = double.parse((await cartTotalPrice).toStringAsFixed(2));
 
-    await shoppingCartItemRepository.close();
-
     return await cartTotalPrice;
   }
 
   getItemsTotalQuantity() async {
     var itemsTotalQuantity = 0;
 
-    await shoppingCartItemRepository.init();
     var cartItems = await shoppingCartItemRepository.retrieveAllItems();
 
     for (var i = 0; i < await cartItems.length; i++) {
@@ -67,8 +42,6 @@ class ShoppingCart extends ChangeNotifier {
 
       itemsTotalQuantity += await itemQuantity;
     }
-
-    await shoppingCartItemRepository.close();
 
     return await itemsTotalQuantity;
   }

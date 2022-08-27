@@ -5,12 +5,12 @@ import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
 
-class Order_History_Screen extends StatefulWidget {
+class Orders_History_Screen extends StatefulWidget {
   @override
-  _Order_History_Screen_State createState() => _Order_History_Screen_State();
+  _Orders_History_Screen_State createState() => _Orders_History_Screen_State();
 }
 
-class _Order_History_Screen_State extends State<Order_History_Screen> {
+class _Orders_History_Screen_State extends State<Orders_History_Screen> {
   final List<Widget> tabs = <Widget>[
     Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -82,10 +82,10 @@ class _Order_History_Screen_State extends State<Order_History_Screen> {
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: TabBarView(
                               children: <Widget>[
-                                buildOrderList(snapshot.data),
-                                buildOrderList(snapshot.data),
-                                // buildOrderList(state.orderData, bloc),
-                                // buildOrderList(state.orderData, bloc),
+                                buildOrdersList(snapshot.data),
+                                buildOrdersList(snapshot.data),
+                                // buildOrdersList(state.orderData, bloc),
+                                // buildOrdersList(state.orderData, bloc),
                               ],
                             ),
                           );
@@ -101,7 +101,7 @@ class _Order_History_Screen_State extends State<Order_History_Screen> {
   }
 }
 
-ListView buildOrderList(List orders) {
+ListView buildOrdersList(List orders) {
   return ListView.builder(
       shrinkWrap: true,
       itemCount: orders.length,

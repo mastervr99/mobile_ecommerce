@@ -7,10 +7,6 @@ class Remove_Shopping_Cart_Item_Usecase {
   Remove_Shopping_Cart_Item_Usecase(this.shoppingCartItemRepository);
 
   removeItem(ShoppingCartItem shoppingCartItem) async {
-    await shoppingCartItemRepository.init();
-
     await shoppingCartItemRepository.deleteItemData(shoppingCartItem);
-
-    await shoppingCartItemRepository.close();
   }
 }

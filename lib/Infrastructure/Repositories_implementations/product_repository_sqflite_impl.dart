@@ -7,7 +7,7 @@ class ProductRepostitorySqfliteImpl extends ProductRepository {
   late var database;
 
   @override
-  init() async {
+  _init_database() async {
     final databasesPath = await getDatabasesPath();
     final path = join(databasesPath, 'shopProducts.db');
     database = await openDatabase(path, version: 1,
@@ -33,11 +33,17 @@ class ProductRepostitorySqfliteImpl extends ProductRepository {
   }
 
   registerProduct(Product product) async {
+    await _init_database();
+
     await database.insert('Products', product.toMap());
+
+    await _close_database();
   }
 
   @override
   retrieveProductsByTitle(String searchKeywords) async {
+    await _init_database();
+
     var searchedProductsInDb = [];
 
     var searchTerms = searchKeywords.split(' ');
@@ -68,11 +74,13 @@ class ProductRepostitorySqfliteImpl extends ProductRepository {
       searchedProducts.add(product);
     });
 
+    await _close_database();
+
     return searchedProducts;
   }
 
   @override
-  close() async {
+  _close_database() async {
     await database.close();
   }
 }

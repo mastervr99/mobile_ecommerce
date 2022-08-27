@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:sqflite/sqflite.dart';
@@ -8,7 +7,7 @@ class UserRepositorySqfliteImpl extends UserRepository {
   late var database;
 
   @override
-  init() async {
+  _init_database() async {
     final databasesPath = await getDatabasesPath();
     final path = join(databasesPath, 'users.db');
     database = await openDatabase(path, version: 1,
@@ -28,15 +27,21 @@ class UserRepositorySqfliteImpl extends UserRepository {
 
   @override
   registerUser(User newUser) async {
+    await _init_database();
     await database.insert('Users', newUser.toMap());
+    await _close_database();
   }
 
   @override
   retrieveUser(User user) async {
+    await _init_database();
+
     var userInfos = await database
         .rawQuery('SELECT * FROM Users WHERE email = ?', [user.getUserEmail()]);
 
     if (userInfos.isEmpty) {
+      await _close_database();
+
       return false;
     } else {
       User registeredUser = User();
@@ -46,12 +51,14 @@ class UserRepositorySqfliteImpl extends UserRepository {
       registeredUser.setUserEmail(await userInfos[0]['email']);
       registeredUser.setUserPassword(await userInfos[0]['password']);
 
+      await _close_database();
+
       return registeredUser;
     }
   }
 
   @override
-  Future<void> close() async {
+  _close_database() async {
     await database.close();
   }
 }

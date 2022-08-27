@@ -132,8 +132,8 @@ class _Products_Search_Screen_State extends State<Products_Search_Screen> {
 }
 
 findProducts(var value) async {
-  var productRepository = ProductRepostitorySqfliteImpl();
-  await productRepository.init();
+  ProductRepostitorySqfliteImpl productRepository =
+      ProductRepostitorySqfliteImpl();
 
   Search_Product_Usecase search_product_usecase =
       Search_Product_Usecase(productRepository);

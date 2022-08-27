@@ -7,7 +7,7 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
   late var database;
 
   @override
-  init() async {
+  _init_database() async {
     database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
     await database.execute('''
       CREATE TABLE IF NOT EXISTS Users (
@@ -22,15 +22,20 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
 
   @override
   registerUser(User newUser) async {
+    await _init_database();
+
     await database.insert('Users', newUser.toMap());
+    await _close_database();
   }
 
   @override
   retrieveUser(User user) async {
+    await _init_database();
     var userInfos = await database
         .rawQuery('SELECT * FROM Users WHERE email = ?', [user.getUserEmail()]);
 
     if (userInfos.isEmpty) {
+      await _close_database();
       return false;
     } else {
       User registeredUser = User();
@@ -40,10 +45,11 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
       registeredUser.setUserEmail(await userInfos[0]['email']);
       registeredUser.setUserPassword(await userInfos[0]['password']);
 
+      await _close_database();
       return registeredUser;
     }
   }
 
   @override
-  close() {}
+  _close_database() {}
 }

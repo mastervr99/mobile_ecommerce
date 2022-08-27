@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:mobile_ecommerce/Application/screens/Order_History_Screen.dart';
+import 'package:mobile_ecommerce/Application/screens/Orders_History_Screen.dart';
 import 'package:mobile_ecommerce/.env.dart';
 
 class Stripe_Payment_Controller extends GetxController {
@@ -45,7 +45,7 @@ class Stripe_Payment_Controller extends GetxController {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => Order_History_Screen(),
+          builder: (context) => Orders_History_Screen(),
         ),
       );
     } on Exception catch (e) {

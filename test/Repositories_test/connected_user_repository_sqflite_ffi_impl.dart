@@ -7,7 +7,7 @@ class ConnectedUserRepositorySqfliteFfiImpl extends ConnectedUserRepository {
   late var database;
 
   @override
-  init() async {
+  _init_database() async {
     database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
     await database.execute('''
       CREATE TABLE IF NOT EXISTS ConnectedUser (
@@ -22,15 +22,21 @@ class ConnectedUserRepositorySqfliteFfiImpl extends ConnectedUserRepository {
 
   @override
   registerUser(User newUser) async {
+    await _init_database();
     await database.insert('ConnectedUser', newUser.toMap());
+    await _close_database();
   }
 
   @override
   retrieveConnectedUser() async {
+    await _init_database();
+
     var connectedUserData =
         await database.rawQuery('SELECT * FROM ConnectedUser');
 
     if (await connectedUserData.isEmpty) {
+      await _close_database();
+
       return [];
     } else {
       User connectedUser = User();
@@ -40,14 +46,20 @@ class ConnectedUserRepositorySqfliteFfiImpl extends ConnectedUserRepository {
       connectedUser.setUserEmail(await connectedUserData[0]['email']);
       connectedUser.setUserPassword(await connectedUserData[0]['password']);
 
+      await _close_database();
+
       return await connectedUser;
     }
   }
 
+  @override
   removeConnectedUser() async {
+    await _init_database();
+
     await database.rawQuery('DELETE FROM ConnectedUser');
+    await _close_database();
   }
 
   @override
-  close() {}
+  _close_database() {}
 }

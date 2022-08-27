@@ -1,7 +1,7 @@
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 
 abstract class ConnectedUserRepository {
-  init();
+  _init_database();
 
   registerUser(User newUser);
 
@@ -9,5 +9,5 @@ abstract class ConnectedUserRepository {
 
   removeConnectedUser();
 
-  close();
+  _close_database();
 }

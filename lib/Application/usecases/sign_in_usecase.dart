@@ -9,10 +9,7 @@ class SignInUsecase {
   SignInUsecase(this.userRepository, this.connectedUserRepository);
 
   checkIfEmailRegistered(User user) async {
-    await userRepository.init();
-
     var registeredUser = await userRepository.retrieveUser(user);
-    await userRepository.close();
 
     if (registeredUser is User) {
       return true;
@@ -22,10 +19,8 @@ class SignInUsecase {
   }
 
   checkIfValidAccountPassword(User user) async {
-    await userRepository.init();
     var registeredUser = await userRepository.retrieveUser(user);
     var registeredUserPassword = await registeredUser.getUserPassword();
-    await userRepository.close();
 
     if (user.getUserPassword() == await registeredUserPassword) {
       return true;
@@ -35,19 +30,13 @@ class SignInUsecase {
   }
 
   signIn(User userToConnect) async {
-    await userRepository.init();
-    await connectedUserRepository.init();
     User registeredUser = await userRepository.retrieveUser(userToConnect);
     await connectedUserRepository.registerUser(await registeredUser);
-
-    await userRepository.close();
-    await connectedUserRepository.close();
   }
 
   checkIfUserConnected() async {
-    await connectedUserRepository.init();
     var connectedUser = await connectedUserRepository.retrieveConnectedUser();
-    // **************** TO RECTIFY *****************
+    // **************** REMOVED BECAUSE OF A PROBLEM - TO REMOVE *****************
     // await connectedUserRepository.close();
 
     if (await connectedUser.runtimeType == User) {

@@ -10,7 +10,7 @@ class ShoppingCartItemRepositorySqfliteFfiImpl
   late var database;
 
   @override
-  init() async {
+  _init_database() async {
     database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
     await database.execute('''
       CREATE TABLE IF NOT EXISTS shoppingCartItems (
@@ -33,6 +33,8 @@ class ShoppingCartItemRepositorySqfliteFfiImpl
 
   @override
   registerItem(Product product) async {
+    await _init_database();
+
     var productData = product.toMap();
     ShoppingCartItem shoppingCartItem =
         ShoppingCartItem(productData['title'] ?? '');
@@ -48,16 +50,23 @@ class ShoppingCartItemRepositorySqfliteFfiImpl
     shoppingCartItem.setSku(productData['sku'] ?? 100);
     shoppingCartItem.setQuantity(1);
     await database.insert('shoppingCartItems', shoppingCartItem.toMap());
+    await _close_database();
   }
 
   @override
   checkIfProductIsAlreadyInCart(Product product) async {
+    await _init_database();
+
     var itemInDb = await database.rawQuery(
         'SELECT * FROM shoppingCartItems WHERE sku = ?', [product.getSku()]);
 
     if (await itemInDb.isEmpty) {
+      await _close_database();
+
       return false;
     } else {
+      await _close_database();
+
       return true;
     }
   }
@@ -74,6 +83,8 @@ class ShoppingCartItemRepositorySqfliteFfiImpl
 
   @override
   retrieveAllItems() async {
+    await _init_database();
+
     var allCartItemsinDB =
         await database.rawQuery("SELECT * FROM shoppingCartItems");
 
@@ -99,11 +110,15 @@ class ShoppingCartItemRepositorySqfliteFfiImpl
       });
     }
 
+    await _close_database();
+
     return allCartItems;
   }
 
   @override
   findItemWithSku(int sku) async {
+    await _init_database();
+
     var itemData = await database
         .rawQuery('SELECT * FROM shoppingCartItems WHERE sku = ?', [sku]);
 
@@ -122,24 +137,36 @@ class ShoppingCartItemRepositorySqfliteFfiImpl
       shoppingCartItem.setQuantity(await itemData[0]['quantity'] ?? 1);
       shoppingCartItem.setSku(itemData[0]['sku'] ?? 100);
 
+      await _close_database();
+
       return shoppingCartItem;
     } else {
+      await _close_database();
+
       return [];
     }
   }
 
   @override
   updateItemData(ShoppingCartItem item) async {
+    await _init_database();
+
     await database.update('shoppingCartItems', item.toMap(),
         where: "sku = ?", whereArgs: [item.getSku()]);
+
+    await _close_database();
   }
 
   @override
   deleteItemData(ShoppingCartItem item) async {
+    await _init_database();
+
     await database.delete('shoppingCartItems',
         where: "sku = ?", whereArgs: [item.getSku()]);
+
+    await _close_database();
   }
 
   @override
-  close() {}
+  _close_database() {}
 }

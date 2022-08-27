@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/components/Language_Selection_Component.dart';
 import 'package:mobile_ecommerce/Application/components/Sign_Up_Component.dart';
-import 'package:mobile_ecommerce/Application/screens/Order_History_Screen.dart';
+import 'package:mobile_ecommerce/Application/screens/Orders_History_Screen.dart';
 import 'package:mobile_ecommerce/main.dart';
 import 'package:mobile_ecommerce/Application/components/Sign_In_Component.dart';
 
@@ -76,7 +76,8 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
               text: translate('MY ORDERS'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Order_History_Screen()),
+                MaterialPageRoute(
+                    builder: (context) => Orders_History_Screen()),
               ),
             ),
           ],

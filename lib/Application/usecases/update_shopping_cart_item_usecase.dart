@@ -7,10 +7,6 @@ class UpdateShoppingCartItemUsecase {
   UpdateShoppingCartItemUsecase(this.shoppingCartItemRepository);
 
   updateItem(ShoppingCartItem shoppingCartItem) async {
-    await shoppingCartItemRepository.init();
-
     await shoppingCartItemRepository.updateItemData(shoppingCartItem);
-
-    await shoppingCartItemRepository.close();
   }
 }

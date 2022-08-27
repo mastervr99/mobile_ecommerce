@@ -8,8 +8,6 @@ class Add_Product_To_Shopping_Cart_Usecase {
   Add_Product_To_Shopping_Cart_Usecase(this.shoppingCartItemRepository);
 
   addCartItem(Product product) async {
-    await shoppingCartItemRepository.init();
-
     var shoppingCartItem =
         await shoppingCartItemRepository.findItemWithSku(product.getSku());
 
@@ -21,6 +19,5 @@ class Add_Product_To_Shopping_Cart_Usecase {
     } else {
       await shoppingCartItemRepository.registerItem(product);
     }
-    await shoppingCartItemRepository.close();
   }
 }

@@ -1,7 +1,7 @@
 abstract class ProductRepository {
-  init();
+  _init_database();
 
   retrieveProductsByTitle(String productTitle);
 
-  close();
+  _close_database();
 }

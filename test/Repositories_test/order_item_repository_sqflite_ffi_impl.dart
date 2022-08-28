@@ -22,7 +22,8 @@ class Order_Item_Repostitory_Sqflite_Ffi_Impl extends Order_Item_Repository {
         usage TEXT,
         imageUrl TEXT,
         price FLOAT,
-        sku INT
+        sku INT,
+        order_reference TEXT
       )
       ''');
   }
@@ -37,37 +38,59 @@ class Order_Item_Repostitory_Sqflite_Ffi_Impl extends Order_Item_Repository {
 
   @override
   retrieve_items_by_order_reference(String order_reference) async {
-    // await _init_database();
+    await _init_database();
 
-    // var items_in_db = [];
+    var items_in_db = await database.rawQuery(
+        "SELECT * FROM order_items WHERE order_reference = ?",
+        [order_reference]);
 
-    // var searchResults = await database
-    //     .rawQuery("SELECT * FROM Products WHERE title like '%$%'");
-    // for (var searchResult in await searchResults) {
-    //   searchedProductsInDb.add(await searchResult);
-    // }
+    if (await items_in_db.isEmpty) {
+      await _close_database();
 
-    // List<Product> searchResults = [];
+      return [];
+    } else {
+      List<Order_Item> order_items = [];
 
-    // searchedProductsInDb.forEach((productData) {
-    //   Product product = Product(productData['title'] ?? '');
-    //   product.setDescription(productData['description'] ?? '');
-    //   product.setGender(productData['gender'] ?? '');
-    //   product.setCategory(productData['category'] ?? '');
-    //   product.setSubCategory(productData['subCategory'] ?? '');
-    //   product.setType(productData['type'] ?? '');
-    //   product.setColor(productData['color'] ?? '');
-    //   product.setUsage(productData['usage'] ?? '');
-    //   product.setImageUrl(productData['imageUrl'] ?? '');
-    //   product.setPrice(productData['price'] ?? 0);
-    //   product.setSku(productData['sku'] ?? 100);
+      await items_in_db.forEach((itemData) async {
+        Order_Item order_item = Order_Item(itemData['title']);
+        order_item.setDescription(itemData['description']);
+        order_item.setGender(itemData['gender']);
+        order_item.setCategory(itemData['category']);
+        order_item.setSubCategory(itemData['subCategory']);
+        order_item.setType(itemData['type']);
+        order_item.setColor(itemData['color']);
+        order_item.setUsage(itemData['usage']);
+        order_item.setImageUrl(itemData['imageUrl']);
+        order_item.setPrice(itemData['price']);
+        order_item.setSku(itemData['sku']);
+        order_item.setOrderReference(itemData['order_reference']);
 
-    //   searchResults.add(product);
-    // });
+        order_items.add(order_item);
+      });
 
-    // await _close_database();
+      await _close_database();
 
-    // return searchResults;
+      return order_items;
+
+      // List<Order_Item> test = [];
+      // await items_in_db.forEach((itemData) async {
+      //   Order_Item order_item = Order_Item(itemData['title']);
+      //   order_item.setDescription(itemData['description']);
+      //   order_item.setGender(itemData['gender'] ?? '');
+      //   order_item.setCategory(itemData['category']);
+      //   order_item.setSubCategory(itemData['subCategory']);
+      //   order_item.setType(itemData['type']);
+      //   order_item.setColor(itemData['color']);
+      //   order_item.setUsage(itemData['usage']);
+      //   order_item.setImageUrl(itemData['imageUrl']);
+      //   order_item.setPrice(itemData['price']);
+      //   order_item.setSku(itemData['sku']);
+      //   order_item.setOrderReference(itemData['order_reference']);
+
+      //   test.add(order_item);
+      // });
+      // return test;
+    }
   }
 
   @override

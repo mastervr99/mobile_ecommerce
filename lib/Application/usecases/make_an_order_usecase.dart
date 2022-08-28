@@ -21,25 +21,27 @@ class Make_An_Order_Usecase {
     return await shoppingCart.getCartTotalPrice();
   }
 
-  register_order(Order order, Order_Repository order_repository,
-      Order_Item_Repository order_item_repository) async {
+  register_order(Order order, Order_Repository order_repository) async {
     await order_repository.register_order(order);
+  }
 
+  register_order_items(
+      Order_Item_Repository order_item_repository, Order order) async {
     var shopping_cart_items =
         await shoppingCartItemRepository.retrieveAllItems();
 
     await shopping_cart_items.forEach((cart_item) async {
-      Order_Item order_item = Order_Item(await cart_item.getTitle());
-      order_item.setDescription(await cart_item.getDescription());
-      order_item.setGender(await cart_item.getGender());
-      order_item.setCategory(await cart_item.getCategory());
-      order_item.setSubCategory(await cart_item.getSubCategory());
-      order_item.setType(await cart_item.getType());
-      order_item.setColor(await cart_item.getColor());
-      order_item.setUsage(await cart_item.getUsage());
-      order_item.setImageUrl(await cart_item.getImageUrl());
-      order_item.setPrice(await cart_item.getPrice());
-      order_item.setSku(await cart_item.getSku());
+      Order_Item order_item = Order_Item(cart_item.getTitle());
+      order_item.setDescription(cart_item.getDescription());
+      order_item.setGender(cart_item.getGender());
+      order_item.setCategory(cart_item.getCategory());
+      order_item.setSubCategory(cart_item.getSubCategory());
+      order_item.setType(cart_item.getType());
+      order_item.setColor(cart_item.getColor());
+      order_item.setUsage(cart_item.getUsage());
+      order_item.setImageUrl(cart_item.getImageUrl());
+      order_item.setPrice(cart_item.getPrice());
+      order_item.setSku(cart_item.getSku());
       order_item.setOrderReference(order.get_order_reference());
 
       await order_item_repository.register_item(order_item);

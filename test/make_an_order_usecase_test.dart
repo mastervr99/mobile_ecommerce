@@ -132,13 +132,53 @@ void main() {
       order.set_order_delivery_method("UPS");
       order.set_order_payment_method("CREDIT CARD");
 
-      await make_an_order_usecase.register_order(
-          order, order_repository, order_item_repository);
+      await make_an_order_usecase.register_order(order, order_repository);
 
       var order_in_db =
           await order_repository.retrieve_order_with_reference("CVD455");
 
       expect(await order_in_db.get_order_reference(), "CVD455");
+
+      closeSqfliteFfiDatabase();
+    });
+
+    test('Register Shopping Cart items as order items', () async {
+      ShoppingCartItemRepository shoppingCartItemRepository =
+          ShoppingCartItemRepositorySqfliteFfiImpl();
+
+      Order_Item_Repository order_item_repository =
+          Order_Item_Repostitory_Sqflite_Ffi_Impl();
+
+      Product product = Product("lg X");
+      product.setSku(100);
+      product.setPrice(44);
+
+      Product product2 = Product("samsung X");
+      product2.setSku(101);
+      product2.setPrice(55);
+
+      Add_Product_To_Shopping_Cart_Usecase
+          add_product_to_shopping_cart_usecase =
+          Add_Product_To_Shopping_Cart_Usecase(shoppingCartItemRepository);
+
+      await add_product_to_shopping_cart_usecase.addCartItem(product);
+      await add_product_to_shopping_cart_usecase.addCartItem(product2);
+
+      Make_An_Order_Usecase make_an_order_usecase =
+          Make_An_Order_Usecase(shoppingCartItemRepository);
+
+      Order order = Order();
+      order.set_order_date('2022-02-02');
+      order.set_order_reference("BDC454");
+
+      await make_an_order_usecase.register_order_items(
+          order_item_repository, order);
+
+      var order_items_in_db = await order_item_repository
+          .retrieve_items_by_order_reference("BDC454");
+
+      expect(await order_items_in_db[0].getTitle(), 'lg X');
+      expect(await order_items_in_db[1].getTitle(), 'samsung X');
 
       closeSqfliteFfiDatabase();
     });

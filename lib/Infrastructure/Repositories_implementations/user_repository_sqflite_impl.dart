@@ -39,7 +39,7 @@ class UserRepositorySqfliteImpl extends UserRepository {
     var userInfos = await database
         .rawQuery('SELECT * FROM Users WHERE email = ?', [user.getUserEmail()]);
 
-    if (userInfos.isEmpty) {
+    if (await userInfos.isEmpty) {
       await _close_database();
 
       return false;

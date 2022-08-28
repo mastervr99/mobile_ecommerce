@@ -60,7 +60,11 @@ void main() {
 
       await signUpUsecase.signUp(user);
 
-      expect(await signInUsecase.checkIfEmailRegistered(user), true);
+      expect(await signInUsecase.checkIfValidAccountPassword(user), true);
+
+      user.setUserPassword('new_password_without_updating_database');
+
+      expect(await signInUsecase.checkIfValidAccountPassword(user), false);
 
       await closeSqfliteFfiDatabase();
     });
@@ -82,19 +86,6 @@ void main() {
           ConnectedUserRepositorySqfliteFfiImpl();
       SignInUsecase signInUsecase =
           SignInUsecase(userRepository, connectedUserRepository);
-
-      var isRegisteredEmail = await signInUsecase.checkIfEmailRegistered(user);
-
-      expect(await isRegisteredEmail, true);
-
-      var isValidAccountPassword =
-          await signInUsecase.checkIfValidAccountPassword(user);
-
-      expect(await isValidAccountPassword, true);
-
-      var isUserConnected = await signInUsecase.checkIfUserConnected();
-
-      expect(await isUserConnected, false);
 
       await signInUsecase.signIn(user);
 

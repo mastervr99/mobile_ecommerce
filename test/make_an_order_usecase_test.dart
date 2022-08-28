@@ -1,13 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_ecommerce/Application/usecases/add_product_to_shopping_cart_usecase.dart';
 import 'package:mobile_ecommerce/Application/usecases/make_an_order_usecase.dart';
+import 'package:mobile_ecommerce/Domain/Entity/order.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/order_item_repository.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/order_repository.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/payment_gateway.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
+import 'Repositories_test/order_item_repository_sqflite_ffi_impl.dart';
 import 'Repositories_test/shopping_cart_item_repository_sqflite_ffi_impl.dart';
+import 'Repositories_test/order_repository_sqflite_ffi_impl.dart';
+import 'Repositories_test/test_payment_gateway.dart';
 
 void main() {
   closeSqfliteFfiDatabase() async {
@@ -88,10 +95,52 @@ void main() {
       closeSqfliteFfiDatabase();
     });
 
-    test('User can pay for the order', () {
-      var orderPaymentStatus = 'success';
+    test('register order', () async {
+      ShoppingCartItemRepository shoppingCartItemRepository =
+          ShoppingCartItemRepositorySqfliteFfiImpl();
 
-      expect(orderPaymentStatus, 'success');
+      Order_Repository order_repository = Order_Repository_Sqflite_Ffi_Impl();
+
+      Order_Item_Repository order_item_repository =
+          Order_Item_Repostitory_Sqflite_Ffi_Impl();
+
+      Product product = Product("lg X");
+      product.setSku(100);
+      product.setPrice(44);
+
+      Product product2 = Product("samsung X");
+      product2.setSku(101);
+      product2.setPrice(55);
+
+      Add_Product_To_Shopping_Cart_Usecase
+          add_product_to_shopping_cart_usecase =
+          Add_Product_To_Shopping_Cart_Usecase(shoppingCartItemRepository);
+
+      await add_product_to_shopping_cart_usecase.addCartItem(product);
+      await add_product_to_shopping_cart_usecase.addCartItem(product2);
+
+      Make_An_Order_Usecase make_an_order_usecase =
+          Make_An_Order_Usecase(shoppingCartItemRepository);
+
+      Order order = Order();
+      order.set_order_date('2022-02-02');
+      order.set_order_reference("CVD455");
+      order.set_order_price(await make_an_order_usecase.get_cart_total_price());
+      order.set_order_state("processing");
+      order.set_order_delivery_date("2022-06-24");
+      order.set_order_hour("16h04");
+      order.set_order_delivery_method("UPS");
+      order.set_order_payment_method("CREDIT CARD");
+
+      await make_an_order_usecase.register_order(
+          order, order_repository, order_item_repository);
+
+      var order_in_db =
+          await order_repository.retrieve_order_with_reference("CVD455");
+
+      expect(await order_in_db.get_order_reference(), "CVD455");
+
+      closeSqfliteFfiDatabase();
     });
   });
 }

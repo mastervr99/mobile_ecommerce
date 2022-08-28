@@ -5,16 +5,19 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_ecommerce/Application/screens/Orders_History_Screen.dart';
 import 'package:mobile_ecommerce/.env.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/payment_gateway.dart';
 
-class Stripe_Payment_Controller extends GetxController {
+class Stripe_Payment_Controller extends GetxController
+    implements Payment_Gateway {
   Map<String, dynamic>? paymentIntentData;
+  String payment_status = '';
 
   Future<void> makePayment(
       {required BuildContext context,
       required String amount,
       required String currency}) async {
     try {
-      var paymentIntentData = await createPaymentIntent(amount, currency);
+      var paymentIntentData = await _createPaymentIntent(amount, currency);
       if (await paymentIntentData != null) {
         await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
@@ -26,14 +29,14 @@ class Stripe_Payment_Controller extends GetxController {
             customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
           ),
         );
-        await displayPaymentSheet(context);
+        await _displayPaymentSheet(context);
       }
     } catch (e, s) {
       print('exception:$e$s');
     }
   }
 
-  displayPaymentSheet(BuildContext context) async {
+  _displayPaymentSheet(BuildContext context) async {
     try {
       await Stripe.instance.presentPaymentSheet();
       Get.snackbar('Payment', 'Payment Successful',
@@ -42,12 +45,14 @@ class Stripe_Payment_Controller extends GetxController {
           colorText: Colors.white,
           margin: const EdgeInsets.all(10),
           duration: const Duration(seconds: 2));
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Orders_History_Screen(),
-        ),
-      );
+      payment_status = 'success';
+      // ***************** TO REACTIVATE **********
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => Orders_History_Screen(),
+      //   ),
+      // );
     } on Exception catch (e) {
       if (e is StripeException) {
         print("Error from Stripe: ${e.error.localizedMessage}");
@@ -60,10 +65,10 @@ class Stripe_Payment_Controller extends GetxController {
   }
 
   //  Future<Map<String, dynamic>>
-  createPaymentIntent(String amount, String currency) async {
+  _createPaymentIntent(String amount, String currency) async {
     try {
       Map<String, dynamic> body = {
-        'amount': calculateAmount(amount),
+        'amount': _calculateAmount(amount),
         'currency': currency,
         'payment_method_types[]': 'card'
       };
@@ -80,8 +85,13 @@ class Stripe_Payment_Controller extends GetxController {
     }
   }
 
-  calculateAmount(String amount) {
+  _calculateAmount(String amount) {
     final a = (double.parse(amount)).ceil() * 100;
     return a.toString();
+  }
+
+  @override
+  getPaymentStatus() {
+    return payment_status;
   }
 }

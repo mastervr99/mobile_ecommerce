@@ -45,7 +45,7 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
 
     for (var searchTerm in searchTerms) {
       var searchResults = await database
-          .rawQuery("SELECT * FROM Products WHERE title like '%$searchTerm%'");
+          .rawQuery("SELECT * FROM products WHERE title like '%$searchTerm%'");
       for (var searchResult in await searchResults) {
         searchedProductsInDb.add(await searchResult);
       }

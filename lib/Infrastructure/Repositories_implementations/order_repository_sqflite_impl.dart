@@ -1,15 +1,19 @@
 import 'package:mobile_ecommerce/Domain/Entity/order.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/order_repository.dart';
-import 'package:sqflite/sqlite_api.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
-class Order_Repository_Sqflite_Ffi_Impl extends Order_Repository {
+class Order_Repository_Sqflite_Impl extends Order_Repository {
   late var database;
 
   @override
   _init_database() async {
-    database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
-    await database.execute('''
+    final databasesPath = await getDatabasesPath();
+    final path = join(databasesPath, 'orders.db');
+    database = await openDatabase(path, version: 1,
+        onCreate: (Database db, int version) async {
+      // When creating the db, create the table
+      await db.execute('''
       CREATE TABLE IF NOT EXISTS orders (
         id INTEGER PRIMARY KEY,
         user_id TEXT,
@@ -23,6 +27,7 @@ class Order_Repository_Sqflite_Ffi_Impl extends Order_Repository {
         order_price FLOAT
       )
       ''');
+    });
   }
 
   register_order(Order order) async {

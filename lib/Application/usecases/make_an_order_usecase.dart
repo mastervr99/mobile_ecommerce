@@ -1,6 +1,8 @@
 import 'package:mobile_ecommerce/Domain/Entity/order.dart';
 import 'package:mobile_ecommerce/Domain/Entity/order_item.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
+import 'package:mobile_ecommerce/Domain/Entity/user.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/order_item_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/order_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
@@ -21,7 +23,11 @@ class Make_An_Order_Usecase {
     return await shoppingCart.getCartTotalPrice();
   }
 
-  register_order(Order order, Order_Repository order_repository) async {
+  register_user_order(ConnectedUserRepository connectedUserRepository,
+      Order order, Order_Repository order_repository) async {
+    User user = await connectedUserRepository.retrieveConnectedUser();
+
+    order.set_user_id(user.get_user_id());
     await order_repository.register_order(order);
   }
 

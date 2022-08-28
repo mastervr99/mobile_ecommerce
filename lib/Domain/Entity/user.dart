@@ -1,8 +1,26 @@
+import 'dart:math';
+
 class User {
-  late String firstname;
-  late String lastname;
-  late String email;
-  late String password;
+  String firstname = '';
+  String lastname = '';
+  String email = '';
+  String password = '';
+  late String user_id;
+
+  final _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  final Random _rnd = Random();
+
+  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+
+  User() {
+    user_id = getRandomString(10);
+  }
+
+  set_user_id(String user_id) {
+    this.user_id = user_id;
+  }
 
   setUserFirstname(String firstname) {
     this.firstname = firstname;
@@ -20,6 +38,10 @@ class User {
     this.password = password;
   }
 
+  get_user_id() {
+    return user_id;
+  }
+
   getUserEmail() {
     return email;
   }
@@ -30,6 +52,7 @@ class User {
 
   Map<String, dynamic> toMap() {
     return {
+      'user_id': user_id,
       'firstname': firstname,
       'lastname': lastname,
       'email': email,

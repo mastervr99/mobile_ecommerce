@@ -12,6 +12,7 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
     await database.execute('''
       CREATE TABLE IF NOT EXISTS Users (
         id INTEGER PRIMARY KEY,
+        user_id TEXT,
         email TEXT,
         password TEXT,
         firstname TEXT,
@@ -40,6 +41,7 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
     } else {
       User registeredUser = User();
 
+      registeredUser.set_user_id(await userInfos[0]['user_id']);
       registeredUser.setUserFirstname(await userInfos[0]['lastname']);
       registeredUser.setUserLastname(await userInfos[0]['firstname']);
       registeredUser.setUserEmail(await userInfos[0]['email']);

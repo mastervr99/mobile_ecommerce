@@ -1,6 +1,4 @@
-import 'dart:ffi';
-
-import 'package:mobile_ecommerce/Domain/Entity/order_item.dart';
+import 'dart:math';
 
 class Order {
   String order_reference = "";
@@ -11,6 +9,18 @@ class Order {
   String order_payment_method = '';
   double order_price = 0;
   String order_delivery_date = '';
+  String user_id = '';
+
+  final _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  final Random _rnd = Random();
+
+  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+
+  Order() {
+    this.order_reference = getRandomString(10);
+  }
 
   set_order_reference(String order_reference) {
     this.order_reference = order_reference;
@@ -42,6 +52,10 @@ class Order {
 
   set_order_delivery_date(String order_delivery_date) {
     this.order_delivery_date = order_delivery_date;
+  }
+
+  set_user_id(String user_id) {
+    this.user_id = user_id;
   }
 
   get_order_reference() {
@@ -76,8 +90,13 @@ class Order {
     return order_payment_method;
   }
 
+  get_user_id() {
+    return user_id;
+  }
+
   Map<String, dynamic> toMap() {
     return {
+      'user_id': user_id,
       'order_reference': order_reference,
       'order_date': order_date,
       'order_hour': order_hour,

@@ -12,6 +12,7 @@ class ConnectedUserRepositorySqfliteFfiImpl extends ConnectedUserRepository {
     await database.execute('''
       CREATE TABLE IF NOT EXISTS ConnectedUser (
         id INTEGER PRIMARY KEY,
+        user_id TEXT,
         email TEXT,
         password TEXT,
         firstname TEXT,
@@ -41,6 +42,7 @@ class ConnectedUserRepositorySqfliteFfiImpl extends ConnectedUserRepository {
     } else {
       User connectedUser = User();
 
+      connectedUser.set_user_id(await connectedUserData[0]['user_id']);
       connectedUser.setUserFirstname(await connectedUserData[0]['lastname']);
       connectedUser.setUserLastname(await connectedUserData[0]['firstname']);
       connectedUser.setUserEmail(await connectedUserData[0]['email']);

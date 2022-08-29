@@ -4,6 +4,12 @@ import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
+import 'package:mobile_ecommerce/Domain/Entity/user.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/order_repository.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/connected_user_repository_sqflite_impl.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/order_item_repository_sqflite_impl.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/order_repository_sqflite_impl.dart';
 
 class Orders_History_Screen extends StatefulWidget {
   @override
@@ -25,6 +31,21 @@ class _Orders_History_Screen_State extends State<Orders_History_Screen> {
       child: Tab(text: 'Cancelled'),
     ),
   ];
+
+  get_alll_user_order(BuildContext context) async {
+    ConnectedUserRepository connectedUserRepository =
+        ConnectedUserRepositorySqfliteImpl();
+
+    User connected_user = await connectedUserRepository.retrieveConnectedUser();
+
+    Order_Repository order_repository = Order_Repository_Sqflite_Impl();
+
+    var orders =
+        await order_repository.retrieve_all_user_orders(await connected_user);
+
+    return await orders;
+  }
+
   @override
   Widget build(BuildContext context) {
     var _theme = Theme.of(context);
@@ -68,7 +89,7 @@ class _Orders_History_Screen_State extends State<Orders_History_Screen> {
               Padding(padding: EdgeInsets.only(bottom: 15)),
               Expanded(
                 child: FutureBuilder(
-                  // future: ,
+                  future: get_alll_user_order(context),
                   builder: (context, AsyncSnapshot snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:
@@ -82,8 +103,8 @@ class _Orders_History_Screen_State extends State<Orders_History_Screen> {
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: TabBarView(
                               children: <Widget>[
-                                buildOrdersList(snapshot.data),
-                                buildOrdersList(snapshot.data),
+                                // buildOrdersList(snapshot.data),
+                                // buildOrdersList(snapshot.data),
                                 // buildOrdersList(state.orderData, bloc),
                                 // buildOrdersList(state.orderData, bloc),
                               ],
@@ -106,13 +127,14 @@ ListView buildOrdersList(List orders) {
       shrinkWrap: true,
       itemCount: orders.length,
       itemBuilder: (context, index) {
-        return UserOrderDetails(
-            // order: orders[index],
-            // onClick: ((int orderId) => {
-            //       bloc..add(ProfileMyOrderDetailsEvent(orderId)),
-            //       widget.changeView(changeType: ViewChangeType.Exact, index: 7)
-            //     }),
-            );
+        return Text('test');
+        // return UserOrderDetails(
+        // order: orders[index],
+        // onClick: ((int orderId) => {
+        //       bloc..add(ProfileMyOrderDetailsEvent(orderId)),
+        //       widget.changeView(changeType: ViewChangeType.Exact, index: 7)
+        //     }),
+        // );
       });
 }
 

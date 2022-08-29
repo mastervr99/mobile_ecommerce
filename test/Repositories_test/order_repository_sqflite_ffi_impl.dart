@@ -1,4 +1,5 @@
 import 'package:mobile_ecommerce/Domain/Entity/order.dart';
+import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/order_repository.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -19,7 +20,7 @@ class Order_Repository_Sqflite_Ffi_Impl extends Order_Repository {
         order_state TEXT,
         order_delivery_method TEXT,
         order_payment_method TEXT,
-        order_delivery_date,
+        order_delivery_date TEXT,
         order_price FLOAT
       )
       ''');
@@ -64,6 +65,37 @@ class Order_Repository_Sqflite_Ffi_Impl extends Order_Repository {
 
       return order;
     }
+  }
+
+  @override
+  retrieve_all_user_orders(User user) async {
+    await _init_database();
+
+    var all_user_orders_in_db = await database.rawQuery(
+        "SELECT * FROM orders WHERE user_id = ?", [user.get_user_id()]);
+
+    List<Order> all_user_orders = [];
+
+    if (await all_user_orders_in_db.isNotEmpty) {
+      await all_user_orders_in_db.forEach((order_in_db) {
+        Order order = Order();
+        order.set_order_date(order_in_db['order_date']);
+        order.set_order_delivery_date(order_in_db['order_delivery_date']);
+        order.set_order_delivery_method(order_in_db['order_delivery_method']);
+        order.set_order_hour(order_in_db['order_hour']);
+        order.set_order_payment_method(order_in_db['order_payment_method']);
+        order.set_order_price(order_in_db['order_price']);
+        order.set_order_reference(order_in_db['order_reference']);
+        order.set_order_state(order_in_db['order_state']);
+        order.set_user_id(order_in_db['user_id']);
+
+        all_user_orders.add(order);
+      });
+    }
+
+    await _close_database();
+
+    return all_user_orders;
   }
 
   @override

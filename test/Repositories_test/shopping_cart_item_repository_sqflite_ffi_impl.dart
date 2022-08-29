@@ -158,5 +158,14 @@ class ShoppingCartItemRepositorySqfliteFfiImpl
   }
 
   @override
+  deleteAllItems() async {
+    await _init_database();
+
+    await database.rawQuery('DELETE FROM shoppingCartItems');
+
+    await _close_database();
+  }
+
+  @override
   _close_database() {}
 }

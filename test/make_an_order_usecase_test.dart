@@ -214,5 +214,45 @@ void main() {
 
       closeSqfliteFfiDatabase();
     });
+
+    test('Shopping cart is empty after registering order', () async {
+      ShoppingCartItemRepository shoppingCartItemRepository =
+          ShoppingCartItemRepositorySqfliteFfiImpl();
+
+      Order_Item_Repository order_item_repository =
+          Order_Item_Repostitory_Sqflite_Ffi_Impl();
+
+      Product product = Product("lg X");
+      product.setSku(100);
+      product.setPrice(44);
+
+      Product product2 = Product("samsung X");
+      product2.setSku(101);
+      product2.setPrice(55);
+
+      Add_Product_To_Shopping_Cart_Usecase
+          add_product_to_shopping_cart_usecase =
+          Add_Product_To_Shopping_Cart_Usecase(shoppingCartItemRepository);
+
+      await add_product_to_shopping_cart_usecase.addCartItem(product);
+      await add_product_to_shopping_cart_usecase.addCartItem(product2);
+
+      Make_An_Order_Usecase make_an_order_usecase =
+          Make_An_Order_Usecase(shoppingCartItemRepository);
+
+      Order order = Order();
+      order.set_order_date('2022-02-02');
+      order.set_order_reference("BDC454");
+
+      await make_an_order_usecase.register_order_items(
+          order_item_repository, order);
+
+      ShoppingCart shoppingCart = ShoppingCart();
+      shoppingCart.setItemRepository(shoppingCartItemRepository);
+
+      var shoppingCartProducts = await shoppingCart.getAllCartItems();
+
+      expect(shoppingCartProducts.isEmpty, true);
+    });
   });
 }

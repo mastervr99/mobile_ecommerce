@@ -52,5 +52,11 @@ class Make_An_Order_Usecase {
 
       await order_item_repository.register_item(order_item);
     });
+
+    _clear_shopping_cart_items();
+  }
+
+  _clear_shopping_cart_items() async {
+    await shoppingCartItemRepository.deleteAllItems();
   }
 }

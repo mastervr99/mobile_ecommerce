@@ -16,5 +16,7 @@ abstract class ShoppingCartItemRepository {
 
   deleteItemData(ShoppingCartItem shoppingCartItem);
 
+  deleteAllItems();
+
   _close_database();
 }

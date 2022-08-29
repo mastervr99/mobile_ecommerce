@@ -9,13 +9,14 @@ class UserRepositorySqfliteImpl extends UserRepository {
   @override
   _init_database() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, 'users.db');
+    final path = join(databasesPath, 'registered_users.db');
     database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table
       await db.execute('''
         CREATE TABLE IF NOT EXISTS Users (
         id INTEGER PRIMARY KEY,
+        user_id TEXT,
         email TEXT,
         password TEXT,
         firstname TEXT,
@@ -46,6 +47,7 @@ class UserRepositorySqfliteImpl extends UserRepository {
     } else {
       User registeredUser = User();
 
+      registeredUser.set_user_id(await userInfos[0]['user_id']);
       registeredUser.setUserFirstname(await userInfos[0]['lastname']);
       registeredUser.setUserLastname(await userInfos[0]['firstname']);
       registeredUser.setUserEmail(await userInfos[0]['email']);

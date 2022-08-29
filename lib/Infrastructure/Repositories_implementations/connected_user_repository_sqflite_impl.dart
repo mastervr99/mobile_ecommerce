@@ -9,13 +9,14 @@ class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
   @override
   _init_database() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, 'connectedUsers.db');
+    final path = join(databasesPath, 'online_user.db');
     database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table
       await db.execute('''
       CREATE TABLE IF NOT EXISTS ConnectedUser (
         id INTEGER PRIMARY KEY,
+        user_id TEXT,
         email TEXT,
         password TEXT,
         firstname TEXT,
@@ -48,6 +49,7 @@ class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
     } else {
       User connectedUser = User();
 
+      connectedUser.set_user_id(await connectedUserData[0]['user_id']);
       connectedUser.setUserFirstname(await connectedUserData[0]['lastname']);
       connectedUser.setUserLastname(await connectedUserData[0]['firstname']);
       connectedUser.setUserEmail(await connectedUserData[0]['email']);

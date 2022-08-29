@@ -9,10 +9,13 @@ class SignInUsecase {
   SignInUsecase(this.userRepository, this.connectedUserRepository);
 
   signIn(User userToConnect) async {
-    if (await checkIfEmailRegistered(userToConnect)) {
-      if (await checkIfValidAccountPassword(userToConnect)) {
-        User registeredUser = await userRepository.retrieveUser(userToConnect);
-        await connectedUserRepository.registerUser(await registeredUser);
+    if (await checkIfUserConnected() == false) {
+      if (await checkIfEmailRegistered(userToConnect)) {
+        if (await checkIfValidAccountPassword(userToConnect)) {
+          User registeredUser =
+              await userRepository.retrieveUser(userToConnect);
+          await connectedUserRepository.registerUser(await registeredUser);
+        }
       }
     }
   }

@@ -168,6 +168,7 @@ void main() {
 
       expect(
           await order_in_db.get_order_reference(), order.get_order_reference());
+
       expect(await order_in_db.get_user_id(), user.get_user_id());
 
       closeSqfliteFfiDatabase();

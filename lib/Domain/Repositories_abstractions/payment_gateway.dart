@@ -1,3 +1,3 @@
 class Payment_Gateway {
-  getPaymentStatus() {}
+  check_if_payment_valid() {}
 }

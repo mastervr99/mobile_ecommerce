@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,7 @@ import 'package:mobile_ecommerce/Domain/Repositories_abstractions/payment_gatewa
 class Stripe_Payment_Controller extends GetxController
     implements Payment_Gateway {
   Map<String, dynamic>? paymentIntentData;
-  String payment_status = '';
+  bool is_payment_valid = false;
 
   Future<void> makePayment(
       {required BuildContext context,
@@ -45,7 +46,7 @@ class Stripe_Payment_Controller extends GetxController
           colorText: Colors.white,
           margin: const EdgeInsets.all(10),
           duration: const Duration(seconds: 2));
-      payment_status = 'success';
+      is_payment_valid = true;
       // ***************** TO REACTIVATE **********
       // Navigator.push(
       //   context,
@@ -91,7 +92,7 @@ class Stripe_Payment_Controller extends GetxController
   }
 
   @override
-  getPaymentStatus() {
-    return payment_status;
+  check_if_payment_valid() {
+    return is_payment_valid;
   }
 }

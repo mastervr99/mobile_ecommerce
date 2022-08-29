@@ -4,13 +4,19 @@ import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
+import 'package:mobile_ecommerce/Application/components/Sign_In_Component.dart';
 import 'package:mobile_ecommerce/Application/screens/Order_Checkout_Screen.dart';
 import 'package:mobile_ecommerce/Application/usecases/remove_shopping_cart_item_usecase.dart';
+import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
 import 'package:mobile_ecommerce/Application/usecases/update_shopping_cart_item_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart_item.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/connected_user_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/shopping_cart_item_repository_sqflite_impl.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
 import 'package:provider/provider.dart';
 
 class Shopping_Cart_Screen extends StatefulWidget {
@@ -113,6 +119,15 @@ Widget _emptyShoppingCart(BuildContext context) {
   );
 }
 
+check_if_user_connected() async {
+  UserRepository userRepository = UserRepositorySqfliteImpl();
+  ConnectedUserRepository connectedUserRepository =
+      ConnectedUserRepositorySqfliteImpl();
+  SignInUsecase signInUsecase =
+      SignInUsecase(userRepository, connectedUserRepository);
+  return await signInUsecase.checkIfUserConnected();
+}
+
 class _CartList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -163,12 +178,20 @@ class _CartList extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                               ),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            Order_Checkout_Screen()));
+                              onPressed: () async {
+                                if (await check_if_user_connected()) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              Order_Checkout_Screen()));
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              Sign_In_Component()));
+                                }
                               },
                             ),
                           ),

@@ -47,13 +47,6 @@ class Stripe_Payment_Controller extends GetxController
           margin: const EdgeInsets.all(10),
           duration: const Duration(seconds: 2));
       is_payment_valid = true;
-      // ***************** TO REACTIVATE **********
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => Orders_History_Screen(),
-      //   ),
-      // );
     } on Exception catch (e) {
       if (e is StripeException) {
         print("Error from Stripe: ${e.error.localizedMessage}");

@@ -3,6 +3,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:get/get.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
+import 'package:mobile_ecommerce/Application/screens/Orders_History_Screen.dart';
 import 'package:mobile_ecommerce/Application/usecases/make_an_order_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/order.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
@@ -350,7 +351,14 @@ class _OrderCheckoutScreenBottomBarState
                               await controller.check_if_payment_valid();
                           if (is_payment_valid) {
                             Order order = Order();
-                            register_order(context, order);
+                            await register_order(context, order);
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Orders_History_Screen(),
+                              ),
+                            );
                           }
                         }),
                       ),

@@ -3,6 +3,14 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:get/get.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
+import 'package:mobile_ecommerce/Application/usecases/make_an_order_usecase.dart';
+import 'package:mobile_ecommerce/Domain/Entity/order.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/order_item_repository.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/order_repository.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/connected_user_repository_sqflite_impl.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/order_item_repository_sqflite_impl.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/order_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Infrastructure/stripe_payment_controller.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
@@ -238,6 +246,36 @@ class OrderCheckoutScreenBottomBar extends StatefulWidget {
       _OrderCheckoutScreenBottomBarState();
 }
 
+register_order(BuildContext context, Order order) async {
+  ShoppingCartItemRepository shoppingCartItemRepository =
+      ShoppingCartItemRepositorySqfliteImpl();
+
+  Make_An_Order_Usecase make_an_order_usecase =
+      Make_An_Order_Usecase(shoppingCartItemRepository);
+
+  ConnectedUserRepository connectedUserRepository =
+      ConnectedUserRepositorySqfliteImpl();
+
+  Order_Repository order_repository = Order_Repository_Sqflite_Impl();
+
+  await make_an_order_usecase.register_user_order(
+      connectedUserRepository, order, order_repository);
+
+  Order_Item_Repository order_item_repository =
+      Order_Item_Repostitory_Sqflite_Impl();
+
+  await make_an_order_usecase.register_order_items(
+      order_item_repository, order);
+  return AlertDialog(
+    // Retrieve the text the that user has entered by using the
+    // TextEditingController.
+    content: Text(
+      translate('PAYMENT VALIDATED'),
+      textAlign: TextAlign.center,
+    ),
+  );
+}
+
 class _OrderCheckoutScreenBottomBarState
     extends State<OrderCheckoutScreenBottomBar> {
   @override
@@ -308,6 +346,12 @@ class _OrderCheckoutScreenBottomBarState
                               context: context,
                               amount: snapshot.data.toString(),
                               currency: 'USD');
+                          bool is_payment_valid =
+                              await controller.check_if_payment_valid();
+                          if (is_payment_valid) {
+                            Order order = Order();
+                            register_order(context, order);
+                          }
                         }),
                       ),
                     ],

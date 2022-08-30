@@ -51,14 +51,14 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                     children: <Widget>[
                       _createDrawerHeader(),
                       _createDrawerItem(
-                          icon: Icons.home,
-                          text: translate('label_home'),
-                          onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        MyHomePage(title: 'ESHOP')),
-                              )),
+                        icon: Icons.home,
+                        text: translate('label_home'),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MyHomePage(title: 'ESHOP')),
+                        ),
+                      ),
                       _createDrawerItem(
                           icon: Icons.call,
                           text: translate('label_contact'),
@@ -94,6 +94,13 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                           SignOutUsecase signOutUsecase =
                               SignOutUsecase(connectedUserRepository);
                           await signOutUsecase.disconnectUser();
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    MyHomePage(title: 'ESHOP')),
+                          );
                         },
                       ),
                     ],
@@ -106,14 +113,14 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                     children: <Widget>[
                       _createDrawerHeader(),
                       _createDrawerItem(
-                          icon: Icons.home,
-                          text: translate('label_home'),
-                          onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        MyHomePage(title: 'ESHOP')),
-                              )),
+                        icon: Icons.home,
+                        text: translate('label_home'),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MyHomePage(title: 'ESHOP')),
+                        ),
+                      ),
                       _createDrawerItem(
                           icon: Icons.call,
                           text: translate('label_contact'),

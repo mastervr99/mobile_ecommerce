@@ -4,6 +4,7 @@ import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
+import 'package:mobile_ecommerce/Domain/Entity/order.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/order_repository.dart';
@@ -103,7 +104,9 @@ class _Orders_History_Screen_State extends State<Orders_History_Screen> {
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: TabBarView(
                               children: <Widget>[
-                                // buildOrdersList(snapshot.data),
+                                buildOrdersList(snapshot.data),
+                                buildOrdersList(snapshot.data),
+                                buildOrdersList(snapshot.data),
                                 // buildOrdersList(snapshot.data),
                                 // buildOrdersList(state.orderData, bloc),
                                 // buildOrdersList(state.orderData, bloc),
@@ -127,23 +130,22 @@ ListView buildOrdersList(List orders) {
       shrinkWrap: true,
       itemCount: orders.length,
       itemBuilder: (context, index) {
-        return Text('test');
-        // return UserOrderDetails(
-        // order: orders[index],
-        // onClick: ((int orderId) => {
-        //       bloc..add(ProfileMyOrderDetailsEvent(orderId)),
-        //       widget.changeView(changeType: ViewChangeType.Exact, index: 7)
-        //     }),
-        // );
+        return UserOrderDetails(
+          order: orders[index],
+          // onClick: ((int orderId) => {
+          //       bloc..add(ProfileMyOrderDetailsEvent(orderId)),
+          //       widget.changeView(changeType: ViewChangeType.Exact, index: 7)
+          //     }),
+        );
       });
 }
 
-class UserOrderDetails extends StatefulWidget {
-  @override
-  _UserOrderDetailsState createState() => _UserOrderDetailsState();
-}
+class UserOrderDetails extends StatelessWidget {
+  final Order order;
+  // final Function(int) onClick;
 
-class _UserOrderDetailsState extends State<UserOrderDetails> {
+  const UserOrderDetails({Key? key, required this.order}) : super(key: key);
+
   Widget build(BuildContext context) {
     var _theme = Theme.of(context);
 

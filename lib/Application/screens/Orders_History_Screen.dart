@@ -4,6 +4,7 @@ import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
+import 'package:mobile_ecommerce/Application/screens/Order_Details_Screen.dart';
 import 'package:mobile_ecommerce/Domain/Entity/order.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
@@ -250,9 +251,6 @@ ListView buildOrdersList(BuildContext context, List orders) {
                                       orders[index]
                                           .get_order_price()
                                           .toString(),
-                                  // 'TEST',
-
-                                  //total amount
                                   style: _theme.textTheme.subtitle1,
                                 ),
                               ),
@@ -279,6 +277,13 @@ ListView buildOrdersList(BuildContext context, List orders) {
                         ),
                         onPressed: () {
                           // onClick(orders[index].id);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  Order_Details_Screen(order: orders[index]),
+                            ),
+                          );
                         },
                         child: Text(
                           'Details',

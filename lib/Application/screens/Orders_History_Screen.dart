@@ -157,21 +157,39 @@ ListView buildOrdersList(BuildContext context, List orders) {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Row(
+                    children: <Widget>[
+                      Text(
+                        'Order Date: ',
+                        style: _theme.textTheme.headline6!
+                            .copyWith(color: _theme.primaryColorLight),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Text(
+                          orders[index].get_order_date(),
+                          style: _theme.textTheme.headline6,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       RichText(
                         text: TextSpan(
                           children: <TextSpan>[
                             TextSpan(
-                              text: 'Order: ',
-                              style: _theme.textTheme.headline6!.copyWith(
+                              text: 'Order Number: ',
+                              style: _theme.textTheme.subtitle1!.copyWith(
                                   color: _theme.primaryColorLight,
                                   fontWeight: FontWeight.normal),
                             ),
                             TextSpan(
                               text: orders[index].get_order_reference(),
-                              // text: 'TEST',
-                              style: _theme.textTheme.headline6!
+                              style: _theme.textTheme.subtitle1!
                                   .copyWith(fontWeight: FontWeight.w700),
                             ),
                           ],
@@ -179,89 +197,47 @@ ListView buildOrdersList(BuildContext context, List orders) {
                       ),
                       // Text(DateFormat('yyyy-MM-dd')
                       //     .format(orders[index].get_order_date())),
-                      Text(
-                        orders[index].get_order_date(),
-                        style: _theme.textTheme.subtitle1!
-                            .copyWith(color: Colors.red),
-                      ),
+
                       // Text('Test',
                       //     style: _theme.textTheme.headline2!
                       //         .copyWith(color: Colors.red))
                     ],
                   ),
+                  // SizedBox(
+                  //   height: 4,
+                  // ),
+                  // Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: <Widget>[
                   SizedBox(
-                    height: 4,
+                    height: 15,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: <Widget>[
+                  Row(
                     children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            'Tacking Number: ',
-                            style: _theme.textTheme.subtitle1!
-                                .copyWith(color: _theme.primaryColorLight),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: Text(
-                              // orders[index].trackingNumber,
-                              'NOT DEFINED',
-                              style: _theme.textTheme.subtitle1,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        'Totat Amount: ',
+                        style: _theme.textTheme.subtitle1!
+                            .copyWith(color: _theme.primaryColorLight),
                       ),
-                      SizedBox(
-                        height: 15,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Text(
+                          '\€' + orders[index].get_order_price().toString(),
+                          style: _theme.textTheme.subtitle1,
+                        ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                'Quantity: ',
-                                style: _theme.textTheme.subtitle1!
-                                    .copyWith(color: _theme.primaryColorLight),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 4),
-                                child: Text(
-                                  // orders[index].totalQuantity.toString(),
-                                  'TEST',
-
-                                  style: _theme.textTheme.subtitle1,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                'Totat Amount: ',
-                                style: _theme.textTheme.subtitle1!
-                                    .copyWith(color: _theme.primaryColorLight),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Text(
-                                  '\€' +
-                                      orders[index]
-                                          .get_order_price()
-                                          .toString(),
-                                  style: _theme.textTheme.subtitle1,
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      )
                     ],
                   ),
+                  // ],
+                  // )
+                  //   ],
+                  // ),
                   SizedBox(
-                    height: 4,
+                    height: 15,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

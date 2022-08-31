@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
 class Order {
   String order_reference = "";
   String order_date = '';
@@ -19,7 +22,11 @@ class Order {
       length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
   Order() {
-    this.order_reference = getRandomString(10);
+    this.order_reference = getRandomString(10).toUpperCase();
+    initializeDateFormatting();
+    DateTime currentDateTime = DateTime.now();
+    this.order_date = DateFormat("dd-MM-yyyy").format(currentDateTime);
+    this.order_hour = DateFormat("HH:mm").format(currentDateTime);
   }
 
   set_order_reference(String order_reference) {

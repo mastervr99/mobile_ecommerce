@@ -104,12 +104,9 @@ class _Orders_History_Screen_State extends State<Orders_History_Screen> {
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: TabBarView(
                               children: <Widget>[
-                                buildOrdersList(snapshot.data),
-                                buildOrdersList(snapshot.data),
-                                buildOrdersList(snapshot.data),
-                                // buildOrdersList(snapshot.data),
-                                // buildOrdersList(state.orderData, bloc),
-                                // buildOrdersList(state.orderData, bloc),
+                                buildOrdersList(context, snapshot.data),
+                                buildOrdersList(context, snapshot.data),
+                                buildOrdersList(context, snapshot.data),
                               ],
                             ),
                           );
@@ -125,174 +122,368 @@ class _Orders_History_Screen_State extends State<Orders_History_Screen> {
   }
 }
 
-ListView buildOrdersList(List orders) {
+ListView buildOrdersList(BuildContext context, List orders) {
+  var _theme = Theme.of(context);
+
   return ListView.builder(
       shrinkWrap: true,
       itemCount: orders.length,
       itemBuilder: (context, index) {
-        return UserOrderDetails(
-          order: orders[index],
-          // onClick: ((int orderId) => {
-          //       bloc..add(ProfileMyOrderDetailsEvent(orderId)),
-          //       widget.changeView(changeType: ViewChangeType.Exact, index: 7)
-          //     }),
-        );
-      });
-}
-
-class UserOrderDetails extends StatelessWidget {
-  final Order order;
-  // final Function(int) onClick;
-
-  const UserOrderDetails({Key? key, required this.order}) : super(key: key);
-
-  Widget build(BuildContext context) {
-    var _theme = Theme.of(context);
-
-    return Container(
-      padding: EdgeInsets.all(8),
-      child: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: _theme.primaryColor.withOpacity(0.3),
-              blurRadius: 8,
-            )
-          ],
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.white,
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  RichText(
-                      text: TextSpan(children: <TextSpan>[
-                    TextSpan(
-                      text: 'Order: ',
-                      style: _theme.textTheme.headline4!.copyWith(
-                          color: _theme.primaryColorLight,
-                          fontWeight: FontWeight.normal),
-                    ),
-                    TextSpan(
-                      // text: '#' + order.orderNumber.toString(),
-                      text: 'TEST',
-                      style: _theme.textTheme.headline4!
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-                  ])),
-                  // Text(DateFormat('yyyy-MM-dd').format(order.orderDate),
-                  Text('Test',
-                      style: _theme.textTheme.headline2!
-                          .copyWith(color: Colors.red))
-                ],
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        // return Text(orders[index].get_order_reference());
+        // return UserOrderDetails(
+        //   order: orders[index],
+        // onClick: ((int orderId) => {
+        //       bloc..add(ProfileMyOrderDetailsEvent(orderId)),
+        //       widget.changeView(changeType: ViewChangeType.Exact, index: 7)
+        //     }),
+        // );
+        return Container(
+          padding: EdgeInsets.all(8),
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: _theme.primaryColor.withOpacity(0.3),
+                  blurRadius: 8,
+                )
+              ],
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.white,
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(15),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                        'Tacking Number: ',
-                        style: _theme.textTheme.headline4!
-                            .copyWith(color: _theme.primaryColorLight),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Text(
-                          // order.trackingNumber,
-                          'TEST',
-                          style: _theme.textTheme.headline4,
+                      RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Order: ',
+                              style: _theme.textTheme.headline6!.copyWith(
+                                  color: _theme.primaryColorLight,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            TextSpan(
+                              text: orders[index].get_order_reference(),
+                              // text: 'TEST',
+                              style: _theme.textTheme.headline6!
+                                  .copyWith(fontWeight: FontWeight.w700),
+                            ),
+                          ],
                         ),
                       ),
+                      // Text(DateFormat('yyyy-MM-dd')
+                      //     .format(orders[index].get_order_date())),
+                      Text(
+                        orders[index].get_order_date(),
+                        style: _theme.textTheme.subtitle1!
+                            .copyWith(color: Colors.red),
+                      ),
+                      // Text('Test',
+                      //     style: _theme.textTheme.headline2!
+                      //         .copyWith(color: Colors.red))
                     ],
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 4,
                   ),
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Row(
                         children: <Widget>[
                           Text(
-                            'Quantity: ',
-                            style: _theme.textTheme.headline4!
-                                .copyWith(color: _theme.primaryColorLight),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 4),
-                            child: Text(
-                              // order.totalQuantity.toString(),
-                              'TEST',
-
-                              style: _theme.textTheme.headline4,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            'Totat Amount: ',
-                            style: _theme.textTheme.headline4!
+                            'Tacking Number: ',
+                            style: _theme.textTheme.subtitle1!
                                 .copyWith(color: _theme.primaryColorLight),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 15),
                             child: Text(
-                              // '\$' + order.totalPrice.toStringAsFixed(0),
-                              'TEST',
-
-                              //total amount
-                              style: _theme.textTheme.headline4,
+                              // orders[index].trackingNumber,
+                              'NOT DEFINED',
+                              style: _theme.textTheme.subtitle1,
                             ),
                           ),
                         ],
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                'Quantity: ',
+                                style: _theme.textTheme.subtitle1!
+                                    .copyWith(color: _theme.primaryColorLight),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: Text(
+                                  // orders[index].totalQuantity.toString(),
+                                  'TEST',
+
+                                  style: _theme.textTheme.subtitle1,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                'Totat Amount: ',
+                                style: _theme.textTheme.subtitle1!
+                                    .copyWith(color: _theme.primaryColorLight),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: Text(
+                                  '\€' +
+                                      orders[index]
+                                          .get_order_price()
+                                          .toString(),
+                                  // 'TEST',
+
+                                  //total amount
+                                  style: _theme.textTheme.subtitle1,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
                       )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.only(
+                              left: 24, right: 24, top: 10, bottom: 10),
+                          primary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              side: BorderSide(color: Colors.black, width: 2)),
+                        ),
+                        onPressed: () {
+                          // onClick(orders[index].id);
+                        },
+                        child: Text(
+                          'Details',
+                          style: _theme.textTheme.headline6,
+                        ),
+                      ),
+                      // Text(orders[index].orderStatus.toString().split('.')[1],
+                      Text('Test',
+                          style: _theme.textTheme.headline6!
+                              .copyWith(color: Colors.green)),
                     ],
                   )
                 ],
               ),
-              SizedBox(
-                height: 4,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  RaisedButton(
-                    padding: EdgeInsets.only(
-                        left: 24, right: 24, top: 10, bottom: 10),
-                    color: Colors.white,
-                    onPressed: () {
-                      // onClick(order.id);
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        side: BorderSide(color: Colors.black, width: 2)),
-                    child: Text(
-                      'Details',
-                      style: _theme.textTheme.headline4,
-                    ),
-                  ),
-                  // Text(order.orderStatus.toString().split('.')[1],
-                  Text('Test',
-                      style: _theme.textTheme.headline4!
-                          .copyWith(color: Colors.green)),
-                ],
-              )
-            ],
+            ),
           ),
-        ),
-      ),
-    );
-  }
+        );
+      });
 }
+
+// class UserOrderDetails extends StatefulWidget {
+//   var order;
+//   // final Function(int) onClick;
+
+//   UserOrderDetails({Key? key, required this.order}) : super(key: key);
+
+//   @override
+//   _UserOrderDetailsState createState() => _UserOrderDetailsState(order: order);
+// }
+
+// class _UserOrderDetailsState extends State<UserOrderDetails> {
+//   var order;
+
+//   _UserOrderDetailsState({this.order});
+
+//   Widget build(BuildContext context) {
+//     var _theme = Theme.of(context);
+
+//     return FutureBuilder(
+//       future: order,
+//       builder: (context, AsyncSnapshot snapshot) {
+//         switch (snapshot.connectionState) {
+//           case ConnectionState.none:
+//           case ConnectionState.waiting:
+//             return Circular_Progress_Widget();
+//           default:
+//             if (snapshot.hasError)
+//               return Text('Error: ${snapshot.error}');
+//             else
+//               return Container(
+//                 padding: EdgeInsets.all(8),
+//                 child: Container(
+//                   decoration: BoxDecoration(
+//                     boxShadow: [
+//                       BoxShadow(
+//                         color: _theme.primaryColor.withOpacity(0.3),
+//                         blurRadius: 8,
+//                       )
+//                     ],
+//                     borderRadius: BorderRadius.circular(8),
+//                     color: Colors.white,
+//                   ),
+//                   child: Padding(
+//                     padding: EdgeInsets.all(15),
+//                     child: Column(
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       children: <Widget>[
+//                         Row(
+//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           children: <Widget>[
+//                             RichText(
+//                               text: TextSpan(
+//                                 children: <TextSpan>[
+//                                   TextSpan(
+//                                     text: 'Order: ',
+//                                     style: _theme.textTheme.headline4!.copyWith(
+//                                         color: _theme.primaryColorLight,
+//                                         fontWeight: FontWeight.normal),
+//                                   ),
+//                                   TextSpan(
+//                                     text: order.get_order_reference(),
+//                                     // text: 'TEST',
+//                                     style: _theme.textTheme.headline4!
+//                                         .copyWith(fontWeight: FontWeight.w700),
+//                                   ),
+//                                 ],
+//                               ),
+//                             ),
+//                             Text(DateFormat('yyyy-MM-dd')
+//                                 .format(order.get_order_date())),
+//                             // Text('Test',
+//                             //     style: _theme.textTheme.headline2!
+//                             //         .copyWith(color: Colors.red))
+//                           ],
+//                         ),
+//                         SizedBox(
+//                           height: 4,
+//                         ),
+//                         Column(
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           children: <Widget>[
+//                             Row(
+//                               children: <Widget>[
+//                                 Text(
+//                                   'Tacking Number: ',
+//                                   style: _theme.textTheme.headline4!.copyWith(
+//                                       color: _theme.primaryColorLight),
+//                                 ),
+//                                 Padding(
+//                                   padding: const EdgeInsets.only(left: 15),
+//                                   child: Text(
+//                                     // order.trackingNumber,
+//                                     'TEST',
+//                                     style: _theme.textTheme.headline4,
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                             SizedBox(
+//                               height: 15,
+//                             ),
+//                             Row(
+//                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                               children: <Widget>[
+//                                 Row(
+//                                   children: <Widget>[
+//                                     Text(
+//                                       'Quantity: ',
+//                                       style: _theme.textTheme.headline4!
+//                                           .copyWith(
+//                                               color: _theme.primaryColorLight),
+//                                     ),
+//                                     Padding(
+//                                       padding: const EdgeInsets.only(left: 4),
+//                                       child: Text(
+//                                         // order.totalQuantity.toString(),
+//                                         'TEST',
+
+//                                         style: _theme.textTheme.headline4,
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                                 Row(
+//                                   children: <Widget>[
+//                                     Text(
+//                                       'Totat Amount: ',
+//                                       style: _theme.textTheme.headline4!
+//                                           .copyWith(
+//                                               color: _theme.primaryColorLight),
+//                                     ),
+//                                     Padding(
+//                                       padding: const EdgeInsets.only(left: 15),
+//                                       child: Text(
+//                                         // '\$' + order.totalPrice.toStringAsFixed(0),
+//                                         'TEST',
+
+//                                         //total amount
+//                                         style: _theme.textTheme.headline4,
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 )
+//                               ],
+//                             )
+//                           ],
+//                         ),
+//                         SizedBox(
+//                           height: 4,
+//                         ),
+//                         Row(
+//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           children: <Widget>[
+//                             ElevatedButton(
+//                               style: ElevatedButton.styleFrom(
+//                                 padding: EdgeInsets.only(
+//                                     left: 24, right: 24, top: 10, bottom: 10),
+//                                 primary: Colors.white,
+//                                 shape: RoundedRectangleBorder(
+//                                     borderRadius: BorderRadius.circular(8),
+//                                     side: BorderSide(
+//                                         color: Colors.black, width: 2)),
+//                               ),
+//                               onPressed: () {
+//                                 // onClick(order.id);
+//                               },
+//                               child: Text(
+//                                 'Details',
+//                                 style: _theme.textTheme.headline4,
+//                               ),
+//                             ),
+//                             // Text(order.orderStatus.toString().split('.')[1],
+//                             Text('Test',
+//                                 style: _theme.textTheme.headline4!
+//                                     .copyWith(color: Colors.green)),
+//                           ],
+//                         )
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//               );
+//         }
+//       },
+//     );
+//   }
+// }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_ecommerce/Application/usecases/add_product_to_shopping_cart_usecase.dart';
 import 'package:mobile_ecommerce/Application/usecases/make_an_order_usecase.dart';
@@ -150,12 +152,10 @@ void main() {
           Make_An_Order_Usecase(shoppingCartItemRepository);
 
       Order order = Order();
-      order.set_order_date('2022-02-02');
       order.set_order_reference("CVD455");
       order.set_order_price(await make_an_order_usecase.get_cart_total_price());
       order.set_order_state("processing");
       order.set_order_delivery_date("2022-06-24");
-      order.set_order_hour("16h04");
       order.set_order_delivery_method("UPS");
       order.set_order_payment_method("CREDIT CARD");
       order.set_user_id(user.get_user_id());
@@ -170,6 +170,7 @@ void main() {
           await order_in_db.get_order_reference(), order.get_order_reference());
 
       expect(await order_in_db.get_user_id(), user.get_user_id());
+      expect(await order_in_db.get_order_date(), true);
 
       closeSqfliteFfiDatabase();
     });
@@ -200,7 +201,6 @@ void main() {
           Make_An_Order_Usecase(shoppingCartItemRepository);
 
       Order order = Order();
-      order.set_order_date('2022-02-02');
       order.set_order_reference("BDC454");
 
       await make_an_order_usecase.register_order_items(
@@ -241,7 +241,6 @@ void main() {
           Make_An_Order_Usecase(shoppingCartItemRepository);
 
       Order order = Order();
-      order.set_order_date('2022-02-02');
       order.set_order_reference("BDC454");
 
       await make_an_order_usecase.register_order_items(

@@ -182,7 +182,7 @@ ListView buildOrdersList(BuildContext context, List orders) {
                         text: TextSpan(
                           children: <TextSpan>[
                             TextSpan(
-                              text: 'Order Number: ',
+                              text: 'Order Reference: ',
                               style: _theme.textTheme.subtitle1!.copyWith(
                                   color: _theme.primaryColorLight,
                                   fontWeight: FontWeight.normal),

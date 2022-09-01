@@ -3,5 +3,7 @@ abstract class ProductRepository {
 
   retrieveProductsByTitle(String productTitle);
 
+  retrieve_product_with_sku(int sku);
+
   _close_database();
 }

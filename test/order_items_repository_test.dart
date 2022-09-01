@@ -96,6 +96,8 @@ void main() {
 
       expect(await orders_items_in_db[0].getTitle(), product.getTitle());
       expect(await orders_items_in_db[1].getTitle(), product2.getTitle());
+
+      await closeSqfliteFfiDatabase();
     });
   });
 }

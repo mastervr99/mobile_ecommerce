@@ -47,6 +47,8 @@ void main() {
 
       var isUserStillConnected = await signInUsecase.checkIfUserConnected();
       expect(isUserStillConnected, false);
+
+      await closeSqfliteFfiDatabase();
     });
   });
 }

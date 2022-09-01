@@ -70,7 +70,7 @@ void main() {
 
       expect(await newCartItemsTotalQuantity, 3);
 
-      closeSqfliteFfiDatabase();
+      await closeSqfliteFfiDatabase();
     });
     test('Get Shopping Cart Total Price', () async {
       ShoppingCartItemRepository shoppingCartItemRepository =
@@ -101,7 +101,7 @@ void main() {
 
       expect(await cartItemsPricesTotal, 99);
 
-      closeSqfliteFfiDatabase();
+      await closeSqfliteFfiDatabase();
     });
 
     test('register user order', () async {
@@ -171,7 +171,7 @@ void main() {
 
       expect(await order_in_db.get_user_id(), user.get_user_id());
 
-      closeSqfliteFfiDatabase();
+      await closeSqfliteFfiDatabase();
     });
 
     test('Register Shopping Cart items as order items', () async {
@@ -211,7 +211,7 @@ void main() {
       expect(await order_items_in_db[0].getTitle(), 'lg X');
       expect(await order_items_in_db[1].getTitle(), 'samsung X');
 
-      closeSqfliteFfiDatabase();
+      await closeSqfliteFfiDatabase();
     });
 
     test('Shopping cart is empty after registering order', () async {
@@ -251,6 +251,8 @@ void main() {
       var shoppingCartProducts = await shoppingCart.getAllCartItems();
 
       expect(shoppingCartProducts.isEmpty, true);
+
+      await closeSqfliteFfiDatabase();
     });
   });
 }

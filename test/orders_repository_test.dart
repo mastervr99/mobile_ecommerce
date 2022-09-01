@@ -96,6 +96,8 @@ void main() {
 
       expect(await orders_in_db[0].get_order_reference(),
           order.get_order_reference());
+
+      await closeSqfliteFfiDatabase();
     });
   });
 }

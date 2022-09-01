@@ -74,6 +74,29 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
     return searchResults;
   }
 
+  retrieve_product_with_sku(int sku) async {
+    await _init_database();
+
+    var productData = await database
+        .rawQuery("SELECT * FROM products WHERE sku like '%$sku%' LIMIT 1");
+
+    Product product = Product(await productData[0]['title'] ?? '');
+    product.setDescription(await productData[0]['description'] ?? '');
+    product.setGender(await productData[0]['gender'] ?? '');
+    product.setCategory(await productData[0]['category'] ?? '');
+    product.setSubCategory(await productData[0]['subCategory'] ?? '');
+    product.setType(await productData[0]['type'] ?? '');
+    product.setColor(await productData[0]['color'] ?? '');
+    product.setUsage(await productData[0]['usage'] ?? '');
+    product.setImageUrl(await productData[0]['imageUrl'] ?? '');
+    product.setPrice(await productData[0]['price'] ?? 0);
+    product.setSku(await productData[0]['sku'] ?? 100);
+
+    await _close_database();
+
+    return await product;
+  }
+
   @override
   _close_database() {}
 }

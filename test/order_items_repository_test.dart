@@ -26,8 +26,8 @@ void main() {
     await db.close();
   }
 
-  group('Orders Repository test :', () {
-    test('Get all connected user orders', () async {
+  group('Order Items Repository test :', () {
+    test('Get all order items', () async {
       ShoppingCartItemRepository shoppingCartItemRepository =
           ShoppingCartItemRepositorySqfliteFfiImpl();
 
@@ -88,14 +88,14 @@ void main() {
       await make_an_order_usecase.register_user_order(
           connectedUserRepository, order, order_repository);
 
-      User connected_user =
-          await connectedUserRepository.retrieveConnectedUser();
+      await make_an_order_usecase.register_order_items(
+          order_item_repository, order);
 
-      var orders_in_db =
-          await order_repository.retrieve_all_user_orders(await connected_user);
+      var orders_items_in_db = await order_item_repository
+          .retrieve_items_by_order_reference(order.get_order_reference());
 
-      expect(await orders_in_db[0].get_order_reference(),
-          order.get_order_reference());
+      expect(await orders_items_in_db[0].getTitle(), product.getTitle());
+      expect(await orders_items_in_db[1].getTitle(), product2.getTitle());
     });
   });
 }

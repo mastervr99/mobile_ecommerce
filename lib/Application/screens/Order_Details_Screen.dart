@@ -4,7 +4,6 @@ import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
-import 'package:mobile_ecommerce/Application/usecases/make_an_order_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/order.dart';
 import 'package:mobile_ecommerce/Domain/Entity/order_item.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/order_item_repository.dart';
@@ -243,7 +242,12 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
                         style: Theme.of(context).textTheme.headline6,
                       ),
                       Text(
-                        "${item.getPrice()}" + translate("label_currency"),
+                        "Price : ${item.getPrice()}" +
+                            translate("label_currency"),
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      Text(
+                        "Quantity : ${item.get_quantity()}",
                         style: Theme.of(context).textTheme.headline6,
                       ),
                     ],

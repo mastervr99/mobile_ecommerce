@@ -49,6 +49,7 @@ class Make_An_Order_Usecase {
       order_item.setPrice(cart_item.getPrice());
       order_item.setSku(cart_item.getSku());
       order_item.setOrderReference(order.get_order_reference());
+      order_item.set_quantity(cart_item.getQuantity());
 
       await order_item_repository.register_item(order_item);
     });

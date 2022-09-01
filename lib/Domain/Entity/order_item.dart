@@ -11,6 +11,7 @@ class Order_Item {
   String imageUrl = '';
   double price = 0;
   int sku = 0;
+  int quantity = 0;
 
   Order_Item(this.title);
 
@@ -56,6 +57,10 @@ class Order_Item {
 
   setSku(int sku) {
     this.sku = sku;
+  }
+
+  set_quantity(int quantity) {
+    this.quantity = quantity;
   }
 
   getTitle() {
@@ -106,6 +111,10 @@ class Order_Item {
     return sku;
   }
 
+  get_quantity() {
+    return quantity;
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'title': title,
@@ -119,7 +128,8 @@ class Order_Item {
       'imageUrl': imageUrl,
       'price': price,
       'sku': sku,
-      'order_reference': order_reference
+      'order_reference': order_reference,
+      'quantity': quantity
     };
   }
 }

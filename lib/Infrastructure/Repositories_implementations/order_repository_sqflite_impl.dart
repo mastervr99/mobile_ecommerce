@@ -10,7 +10,7 @@ class Order_Repository_Sqflite_Impl extends Order_Repository {
   @override
   _init_database() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, 'orders.db');
+    final path = join(databasesPath, 'user_orders.db');
     database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table

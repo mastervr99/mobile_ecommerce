@@ -23,7 +23,8 @@ class Order_Item_Repostitory_Sqflite_Ffi_Impl extends Order_Item_Repository {
         imageUrl TEXT,
         price FLOAT,
         sku INT,
-        order_reference TEXT
+        order_reference TEXT,
+        quantity INT
       )
       ''');
   }
@@ -64,6 +65,7 @@ class Order_Item_Repostitory_Sqflite_Ffi_Impl extends Order_Item_Repository {
         order_item.setPrice(itemData['price']);
         order_item.setSku(itemData['sku']);
         order_item.setOrderReference(itemData['order_reference']);
+        order_item.set_quantity(itemData['quantity']);
 
         order_items.add(order_item);
       });
@@ -71,25 +73,6 @@ class Order_Item_Repostitory_Sqflite_Ffi_Impl extends Order_Item_Repository {
       await _close_database();
 
       return order_items;
-
-      // List<Order_Item> test = [];
-      // await items_in_db.forEach((itemData) async {
-      //   Order_Item order_item = Order_Item(itemData['title']);
-      //   order_item.setDescription(itemData['description']);
-      //   order_item.setGender(itemData['gender'] ?? '');
-      //   order_item.setCategory(itemData['category']);
-      //   order_item.setSubCategory(itemData['subCategory']);
-      //   order_item.setType(itemData['type']);
-      //   order_item.setColor(itemData['color']);
-      //   order_item.setUsage(itemData['usage']);
-      //   order_item.setImageUrl(itemData['imageUrl']);
-      //   order_item.setPrice(itemData['price']);
-      //   order_item.setSku(itemData['sku']);
-      //   order_item.setOrderReference(itemData['order_reference']);
-
-      //   test.add(order_item);
-      // });
-      // return test;
     }
   }
 

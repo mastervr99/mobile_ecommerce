@@ -77,7 +77,8 @@ class Order_Repository_Sqflite_Impl extends Order_Repository {
     await _init_database();
 
     var all_user_orders_in_db = await database.rawQuery(
-        "SELECT * FROM orders WHERE user_id = ?", [user.get_user_id()]);
+        "SELECT * FROM orders WHERE user_id = ? ORDER BY id DESC",
+        [user.get_user_id()]);
 
     List<Order> all_user_orders = [];
 

@@ -170,7 +170,6 @@ void main() {
           await order_in_db.get_order_reference(), order.get_order_reference());
 
       expect(await order_in_db.get_user_id(), user.get_user_id());
-      expect(await order_in_db.get_order_date(), true);
 
       closeSqfliteFfiDatabase();
     });

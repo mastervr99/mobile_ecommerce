@@ -94,7 +94,7 @@ void main() {
       var orders =
           await order_repository.retrieve_all_user_orders(await connected_user);
 
-      expect(orders[0], false);
+      expect(orders[0].get_order_reference(), order.get_order_reference());
     });
   });
 }

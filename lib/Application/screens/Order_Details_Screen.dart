@@ -316,25 +316,26 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
     return await product;
   }
 
-  Row buildSummaryLine(
-      String label, String text, ThemeData _theme, double width) {
-    print(label + ' ' + text);
+  buildSummaryLine(String label, String text, ThemeData _theme, double width) {
     return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Expanded(
+          child: Text(
             label,
             style: _theme.textTheme.headline5!
                 .copyWith(color: _theme.primaryColorLight),
           ),
-          Container(
-            width: width / 2,
-            child: Text(
-              text,
-              style: _theme.textTheme.headline6,
-            ),
-          )
-        ]);
+        ),
+        Container(
+          width: width / 2,
+          child: Text(
+            text,
+            style: _theme.textTheme.headline6,
+          ),
+        )
+      ],
+    );
   }
 }

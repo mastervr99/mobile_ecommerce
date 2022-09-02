@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_ecommerce/Application/screens/Products_Search_Screen.dart';
 import 'package:mobile_ecommerce/Application/screens/Shopping_Cart_Screen.dart';
+import 'package:mobile_ecommerce/Application/screens/User_Account_Screen.dart';
 import 'package:mobile_ecommerce/main.dart';
 
 class Bottom_Navbar_Widget extends StatefulWidget {
@@ -31,10 +32,10 @@ class _Bottom_Navbar_Widget_State extends State<Bottom_Navbar_Widget> {
             MaterialPageRoute(builder: (context) => Products_Search_Screen()),
           );
           break;
-        case 1:
+        case 2:
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Products_Search_Screen()),
+            MaterialPageRoute(builder: (context) => User_Account_Screen()),
           );
           break;
         case 3:

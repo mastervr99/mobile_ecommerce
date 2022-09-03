@@ -4,6 +4,7 @@ import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Wi
 import 'package:mobile_ecommerce/Application/components/Language_Selection_Component.dart';
 import 'package:mobile_ecommerce/Application/components/Sign_Up_Component.dart';
 import 'package:mobile_ecommerce/Application/screens/Orders_History_Screen.dart';
+import 'package:mobile_ecommerce/Application/screens/User_Account_Screen.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_out_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
@@ -61,6 +62,24 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                         ),
                       ),
                       _createDrawerItem(
+                        icon: Icons.shopping_bag_outlined,
+                        text: translate('My Account'),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => User_Account_Screen()),
+                        ),
+                      ),
+                      _createDrawerItem(
+                        icon: Icons.shopping_bag_outlined,
+                        text: translate('My Orders'),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Orders_History_Screen()),
+                        ),
+                      ),
+                      _createDrawerItem(
                           icon: Icons.call,
                           text: translate('label_contact'),
                           onTap: () => Navigator.push(
@@ -77,15 +96,6 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   Language_Selection_Component()),
-                        ),
-                      ),
-                      _createDrawerItem(
-                        icon: Icons.shopping_bag_outlined,
-                        text: translate('MY ORDERS'),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Orders_History_Screen()),
                         ),
                       ),
                       _createDrawerItem(

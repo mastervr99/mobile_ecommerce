@@ -37,6 +37,7 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
       child: FutureBuilder(
         future: check_if_user_connected(),
         builder: (context, AsyncSnapshot snapshot) {
+          var is_user_connected = snapshot.data;
           switch (snapshot.connectionState) {
             case ConnectionState.none:
             case ConnectionState.waiting:
@@ -44,7 +45,7 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
             default:
               if (snapshot.hasError)
                 return Text('Error: ${snapshot.error}');
-              else if (snapshot.data == true) {
+              else if (is_user_connected == true) {
                 return Drawer(
                   child: ListView(
                     padding: EdgeInsets.zero,

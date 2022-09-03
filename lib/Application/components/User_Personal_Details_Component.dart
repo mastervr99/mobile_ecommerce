@@ -249,11 +249,6 @@ class _User_Personal_Details_Component_State
                               hintText:
                                   widget.connected_user.get_user_phone_number(),
                             ),
-                            validator: (name) {
-                              if (!formFieldValidator.isValidEmail(name)) {
-                                return translate('label_valid_email');
-                              }
-                            },
                           ),
                           SizedBox(
                             height: 15,

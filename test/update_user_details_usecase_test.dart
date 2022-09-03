@@ -39,5 +39,38 @@ void main() {
 
       expect(await user_in_db.getUserEmail(), 'changing@gmail.com');
     });
+
+    test('check if email is new', () async {
+      User user = User();
+      user.setUserFirstname('testFirstname');
+      user.setUserLastname('testLastname');
+      user.setUserEmail('user1@gmail.com');
+      user.setUserPassword('password');
+      user.set_user_phone_number('01234(-789');
+
+      User user2 = User();
+      user2.setUserFirstname('testFirstname');
+      user2.setUserLastname('testLastname');
+      user2.setUserEmail('user2@gmail.com');
+      user2.setUserPassword('password');
+      user2.set_user_phone_number('0123456789');
+
+      UserRepository user_repository = UserRepositorySqfliteFfiImpl();
+
+      SignUpUsecase signUpUsecase = SignUpUsecase(user_repository);
+      await signUpUsecase.signUp(user);
+      await signUpUsecase.signUp(user2);
+
+      Update_User_Details_Usecase update_user_details_usecase =
+          Update_User_Details_Usecase(user_repository);
+
+      bool is_user2_email_registered =
+          await update_user_details_usecase.checkIfEmailRegistered(user2);
+      if (!await is_user2_email_registered) {
+        user.setUserEmail(user2.getUserEmail());
+      }
+
+      expect(await user.getUserEmail(), 'user1@gmail.com');
+    });
   });
 }

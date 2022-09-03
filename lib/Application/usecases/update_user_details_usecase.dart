@@ -7,6 +7,18 @@ class Update_User_Details_Usecase {
   Update_User_Details_Usecase(this.user_repository);
 
   update(User user) async {
-    await user_repository.update_user_data(user);
+    if (!await checkIfEmailRegistered(user)) {
+      await user_repository.update_user_data(user);
+    }
+  }
+
+  checkIfEmailRegistered(User user) async {
+    var registeredUser = await user_repository.retrieveUser(user);
+
+    if (registeredUser is User) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

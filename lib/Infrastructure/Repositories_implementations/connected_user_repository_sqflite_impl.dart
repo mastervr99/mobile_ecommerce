@@ -9,7 +9,7 @@ class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
   @override
   _init_database() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, 'online_user.db');
+    final path = join(databasesPath, 'connected_user1.db');
     database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table
@@ -20,7 +20,8 @@ class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
         email TEXT,
         password TEXT,
         firstname TEXT,
-        lastname TEXT
+        lastname TEXT,
+        phone_number TEXT
       )
       ''');
     });
@@ -54,6 +55,8 @@ class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
       connectedUser.setUserLastname(await connectedUserData[0]['firstname']);
       connectedUser.setUserEmail(await connectedUserData[0]['email']);
       connectedUser.setUserPassword(await connectedUserData[0]['password']);
+      connectedUser
+          .set_user_phone_number(await connectedUserData[0]['phone_number']);
 
       await _close_database();
 
@@ -61,6 +64,15 @@ class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
     }
   }
 
+  @override
+  update_connected_user_data(User user) async {
+    await _init_database();
+
+    await database.update('ConnectedUser', user.toMap());
+    await _close_database();
+  }
+
+  @override
   removeConnectedUser() async {
     await _init_database();
 

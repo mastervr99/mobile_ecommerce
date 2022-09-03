@@ -15,4 +15,10 @@ class CustomFormFieldValidator {
         r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$');
     return passwordRegExp.hasMatch(password);
   }
+
+  bool check_if_valid_phone_number(phone_number) {
+    final phone_number_reg_exp = RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
+
+    return phone_number_reg_exp.hasMatch(phone_number);
+  }
 }

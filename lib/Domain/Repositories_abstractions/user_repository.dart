@@ -5,6 +5,8 @@ abstract class UserRepository {
 
   registerUser(User newUser);
 
+  update_user_data(User user);
+
   retrieveUser(User user);
 
   _close_database();

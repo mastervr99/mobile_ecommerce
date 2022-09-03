@@ -28,9 +28,9 @@ void main() {
 
       await signUpUsecase.signUp(user);
 
-      User dataSearchUser1 = await userRepository.retrieveUser(user);
+      User user_in_db = await userRepository.retrieveUser(user);
 
-      expect(await dataSearchUser1.getUserEmail(), user.getUserEmail());
+      expect(await user_in_db.getUserEmail(), user.getUserEmail());
 
       await closeSqfliteFfiDatabase();
     });

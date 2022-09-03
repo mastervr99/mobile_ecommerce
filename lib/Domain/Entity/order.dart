@@ -14,12 +14,20 @@ class Order {
   String order_delivery_date = '';
   String user_id = '';
 
-  final _chars =
-      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  final Random _rnd = Random();
+  String getRandomString(int length) {
+    var _chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    Random _rnd = Random();
 
-  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+    return String.fromCharCodes(
+      Iterable.generate(
+        length,
+        (_) => _chars.codeUnitAt(
+          _rnd.nextInt(_chars.length),
+        ),
+      ),
+    );
+  }
 
   Order() {
     this.order_reference = getRandomString(10).toUpperCase();

@@ -27,5 +27,15 @@ void main() {
       String password2 = "exemple";
       expect(formFieldValidator.isValidPassword(password2), false);
     });
+
+    test('phone number validation', () {
+      var phone_number = '0123456778';
+      expect(
+          formFieldValidator.check_if_valid_phone_number(phone_number), true);
+
+      var phone_number2 = '01234567784fdf';
+      expect(
+          formFieldValidator.check_if_valid_phone_number(phone_number2), false);
+    });
   });
 }

@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
+import 'package:mobile_ecommerce/Application/screens/Orders_History_Screen.dart';
+import 'package:mobile_ecommerce/Application/components/User_Personal_Details_Component.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/connected_user_repository_sqflite_impl.dart';
 
 class User_Account_Screen extends StatefulWidget {
   @override
   _User_Account_Screen_State createState() => _User_Account_Screen_State();
+}
+
+get_connected_user() async {
+  ConnectedUserRepository connectedUserRepository =
+      ConnectedUserRepositorySqfliteImpl();
+
+  var connected_user = await connectedUserRepository.retrieveConnectedUser();
+
+  return await connected_user;
 }
 
 class _User_Account_Screen_State extends State<User_Account_Screen> {
@@ -34,6 +48,11 @@ class _User_Account_Screen_State extends State<User_Account_Screen> {
       color: Colors.black38,
     );
 
+    Icon orders = Icon(
+      Icons.shopping_bag,
+      color: Colors.black38,
+    );
+
     Icon menu = Icon(
       Icons.more_vert,
       color: Colors.black38,
@@ -47,473 +66,557 @@ class _User_Account_Screen_State extends State<User_Account_Screen> {
       appBar: Appbar_Widget(context),
       endDrawer: Drawer_Widget(),
       bottomNavigationBar: Bottom_Navbar_Widget(),
-      body: Container(
-          child: SingleChildScrollView(
-              child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        textDirection: TextDirection.ltr,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(7.0),
-            alignment: Alignment.topCenter,
-            height: 260.0,
-            child: Card(
-              elevation: 3.0,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        width: 100.0,
-                        height: 100.0,
-                        margin: const EdgeInsets.all(10.0),
-                        // padding: const EdgeInsets.all(3.0),
-                        child: ClipOval(
-                          child: Image.network(
-                              'https://www.fakenamegenerator.com/images/sil-female.png'),
+      body: FutureBuilder(
+        future: get_connected_user(),
+        builder: (context, AsyncSnapshot snapshot) {
+          var connected_user = snapshot.data;
+
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+              return Circular_Progress_Widget();
+            default:
+              if (snapshot.hasError)
+                return Text('Error: ${snapshot.error}');
+              else
+                return Container(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      textDirection: TextDirection.ltr,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.all(7.0),
+                          alignment: Alignment.topCenter,
+                          height: 260.0,
+                          child: Card(
+                            elevation: 3.0,
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                    alignment: Alignment.topCenter,
+                                    child: Container(
+                                      width: 100.0,
+                                      height: 100.0,
+                                      margin: const EdgeInsets.all(10.0),
+                                      // padding: const EdgeInsets.all(3.0),
+                                      child: ClipOval(
+                                        child: Image.network(
+                                            'https://www.fakenamegenerator.com/images/sil-female.png'),
+                                      ),
+                                    )),
+
+                                FlatButton(
+                                  onPressed: null,
+                                  child: Text(
+                                    'Change',
+                                    style: TextStyle(
+                                        fontSize: 13.0,
+                                        color: Colors.blueAccent),
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      side:
+                                          BorderSide(color: Colors.blueAccent)),
+                                ),
+
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          left: 10.0,
+                                          top: 20.0,
+                                          right: 5.0,
+                                          bottom: 5.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          Text(
+                                            connected_user
+                                                    .get_user_firstname() +
+                                                ' ' +
+                                                connected_user
+                                                    .get_user_lastname(),
+                                            style: TextStyle(
+                                              color: Colors.black87,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.bold,
+                                              letterSpacing: 0.5,
+                                            ),
+                                          ),
+                                          _verticalDivider(),
+                                          Text(
+                                            mobilenumber,
+                                            style: TextStyle(
+                                                color: Colors.black45,
+                                                fontSize: 13.0,
+                                                fontWeight: FontWeight.bold,
+                                                letterSpacing: 0.5),
+                                          ),
+                                          _verticalDivider(),
+                                          Text(
+                                            connected_user.getUserEmail(),
+                                            style: TextStyle(
+                                                color: Colors.black45,
+                                                fontSize: 13.0,
+                                                fontWeight: FontWeight.bold,
+                                                letterSpacing: 0.5),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: IconButton(
+                                          icon: ofericon,
+                                          color: Colors.blueAccent,
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      User_Personal_Details_Component(
+                                                          connected_user:
+                                                              connected_user)),
+                                            );
+                                          }),
+                                    )
+                                  ],
+                                ),
+                                // VerticalDivider(),
+                              ],
+                            ),
+                          ),
                         ),
-                      )),
-
-                  FlatButton(
-                    onPressed: null,
-                    child: Text(
-                      'Change',
-                      style:
-                          TextStyle(fontSize: 13.0, color: Colors.blueAccent),
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        side: BorderSide(color: Colors.blueAccent)),
-                  ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(
-                            left: 10.0, top: 20.0, right: 5.0, bottom: 5.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Text(
-                              username,
-                              style: TextStyle(
+                        Container(
+                          margin: EdgeInsets.only(
+                              left: 12.0, top: 5.0, right: 0.0, bottom: 5.0),
+                          child: Text(
+                            'Addresses',
+                            style: TextStyle(
                                 color: Colors.black87,
-                                fontSize: 15.0,
                                 fontWeight: FontWeight.bold,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                            _verticalDivider(),
-                            Text(
-                              mobilenumber,
-                              style: TextStyle(
-                                  color: Colors.black45,
-                                  fontSize: 13.0,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.5),
-                            ),
-                            _verticalDivider(),
-                            Text(
-                              eid,
-                              style: TextStyle(
-                                  color: Colors.black45,
-                                  fontSize: 13.0,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.5),
-                            )
-                          ],
+                                fontSize: 18.0),
+                          ),
                         ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: IconButton(
-                            icon: ofericon,
-                            color: Colors.blueAccent,
-                            onPressed: null),
-                      )
-                    ],
-                  ),
-                  // VerticalDivider(),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            margin:
-                EdgeInsets.only(left: 12.0, top: 5.0, right: 0.0, bottom: 5.0),
-            child: Text(
-              'Addresses',
-              style: TextStyle(
-                  color: Colors.black87,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0),
-            ),
-          ),
-          Container(
-              height: 165.0,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Container(
-                    height: 165.0,
-                    width: 230.0,
-                    margin: EdgeInsets.all(7.0),
-                    child: Card(
-                      elevation: 3.0,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: 12.0,
-                                    top: 5.0,
-                                    right: 0.0,
-                                    bottom: 5.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'Naomi A. Schultz',
-                                      style: TextStyle(
-                                        color: Colors.black87,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                        letterSpacing: 0.5,
-                                      ),
-                                    ),
-                                    _verticalDivider(),
-                                    Text(
-                                      '2585 Columbia Boulevard',
-                                      style: TextStyle(
-                                          color: Colors.black45,
-                                          fontSize: 13.0,
-                                          letterSpacing: 0.5),
-                                    ),
-                                    _verticalDivider(),
-                                    Text(
-                                      'Salisbury',
-                                      style: TextStyle(
-                                          color: Colors.black45,
-                                          fontSize: 13.0,
-                                          letterSpacing: 0.5),
-                                    ),
-                                    _verticalDivider(),
-                                    Text(
-                                      ' MD 21801',
-                                      style: TextStyle(
-                                          color: Colors.black45,
-                                          fontSize: 13.0,
-                                          letterSpacing: 0.5),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          left: 00.0,
-                                          top: 05.0,
-                                          right: 0.0,
-                                          bottom: 5.0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text(
-                                            'Delivery Address',
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              color: Colors.black26,
+                        Container(
+                            height: 165.0,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: <Widget>[
+                                Container(
+                                  height: 165.0,
+                                  width: 230.0,
+                                  margin: EdgeInsets.all(7.0),
+                                  child: Card(
+                                    elevation: 3.0,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Column(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  left: 12.0,
+                                                  top: 5.0,
+                                                  right: 0.0,
+                                                  bottom: 5.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Text(
+                                                    'Naomi A. Schultz',
+                                                    style: TextStyle(
+                                                      color: Colors.black87,
+                                                      fontSize: 15.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      letterSpacing: 0.5,
+                                                    ),
+                                                  ),
+                                                  _verticalDivider(),
+                                                  Text(
+                                                    '2585 Columbia Boulevard',
+                                                    style: TextStyle(
+                                                        color: Colors.black45,
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.5),
+                                                  ),
+                                                  _verticalDivider(),
+                                                  Text(
+                                                    'Salisbury',
+                                                    style: TextStyle(
+                                                        color: Colors.black45,
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.5),
+                                                  ),
+                                                  _verticalDivider(),
+                                                  Text(
+                                                    ' MD 21801',
+                                                    style: TextStyle(
+                                                        color: Colors.black45,
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.5),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 00.0,
+                                                        top: 05.0,
+                                                        right: 0.0,
+                                                        bottom: 5.0),
+                                                    child: Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: <Widget>[
+                                                        Text(
+                                                          'Delivery Address',
+                                                          style: TextStyle(
+                                                            fontSize: 15.0,
+                                                            color:
+                                                                Colors.black26,
+                                                          ),
+                                                        ),
+                                                        _verticalD(),
+                                                        // Checkbox(
+                                                        //   value: checkboxValueA,
+                                                        //   onChanged: (bool value) {
+                                                        //     setState(() {
+                                                        //       checkboxValueA = value;
+                                                        //     });
+                                                        //   },
+                                                        // ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                          _verticalD(),
-                                          // Checkbox(
-                                          //   value: checkboxValueA,
-                                          //   onChanged: (bool value) {
-                                          //     setState(() {
-                                          //       checkboxValueA = value;
-                                          //     });
-                                          //   },
-                                          // ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                                          ],
+                                        ),
+                                        Container(
+                                          alignment: Alignment.topLeft,
+                                          child: IconButton(
+                                              icon: menu,
+                                              color: Colors.black38,
+                                              onPressed: null),
+                                        )
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            alignment: Alignment.topLeft,
-                            child: IconButton(
-                                icon: menu,
-                                color: Colors.black38,
-                                onPressed: null),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 130.0,
-                    width: 230.0,
-                    margin: EdgeInsets.all(7.0),
-                    child: Card(
-                      elevation: 3.0,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: 12.0,
-                                    top: 5.0,
-                                    right: 0.0,
-                                    bottom: 5.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'Bradford R. Butler',
-                                      style: TextStyle(
-                                        color: Colors.black87,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                        letterSpacing: 0.5,
-                                      ),
-                                    ),
-                                    _verticalDivider(),
-                                    Text(
-                                      '4528 Filbert Street',
-                                      style: TextStyle(
-                                          color: Colors.black45,
-                                          fontSize: 13.0,
-                                          letterSpacing: 0.5),
-                                    ),
-                                    _verticalDivider(),
-                                    Text(
-                                      'Philadelphia',
-                                      style: TextStyle(
-                                          color: Colors.black45,
-                                          fontSize: 13.0,
-                                          letterSpacing: 0.5),
-                                    ),
-                                    _verticalDivider(),
-                                    Text(
-                                      ' PA 19103',
-                                      style: TextStyle(
-                                          color: Colors.black45,
-                                          fontSize: 13.0,
-                                          letterSpacing: 0.5),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          left: 00.0,
-                                          top: 05.0,
-                                          right: 0.0,
-                                          bottom: 5.0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text(
-                                            'Delivery Address',
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              color: Colors.black12,
+                                Container(
+                                  height: 130.0,
+                                  width: 230.0,
+                                  margin: EdgeInsets.all(7.0),
+                                  child: Card(
+                                    elevation: 3.0,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Column(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  left: 12.0,
+                                                  top: 5.0,
+                                                  right: 0.0,
+                                                  bottom: 5.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Text(
+                                                    'Bradford R. Butler',
+                                                    style: TextStyle(
+                                                      color: Colors.black87,
+                                                      fontSize: 15.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      letterSpacing: 0.5,
+                                                    ),
+                                                  ),
+                                                  _verticalDivider(),
+                                                  Text(
+                                                    '4528 Filbert Street',
+                                                    style: TextStyle(
+                                                        color: Colors.black45,
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.5),
+                                                  ),
+                                                  _verticalDivider(),
+                                                  Text(
+                                                    'Philadelphia',
+                                                    style: TextStyle(
+                                                        color: Colors.black45,
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.5),
+                                                  ),
+                                                  _verticalDivider(),
+                                                  Text(
+                                                    ' PA 19103',
+                                                    style: TextStyle(
+                                                        color: Colors.black45,
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.5),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 00.0,
+                                                        top: 05.0,
+                                                        right: 0.0,
+                                                        bottom: 5.0),
+                                                    child: Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: <Widget>[
+                                                        Text(
+                                                          'Delivery Address',
+                                                          style: TextStyle(
+                                                            fontSize: 15.0,
+                                                            color:
+                                                                Colors.black12,
+                                                          ),
+                                                        ),
+                                                        _verticalD(),
+                                                        // Checkbox(
+                                                        //   value: checkboxValueB,
+                                                        //   onChanged: (bool value) {
+                                                        //     setState(() {
+                                                        //       checkboxValueB = value;
+                                                        //     });
+                                                        //   },
+                                                        // ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                          _verticalD(),
-                                          // Checkbox(
-                                          //   value: checkboxValueB,
-                                          //   onChanged: (bool value) {
-                                          //     setState(() {
-                                          //       checkboxValueB = value;
-                                          //     });
-                                          //   },
-                                          // ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                                          ],
+                                        ),
+                                        Container(
+                                          alignment: Alignment.topLeft,
+                                          child: IconButton(
+                                              icon: menu,
+                                              color: Colors.black38,
+                                              onPressed: null),
+                                        )
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            alignment: Alignment.topLeft,
-                            child: IconButton(
-                                icon: menu,
-                                color: Colors.black38,
-                                onPressed: null),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 130.0,
-                    width: 230.0,
-                    margin: EdgeInsets.all(7.0),
-                    child: Card(
-                      elevation: 3.0,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: 12.0,
-                                    top: 5.0,
-                                    right: 0.0,
-                                    bottom: 5.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'Elizabeth J. Schmidt',
-                                      style: TextStyle(
-                                        color: Colors.black87,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                        letterSpacing: 0.5,
-                                      ),
-                                    ),
-                                    _verticalDivider(),
-                                    Text(
-                                      '3674 Oakway Lane',
-                                      style: TextStyle(
-                                          color: Colors.black45,
-                                          fontSize: 13.0,
-                                          letterSpacing: 0.5),
-                                    ),
-                                    _verticalDivider(),
-                                    Text(
-                                      'Long Beach',
-                                      style: TextStyle(
-                                          color: Colors.black45,
-                                          fontSize: 13.0,
-                                          letterSpacing: 0.5),
-                                    ),
-                                    _verticalDivider(),
-                                    Text(
-                                      'CA 90802',
-                                      style: TextStyle(
-                                          color: Colors.black45,
-                                          fontSize: 13.0,
-                                          letterSpacing: 0.5),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          left: 00.0,
-                                          top: 05.0,
-                                          right: 0.0,
-                                          bottom: 5.0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text(
-                                            'Delivery Address',
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              color: Colors.black12,
+                                Container(
+                                  height: 130.0,
+                                  width: 230.0,
+                                  margin: EdgeInsets.all(7.0),
+                                  child: Card(
+                                    elevation: 3.0,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Column(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  left: 12.0,
+                                                  top: 5.0,
+                                                  right: 0.0,
+                                                  bottom: 5.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Text(
+                                                    'Elizabeth J. Schmidt',
+                                                    style: TextStyle(
+                                                      color: Colors.black87,
+                                                      fontSize: 15.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      letterSpacing: 0.5,
+                                                    ),
+                                                  ),
+                                                  _verticalDivider(),
+                                                  Text(
+                                                    '3674 Oakway Lane',
+                                                    style: TextStyle(
+                                                        color: Colors.black45,
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.5),
+                                                  ),
+                                                  _verticalDivider(),
+                                                  Text(
+                                                    'Long Beach',
+                                                    style: TextStyle(
+                                                        color: Colors.black45,
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.5),
+                                                  ),
+                                                  _verticalDivider(),
+                                                  Text(
+                                                    'CA 90802',
+                                                    style: TextStyle(
+                                                        color: Colors.black45,
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.5),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 00.0,
+                                                        top: 05.0,
+                                                        right: 0.0,
+                                                        bottom: 5.0),
+                                                    child: Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: <Widget>[
+                                                        Text(
+                                                          'Delivery Address',
+                                                          style: TextStyle(
+                                                            fontSize: 15.0,
+                                                            color:
+                                                                Colors.black12,
+                                                          ),
+                                                        ),
+                                                        _verticalD(),
+                                                        // Checkbox(
+                                                        //   value: checkboxValueC,
+                                                        //   onChanged: (bool value) {
+                                                        //     setState(() {
+                                                        //       checkboxValueC = value;
+                                                        //     });
+                                                        //   },
+                                                        // ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                          _verticalD(),
-                                          // Checkbox(
-                                          //   value: checkboxValueC,
-                                          //   onChanged: (bool value) {
-                                          //     setState(() {
-                                          //       checkboxValueC = value;
-                                          //     });
-                                          //   },
-                                          // ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                                          ],
+                                        ),
+                                        Container(
+                                          alignment: Alignment.topLeft,
+                                          child: IconButton(
+                                              icon: menu,
+                                              color: Colors.black38,
+                                              onPressed: null),
+                                        )
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            )),
+                        Container(
+                          margin: EdgeInsets.all(7.0),
+                          child: Card(
+                            elevation: 1.0,
+                            child: Row(
+                              children: <Widget>[
+                                IconButton(
+                                    icon: orders,
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Orders_History_Screen()),
+                                      );
+                                    }),
+                                _verticalD(),
+                                Text(
+                                  'My Orders',
+                                  style: TextStyle(
+                                      fontSize: 15.0, color: Colors.black87),
+                                )
+                              ],
+                            ),
                           ),
-                          Container(
-                            alignment: Alignment.topLeft,
-                            child: IconButton(
-                                icon: menu,
-                                color: Colors.black38,
-                                onPressed: null),
-                          )
-                        ],
-                      ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(7.0),
+                          child: Card(
+                            elevation: 1.0,
+                            child: Row(
+                              children: <Widget>[
+                                IconButton(icon: keyloch, onPressed: null),
+                                _verticalD(),
+                                Text(
+                                  'Change Password',
+                                  style: TextStyle(
+                                      fontSize: 15.0, color: Colors.black87),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(7.0),
+                          child: Card(
+                            elevation: 1.0,
+                            child: Row(
+                              children: <Widget>[
+                                IconButton(icon: clear, onPressed: null),
+                                _verticalD(),
+                                Text(
+                                  'Clear History',
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.black87,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(7.0),
+                          child: Card(
+                            elevation: 1.0,
+                            child: Row(
+                              children: <Widget>[
+                                IconButton(icon: logout, onPressed: null),
+                                _verticalD(),
+                                Text(
+                                  'Deactivate Account',
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.redAccent,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                ],
-              )),
-          Container(
-            margin: EdgeInsets.all(7.0),
-            child: Card(
-              elevation: 1.0,
-              child: Row(
-                children: <Widget>[
-                  IconButton(icon: keyloch, onPressed: null),
-                  _verticalD(),
-                  Text(
-                    'Change Password',
-                    style: TextStyle(fontSize: 15.0, color: Colors.black87),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(7.0),
-            child: Card(
-              elevation: 1.0,
-              child: Row(
-                children: <Widget>[
-                  IconButton(icon: clear, onPressed: null),
-                  _verticalD(),
-                  Text(
-                    'Clear History',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black87,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(7.0),
-            child: Card(
-              elevation: 1.0,
-              child: Row(
-                children: <Widget>[
-                  IconButton(icon: logout, onPressed: null),
-                  _verticalD(),
-                  Text(
-                    'Deactivate Account',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.redAccent,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
-      ))),
+                );
+          }
+        },
+      ),
     );
   }
 

@@ -6,13 +6,22 @@ class User {
   String email = '';
   String password = '';
   late String user_id;
+  String phone_number = '';
 
-  final _chars =
-      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  final Random _rnd = Random();
+  String getRandomString(int length) {
+    var _chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    Random _rnd = Random();
 
-  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+    return String.fromCharCodes(
+      Iterable.generate(
+        length,
+        (_) => _chars.codeUnitAt(
+          _rnd.nextInt(_chars.length),
+        ),
+      ),
+    );
+  }
 
   User() {
     user_id = getRandomString(10);
@@ -38,8 +47,20 @@ class User {
     this.password = password;
   }
 
+  set_user_phone_number(String phone_number) {
+    this.phone_number = phone_number;
+  }
+
   get_user_id() {
     return user_id;
+  }
+
+  get_user_firstname() {
+    return firstname;
+  }
+
+  get_user_lastname() {
+    return lastname;
   }
 
   getUserEmail() {
@@ -50,13 +71,18 @@ class User {
     return password;
   }
 
+  get_user_phone_number() {
+    return phone_number;
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'user_id': user_id,
       'firstname': firstname,
       'lastname': lastname,
       'email': email,
-      'password': password
+      'password': password,
+      'phone_number': phone_number
     };
   }
 }

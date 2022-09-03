@@ -16,7 +16,8 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
         email TEXT,
         password TEXT,
         firstname TEXT,
-        lastname TEXT
+        lastname TEXT,
+        phone_number TEXT
       )
       ''');
   }
@@ -26,6 +27,14 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
     await _init_database();
 
     await database.insert('Users', newUser.toMap());
+    await _close_database();
+  }
+
+  @override
+  update_user_data(User user) async {
+    await _init_database();
+
+    await database.update('Users', user.toMap());
     await _close_database();
   }
 
@@ -46,6 +55,7 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
       registeredUser.setUserLastname(await userInfos[0]['firstname']);
       registeredUser.setUserEmail(await userInfos[0]['email']);
       registeredUser.setUserPassword(await userInfos[0]['password']);
+      registeredUser.set_user_phone_number(await userInfos[0]['phone_number']);
 
       await _close_database();
       return registeredUser;

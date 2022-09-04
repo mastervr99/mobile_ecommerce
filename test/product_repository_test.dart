@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
-import 'package:sqflite/sqlite_api.dart';
+import 'package:sqflite_common/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'Repositories_test/product_repository_sqflite_ffi_impl.dart';

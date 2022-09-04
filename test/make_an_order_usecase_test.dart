@@ -15,7 +15,7 @@ import 'package:mobile_ecommerce/Domain/Repositories_abstractions/order_reposito
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/payment_gateway.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
-import 'package:sqflite/sqlite_api.dart';
+import 'package:sqflite_common/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'Repositories_test/connected_user_repository_sqflite_ffi_impl.dart';

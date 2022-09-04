@@ -3,7 +3,7 @@ import 'package:mobile_ecommerce/Application/usecases/add_product_to_shopping_ca
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
-import 'package:sqflite/sqlite_api.dart';
+import 'package:sqflite_common/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'Repositories_test/shopping_cart_item_repository_sqflite_ffi_impl.dart';

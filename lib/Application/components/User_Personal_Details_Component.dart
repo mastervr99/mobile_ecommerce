@@ -266,14 +266,14 @@ class _User_Personal_Details_Component_State
                               ),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  widget.connected_user
-                                      .setUserEmail(emailController.text);
+                                  widget.connected_user.setUserEmail(
+                                      emailController.text.trim());
                                   widget.connected_user.set_user_phone_number(
-                                      phone_number_controller.text);
+                                      phone_number_controller.text.trim());
                                   widget.connected_user.setUserFirstname(
-                                      firstNameController.text);
-                                  widget.connected_user
-                                      .setUserLastname(lastNameController.text);
+                                      firstNameController.text.trim());
+                                  widget.connected_user.setUserLastname(
+                                      lastNameController.text.trim());
                                 }
                               },
                               child: Text(

@@ -298,12 +298,14 @@ class _Sign_Up_Component_State extends State<Sign_Up_Component> {
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   User user = User();
-                                  user.setUserEmail(emailController.text);
-                                  user.setUserPassword(passwordController.text);
+                                  user.setUserEmail(
+                                      emailController.text.trim());
+                                  user.setUserPassword(
+                                      passwordController.text.trim());
                                   user.setUserFirstname(
-                                      firstNameController.text);
+                                      firstNameController.text.trim());
                                   user.setUserLastname(
-                                      firstNameController.text);
+                                      firstNameController.text.trim());
                                   bool isNewUser =
                                       await signUpUsecase.checkIfNewUser(user);
                                   if (isNewUser) {

@@ -271,8 +271,9 @@ class _Sign_In_Component_State extends State<Sign_In_Component> {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 User user = User();
-                                user.setUserEmail(emailController.text);
-                                user.setUserPassword(passwordController.text);
+                                user.setUserEmail(emailController.text.trim());
+                                user.setUserPassword(
+                                    passwordController.text.trim());
 
                                 bool isEmailRegistered = await signInUsecase
                                     .checkIfEmailRegistered(user);

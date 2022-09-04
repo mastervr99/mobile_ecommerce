@@ -305,7 +305,7 @@ class _Sign_Up_Component_State extends State<Sign_Up_Component> {
                                   user.setUserFirstname(
                                       firstNameController.text.trim());
                                   user.setUserLastname(
-                                      firstNameController.text.trim());
+                                      lastNameController.text.trim());
                                   bool isNewUser =
                                       await signUpUsecase.checkIfNewUser(user);
                                   if (isNewUser) {

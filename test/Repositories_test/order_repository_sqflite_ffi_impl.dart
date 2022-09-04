@@ -1,7 +1,7 @@
 import 'package:mobile_ecommerce/Domain/Entity/order.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/order_repository.dart';
-import 'package:sqflite/sqlite_api.dart';
+import 'package:sqflite_common/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class Order_Repository_Sqflite_Ffi_Impl extends Order_Repository {

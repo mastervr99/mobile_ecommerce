@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
 import 'package:path/path.dart';
@@ -68,7 +69,8 @@ class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
   update_connected_user_data(User user) async {
     await _init_database();
 
-    await database.update('ConnectedUser', user.toMap());
+    await database.update('ConnectedUser', user.toMap(),
+        where: 'user_id = ?', whereArgs: [user.get_user_id()]);
     await _close_database();
   }
 

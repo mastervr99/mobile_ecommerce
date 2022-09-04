@@ -110,7 +110,7 @@ class _Products_Search_Screen_State extends State<Products_Search_Screen> {
 //    physics: NeverScrollableScrollPhysics(),
                           padding: EdgeInsets.all(1.0),
                           childAspectRatio: 8.0 / 12.0,
-                          children: List<Widget>.generate(productsList!.length,
+                          children: List<Widget>.generate(productsList.length,
                               (index) {
                             return GridTile(
                                 child: Products_Grid_Tiles_Component(

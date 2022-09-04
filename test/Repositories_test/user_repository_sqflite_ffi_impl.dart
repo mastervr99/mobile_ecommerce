@@ -34,7 +34,8 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
   update_user_data(User user) async {
     await _init_database();
 
-    await database.update('Users', user.toMap());
+    await database.update('Users', user.toMap(),
+        where: 'user_id = ?', whereArgs: [user.get_user_id()]);
     await _close_database();
   }
 

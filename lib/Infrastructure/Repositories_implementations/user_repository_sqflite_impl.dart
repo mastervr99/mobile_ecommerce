@@ -1,7 +1,7 @@
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 class UserRepositorySqfliteImpl extends UserRepository {
   late var database;
@@ -65,7 +65,8 @@ class UserRepositorySqfliteImpl extends UserRepository {
   update_user_data(User user) async {
     await _init_database();
 
-    await database.update('Users', user.toMap());
+    await database.update('Users', user.toMap(),
+        where: 'user_id = ?', whereArgs: [user.get_user_id()]);
     await _close_database();
   }
 

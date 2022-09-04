@@ -1,7 +1,7 @@
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common/sqlite_api.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class ConnectedUserRepositorySqfliteFfiImpl extends ConnectedUserRepository {
   late var database;
@@ -62,7 +62,8 @@ class ConnectedUserRepositorySqfliteFfiImpl extends ConnectedUserRepository {
   update_connected_user_data(User user) async {
     await _init_database();
 
-    await database.update('ConnectedUser', user.toMap());
+    await database.update('ConnectedUser', user.toMap(),
+        where: 'user_id = ?', whereArgs: [user.get_user_id()]);
     await _close_database();
   }
 

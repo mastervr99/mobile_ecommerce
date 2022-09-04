@@ -44,8 +44,8 @@ class ConnectedUserRepositorySqfliteFfiImpl extends ConnectedUserRepository {
       User connectedUser = User();
 
       connectedUser.set_user_id(await connectedUserData[0]['user_id']);
-      connectedUser.setUserFirstname(await connectedUserData[0]['lastname']);
-      connectedUser.setUserLastname(await connectedUserData[0]['firstname']);
+      connectedUser.setUserFirstname(await connectedUserData[0]['firstname']);
+      connectedUser.setUserLastname(await connectedUserData[0]['lastname']);
       connectedUser.setUserEmail(await connectedUserData[0]['email']);
       connectedUser.setUserPassword(await connectedUserData[0]['password']);
       connectedUser.setUserPassword(await connectedUserData[0]['password']);

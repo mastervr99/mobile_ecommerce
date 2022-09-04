@@ -49,8 +49,8 @@ class UserRepositorySqfliteImpl extends UserRepository {
       User registeredUser = User();
 
       registeredUser.set_user_id(await userInfos[0]['user_id']);
-      registeredUser.setUserFirstname(await userInfos[0]['lastname']);
-      registeredUser.setUserLastname(await userInfos[0]['firstname']);
+      registeredUser.setUserFirstname(await userInfos[0]['firstname']);
+      registeredUser.setUserLastname(await userInfos[0]['lastname']);
       registeredUser.setUserEmail(await userInfos[0]['email']);
       registeredUser.setUserPassword(await userInfos[0]['password']);
       registeredUser.set_user_phone_number(await userInfos[0]['phone_number']);

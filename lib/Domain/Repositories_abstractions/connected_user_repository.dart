@@ -7,8 +7,6 @@ abstract class ConnectedUserRepository {
 
   retrieveConnectedUser();
 
-  update_connected_user_data(User user);
-
   removeConnectedUser();
 
   _close_database();

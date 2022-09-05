@@ -4,21 +4,24 @@ import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repositor
 class Update_User_Details_Usecase {
   UserRepository user_repository;
 
-  Update_User_Details_Usecase(this.user_repository);
+  Update_User_Details_Usecase(
+    this.user_repository,
+  );
 
   update(User user) async {
-    if (!await checkIfEmailRegistered(user)) {
+    bool is_new_email_available = await check_if_new_email_available(user);
+    if (await is_new_email_available) {
       await user_repository.update_user_data(user);
     }
   }
 
-  checkIfEmailRegistered(User user) async {
+  check_if_new_email_available(User user) async {
     var registeredUser = await user_repository.retrieveUser(user);
 
-    if (registeredUser is User) {
-      return true;
-    } else {
+    if (await registeredUser is User) {
       return false;
+    } else {
+      return true;
     }
   }
 }

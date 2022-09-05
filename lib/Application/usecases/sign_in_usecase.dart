@@ -23,7 +23,7 @@ class SignInUsecase {
   checkIfEmailRegistered(User user) async {
     var registeredUser = await userRepository.retrieveUser(user);
 
-    if (registeredUser is User) {
+    if (await registeredUser is User) {
       return true;
     } else {
       return false;

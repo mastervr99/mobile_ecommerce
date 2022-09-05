@@ -7,6 +7,7 @@ import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
 import 'package:mobile_ecommerce/Application/components/Sign_In_Component.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_up_usecase.dart';
+import 'package:mobile_ecommerce/Application/usecases/update_user_details_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
@@ -33,18 +34,6 @@ registrationSucceded(BuildContext context) {
           translate('label_user_registration_succeded'),
           textAlign: TextAlign.center,
         ),
-        actions: [
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
-              child: Text(translate('label_sign_in')),
-              onPressed: (() {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Sign_In_Component()),
-                );
-              }))
-        ],
       );
     },
   );
@@ -64,6 +53,10 @@ registrationFailed(BuildContext context) {
   );
 }
 
+UserRepository user_repository = UserRepositorySqfliteImpl();
+Update_User_Details_Usecase update_user_details_usecase =
+    Update_User_Details_Usecase(user_repository);
+
 class _User_Personal_Details_Component_State
     extends State<User_Personal_Details_Component> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -73,9 +66,6 @@ class _User_Personal_Details_Component_State
   TextEditingController phone_number_controller = TextEditingController();
 
   var formFieldValidator = CustomFormFieldValidator();
-
-  UserRepository userRepository = UserRepositorySqfliteImpl();
-  late SignUpUsecase signUpUsecase = SignUpUsecase(userRepository);
 
   @override
   Widget build(BuildContext context) {
@@ -274,6 +264,18 @@ class _User_Personal_Details_Component_State
                                       firstNameController.text.trim());
                                   widget.connected_user.setUserLastname(
                                       lastNameController.text.trim());
+                                }
+                                bool is_unaffected_email =
+                                    await update_user_details_usecase
+                                        .check_if_new_email_available(
+                                            widget.connected_user);
+                                if (await is_unaffected_email) {
+                                  await update_user_details_usecase.update(
+                                    widget.connected_user,
+                                  );
+                                  registrationSucceded(context);
+                                } else {
+                                  registrationFailed(context);
                                 }
                               },
                               child: Text(

@@ -6,19 +6,19 @@ class SignUpUsecase {
 
   SignUpUsecase(this.userRepository);
 
+  signUp(User newUser) async {
+    if (await checkIfNewUser(newUser)) {
+      await userRepository.registerUser(newUser);
+    }
+  }
+
   checkIfNewUser(User user) async {
     var registeredUser = await userRepository.retrieveUser(user);
 
-    if (registeredUser is User) {
+    if (await registeredUser.runtimeType == User) {
       return false;
     } else {
       return true;
     }
-  }
-
-  signUp(User newUser) async {
-    var result = await userRepository.registerUser(newUser);
-
-    return result;
   }
 }

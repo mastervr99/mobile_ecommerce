@@ -9,7 +9,7 @@ class UserRepositorySqfliteImpl extends UserRepository {
   @override
   _init_database() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, 'users1.db');
+    final path = join(databasesPath, 'users2.db');
     database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table
@@ -38,8 +38,8 @@ class UserRepositorySqfliteImpl extends UserRepository {
   retrieveUser(User user) async {
     await _init_database();
 
-    var userInfos = await database.rawQuery(
-        'SELECT * FROM Users WHERE user_id = ? LIMIT 1', [user.get_user_id()]);
+    var userInfos = await database
+        .rawQuery('SELECT * FROM Users WHERE email = ?', [user.getUserEmail()]);
 
     if (await userInfos.isEmpty) {
       await _close_database();
@@ -57,7 +57,7 @@ class UserRepositorySqfliteImpl extends UserRepository {
 
       await _close_database();
 
-      return registeredUser;
+      return await registeredUser;
     }
   }
 

@@ -6,20 +6,26 @@ import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
 import 'package:mobile_ecommerce/Application/screens/Orders_History_Screen.dart';
 import 'package:mobile_ecommerce/Application/components/User_Personal_Details_Component.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/connected_user_repository_sqflite_impl.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
 
 class User_Account_Screen extends StatefulWidget {
   @override
   _User_Account_Screen_State createState() => _User_Account_Screen_State();
 }
 
-get_connected_user() async {
+get_connected_user_data() async {
   ConnectedUserRepository connectedUserRepository =
       ConnectedUserRepositorySqfliteImpl();
 
   var connected_user = await connectedUserRepository.retrieveConnectedUser();
 
-  return await connected_user;
+  UserRepository userRepository = UserRepositorySqfliteImpl();
+
+  var user = await userRepository.retrieveUser(await connected_user);
+
+  return await user;
 }
 
 class _User_Account_Screen_State extends State<User_Account_Screen> {
@@ -67,7 +73,7 @@ class _User_Account_Screen_State extends State<User_Account_Screen> {
       endDrawer: Drawer_Widget(),
       bottomNavigationBar: Bottom_Navbar_Widget(),
       body: FutureBuilder(
-        future: get_connected_user(),
+        future: get_connected_user_data(),
         builder: (context, AsyncSnapshot snapshot) {
           var connected_user = snapshot.data;
 

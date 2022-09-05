@@ -17,8 +17,6 @@ registrationSucceded(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        // Retrieve the text the that user has entered by using the
-        // TextEditingController.
         content: Text(
           translate('label_user_registration_succeded'),
           textAlign: TextAlign.center,
@@ -54,6 +52,9 @@ registrationFailed(BuildContext context) {
   );
 }
 
+UserRepository userRepository = UserRepositorySqfliteImpl();
+SignUpUsecase signUpUsecase = SignUpUsecase(userRepository);
+
 class _Sign_Up_Component_State extends State<Sign_Up_Component> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController lastNameController = TextEditingController();
@@ -63,9 +64,6 @@ class _Sign_Up_Component_State extends State<Sign_Up_Component> {
   bool _passwordhidden = true;
 
   var formFieldValidator = CustomFormFieldValidator();
-
-  UserRepository userRepository = UserRepositorySqfliteImpl();
-  late SignUpUsecase signUpUsecase = SignUpUsecase(userRepository);
 
   @override
   Widget build(BuildContext context) {
@@ -308,7 +306,7 @@ class _Sign_Up_Component_State extends State<Sign_Up_Component> {
                                       lastNameController.text.trim());
                                   bool isNewUser =
                                       await signUpUsecase.checkIfNewUser(user);
-                                  if (isNewUser) {
+                                  if (await isNewUser) {
                                     await signUpUsecase.signUp(user);
                                     registrationSucceded(context);
                                   } else {

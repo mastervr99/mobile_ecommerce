@@ -42,12 +42,13 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
   @override
   retrieveUser(User user) async {
     await _init_database();
-    var userInfos = await database
-        .rawQuery('SELECT * FROM Users WHERE email = ?', [user.getUserEmail()]);
+    var userInfos = await database.rawQuery(
+        'SELECT * FROM Users WHERE email = ? LIMIT 1', [user.getUserEmail()]);
 
-    if (userInfos.isEmpty) {
+    if (await userInfos.isEmpty) {
       await _close_database();
-      return false;
+
+      return [];
     } else {
       User registeredUser = User();
 
@@ -59,7 +60,8 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
       registeredUser.set_user_phone_number(await userInfos[0]['phone_number']);
 
       await _close_database();
-      return registeredUser;
+
+      return await registeredUser;
     }
   }
 

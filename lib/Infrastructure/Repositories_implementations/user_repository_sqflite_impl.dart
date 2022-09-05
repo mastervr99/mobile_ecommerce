@@ -38,13 +38,13 @@ class UserRepositorySqfliteImpl extends UserRepository {
   retrieveUser(User user) async {
     await _init_database();
 
-    var userInfos = await database
-        .rawQuery('SELECT * FROM Users WHERE email = ?', [user.getUserEmail()]);
+    var userInfos = await database.rawQuery(
+        'SELECT * FROM Users WHERE user_id = ? LIMIT 1', [user.get_user_id()]);
 
     if (await userInfos.isEmpty) {
       await _close_database();
 
-      return false;
+      return [];
     } else {
       User registeredUser = User();
 

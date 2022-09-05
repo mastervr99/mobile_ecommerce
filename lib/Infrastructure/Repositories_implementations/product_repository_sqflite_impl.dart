@@ -83,7 +83,7 @@ class ProductRepostitorySqfliteImpl extends ProductRepository {
     await _init_database();
 
     var productData = await database
-        .rawQuery("SELECT * FROM products WHERE sku like '%$sku%' LIMIT 1");
+        .rawQuery("SELECT * FROM products WHERE sku = ? LIMIT 1", [sku]);
 
     Product product = Product(await productData[0]['title'] ?? '');
     product.setDescription(await productData[0]['description'] ?? '');

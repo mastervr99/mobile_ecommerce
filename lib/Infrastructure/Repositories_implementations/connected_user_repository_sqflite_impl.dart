@@ -42,7 +42,7 @@ class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
     await _init_database();
 
     var connectedUserData =
-        await database.rawQuery('SELECT * FROM ConnectedUser');
+        await database.rawQuery('SELECT * FROM ConnectedUser LIMIT 1');
 
     if (await connectedUserData.isEmpty) {
       await _close_database();

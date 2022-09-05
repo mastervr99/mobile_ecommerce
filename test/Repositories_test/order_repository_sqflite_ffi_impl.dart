@@ -39,7 +39,8 @@ class Order_Repository_Sqflite_Ffi_Impl extends Order_Repository {
     await _init_database();
 
     var order_in_db = await database.rawQuery(
-        'SELECT * FROM orders WHERE order_reference = ?', [order_reference]);
+        'SELECT * FROM orders WHERE order_reference = ? LIMIT 1',
+        [order_reference]);
 
     if (await order_in_db.isEmpty) {
       await _close_database();

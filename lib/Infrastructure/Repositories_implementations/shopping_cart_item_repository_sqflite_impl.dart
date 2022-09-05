@@ -111,8 +111,8 @@ class ShoppingCartItemRepositorySqfliteImpl extends ShoppingCartItemRepository {
   findItemWithSku(int sku) async {
     await _init_database();
 
-    var itemData = await database
-        .rawQuery('SELECT * FROM shoppingCartItems WHERE sku = ?', [sku]);
+    var itemData = await database.rawQuery(
+        'SELECT * FROM shoppingCartItems WHERE sku = ? LIMIT 1', [sku]);
 
     if (await itemData.isNotEmpty) {
       ShoppingCartItem shoppingCartItem =

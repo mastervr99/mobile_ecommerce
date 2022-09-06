@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Search_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Promo_Slider_Widget.dart';
 
 /** 
 import 'package:mobile_ecommerce/components/BrandHomePage.dart';
@@ -21,7 +22,7 @@ class _Home_Screen_State extends State<Home_Screen> {
       child: Column(
         children: <Widget>[
           Search_Widget(),
-          //TopPromoSlider(),
+          Promo_Slider_Widget(),
           //PopularMenu(),
           SizedBox(
             height: 10,

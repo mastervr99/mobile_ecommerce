@@ -1,17 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_ecommerce/Application/components/Sign_In_Component.dart';
-import 'package:mobile_ecommerce/Application/components/User_Personal_Details_Component.dart';
-import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
-import 'package:mobile_ecommerce/Application/usecases/sign_out_usecase.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_up_usecase.dart';
 import 'package:mobile_ecommerce/Application/usecases/update_user_details_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
-import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:sqflite_common/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-import 'Repositories_test/connected_user_repository_sqflite_ffi_impl.dart';
 import 'Repositories_test/user_repository_sqflite_ffi_impl.dart';
 
 void main() {

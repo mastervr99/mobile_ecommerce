@@ -7,7 +7,9 @@ abstract class UserRepository {
 
   update_user_data(User user);
 
-  retrieveUser(User user);
+  retrieve_user_by_email(String user_email);
+
+  retrieve_user_by_id(String user_id);
 
   _close_database();
 }

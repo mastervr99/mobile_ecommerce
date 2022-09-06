@@ -43,7 +43,8 @@ void main() {
 
       await update_user_details_usecase.update(user);
 
-      User user_in_db = await user_repository.retrieveUser(user);
+      var user_in_db =
+          await user_repository.retrieve_user_by_id(user.get_user_id());
 
       expect(await user_in_db.getUserEmail(), 'changing@gmail.com');
 
@@ -75,8 +76,8 @@ void main() {
       Update_User_Details_Usecase update_user_details_usecase =
           Update_User_Details_Usecase(user_repository);
 
-      bool is_user2_email_available =
-          await update_user_details_usecase.check_if_new_email_available(user2);
+      bool is_user2_email_available = await update_user_details_usecase
+          .check_if_new_email_available(user2.getUserEmail());
       if (await is_user2_email_available) {
         user.setUserEmail(user2.getUserEmail());
       }

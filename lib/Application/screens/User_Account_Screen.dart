@@ -23,15 +23,14 @@ get_connected_user_data() async {
 
   UserRepository userRepository = UserRepositorySqfliteImpl();
 
-  var user = await userRepository.retrieveUser(await connected_user);
+  var user = await userRepository
+      .retrieve_user_by_id(await connected_user.get_user_id());
 
   return await user;
 }
 
 class _User_Account_Screen_State extends State<User_Account_Screen> {
-  String username = 'Naomi A. Schultz';
   String mobilenumber = '410-422-9171';
-  String eid = 'NaomiASchultz@armyspy.com';
 
   @override
   Widget build(BuildContext context) {

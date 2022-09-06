@@ -40,10 +40,38 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
   }
 
   @override
-  retrieveUser(User user) async {
+  retrieve_user_by_email(String user_email) async {
     await _init_database();
-    var userInfos = await database.rawQuery(
-        'SELECT * FROM Users WHERE email = ? LIMIT 1', [user.getUserEmail()]);
+
+    var userInfos = await database
+        .rawQuery('SELECT * FROM Users WHERE email = ? LIMIT 1', [user_email]);
+
+    if (await userInfos.isEmpty) {
+      await _close_database();
+
+      return [];
+    } else {
+      User registeredUser = User();
+
+      registeredUser.set_user_id(await userInfos[0]['user_id']);
+      registeredUser.setUserFirstname(await userInfos[0]['firstname']);
+      registeredUser.setUserLastname(await userInfos[0]['lastname']);
+      registeredUser.setUserEmail(await userInfos[0]['email']);
+      registeredUser.setUserPassword(await userInfos[0]['password']);
+      registeredUser.set_user_phone_number(await userInfos[0]['phone_number']);
+
+      await _close_database();
+
+      return await registeredUser;
+    }
+  }
+
+  @override
+  retrieve_user_by_id(String user_id) async {
+    await _init_database();
+
+    var userInfos = await database
+        .rawQuery('SELECT * FROM Users WHERE user_id = ? LIMIT 1', [user_id]);
 
     if (await userInfos.isEmpty) {
       await _close_database();

@@ -267,8 +267,9 @@ class _User_Personal_Details_Component_State
                                 }
                                 bool is_unaffected_email =
                                     await update_user_details_usecase
-                                        .check_if_new_email_available(
-                                            widget.connected_user);
+                                        .check_if_new_email_available(widget
+                                            .connected_user
+                                            .getUserEmail());
                                 if (await is_unaffected_email) {
                                   await update_user_details_usecase.update(
                                     widget.connected_user,

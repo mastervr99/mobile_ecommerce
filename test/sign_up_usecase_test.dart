@@ -28,7 +28,8 @@ void main() {
 
       await signUpUsecase.signUp(user);
 
-      User user_in_db = await userRepository.retrieveUser(user);
+      User user_in_db =
+          await userRepository.retrieve_user_by_email(user.getUserEmail());
 
       expect(await user_in_db.getUserEmail(), user.getUserEmail());
 

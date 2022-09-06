@@ -12,8 +12,8 @@ class SignInUsecase {
     if (await checkIfUserConnected() == false) {
       if (await checkIfEmailRegistered(userToConnect)) {
         if (await checkIfValidAccountPassword(userToConnect)) {
-          User registeredUser =
-              await userRepository.retrieveUser(userToConnect);
+          User registeredUser = await userRepository
+              .retrieve_user_by_email(userToConnect.getUserEmail());
           await connectedUserRepository.registerUser(await registeredUser);
         }
       }
@@ -21,7 +21,8 @@ class SignInUsecase {
   }
 
   checkIfEmailRegistered(User user) async {
-    var registeredUser = await userRepository.retrieveUser(user);
+    var registeredUser =
+        await userRepository.retrieve_user_by_email(user.getUserEmail());
 
     if (await registeredUser is User) {
       return true;
@@ -31,7 +32,8 @@ class SignInUsecase {
   }
 
   checkIfValidAccountPassword(User user) async {
-    var registeredUser = await userRepository.retrieveUser(user);
+    var registeredUser =
+        await userRepository.retrieve_user_by_email(user.getUserEmail());
     var registeredUserPassword = await registeredUser.getUserPassword();
 
     if (user.getUserPassword() == await registeredUserPassword) {

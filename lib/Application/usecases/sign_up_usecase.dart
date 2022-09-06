@@ -13,7 +13,8 @@ class SignUpUsecase {
   }
 
   checkIfNewUser(User user) async {
-    var registeredUser = await userRepository.retrieveUser(user);
+    var registeredUser =
+        await userRepository.retrieve_user_by_email(user.getUserEmail());
 
     if (await registeredUser.runtimeType == User) {
       return false;

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Products_Slider_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Search_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Promo_Slider_Widget.dart';
+import 'package:mobile_ecommerce/Domain/Entity/product.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/product_repository.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/product_repository_sqflite_impl.dart';
 
 /** 
 import 'package:mobile_ecommerce/components/BrandHomePage.dart';
@@ -15,6 +20,15 @@ class Home_Screen extends StatefulWidget {
   _Home_Screen_State createState() => _Home_Screen_State();
 }
 
+get_trending_products() async {
+  ProductRepository productRepository = ProductRepostitorySqfliteImpl();
+
+  var trending_products =
+      await productRepository.retrieveProductsByTitle('gini');
+
+  return await trending_products;
+}
+
 class _Home_Screen_State extends State<Home_Screen> {
   @override
   Widget build(BuildContext context) {
@@ -24,6 +38,22 @@ class _Home_Screen_State extends State<Home_Screen> {
           Search_Widget(),
           Promo_Slider_Widget(),
           //PopularMenu(),
+          FutureBuilder(
+            future: get_trending_products(),
+            builder: (context, AsyncSnapshot snapshot) {
+              var products = snapshot.data;
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  return Circular_Progress_Widget();
+                default:
+                  if (snapshot.hasError)
+                    return Text('Error: ${snapshot.error}');
+                  else
+                    return Products_Slider_Widget(products: products);
+              }
+            },
+          ),
           SizedBox(
             height: 10,
             child: Container(

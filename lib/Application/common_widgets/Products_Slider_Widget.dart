@@ -32,7 +32,7 @@ class _Products_Slider_Widget_State extends State<Products_Slider_Widget> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(6.0),
+            padding: const EdgeInsets.all(15.0),
             child: Row(
               children: <Widget>[
                 Expanded(

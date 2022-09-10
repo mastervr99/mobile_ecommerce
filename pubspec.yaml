@@ -79,6 +79,15 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
+    - assets/images/women.jpg
+    - assets/images/men.jpg
+    - assets/images/tshirts.jpg
+    - assets/images/shorts.jpg
+    - assets/images/jeans.jpg
+    - assets/images/leggings.jpg
+    - assets/images/jackets.jpg
+    - assets/images/trousers.jpg
+    - assets/images/shoes.jpg
     - assets/images/ic_add_cart.png
     - assets/images/ic_discount.png
     - assets/images/promotion_one.png

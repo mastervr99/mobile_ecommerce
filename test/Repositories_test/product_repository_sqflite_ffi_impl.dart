@@ -53,6 +53,8 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
 
     List<Product> searchResults = [];
 
+    await searchedProductsInDb;
+
     searchedProductsInDb.forEach((productData) {
       Product product = Product(productData['title'] ?? '');
       product.setDescription(productData['description'] ?? '');
@@ -95,6 +97,50 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
     await _close_database();
 
     return await product;
+  }
+
+  search_products_with_filters(Map filters) async {
+    await _init_database();
+
+    final first_key = filters.keys.elementAt(0);
+
+    var search_query = "SELECT * FROM products";
+
+    filters.forEach((key, value) {
+      if (key == first_key) {
+        search_query += " WHERE $key = '$value'";
+      } else {
+        search_query += " AND $key = '$value'";
+      }
+    });
+
+    var products_found_in_db = [];
+
+    products_found_in_db = await database.rawQuery(search_query);
+
+    List<Product> searchResults = [];
+
+    await products_found_in_db;
+
+    products_found_in_db.forEach((productData) {
+      Product product = Product(productData['title'] ?? '');
+      product.setDescription(productData['description'] ?? '');
+      product.setGender(productData['gender'] ?? '');
+      product.setCategory(productData['category'] ?? '');
+      product.setSubCategory(productData['subCategory'] ?? '');
+      product.setType(productData['type'] ?? '');
+      product.setColor(productData['color'] ?? '');
+      product.setUsage(productData['usage'] ?? '');
+      product.setImageUrl(productData['imageUrl'] ?? '');
+      product.setPrice(productData['price'] ?? 0);
+      product.setSku(productData['sku'] ?? 100);
+
+      searchResults.add(product);
+    });
+
+    await _close_database();
+
+    return searchResults;
   }
 
   @override

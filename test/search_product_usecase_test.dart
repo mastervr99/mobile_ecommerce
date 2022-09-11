@@ -81,7 +81,6 @@ void main() {
         product.setImageUrl(parsedList[i][7]);
         product.setPrice(0.01);
         product.setSku(100 + i);
-        // expect(product.toMap(), 'setting 2 from csv');
 
         await productRepository.registerProduct(product);
       }
@@ -143,11 +142,11 @@ void main() {
       await searchResults.forEach((product) {
         var productTitle = product.getTitle();
 
-        bool containsAll = true;
+        bool containsAll = false;
 
         searchTerms.forEach((searchTerm) {
-          if (!productTitle.contains(searchTerm)) {
-            containsAll = false;
+          if (productTitle.contains(searchTerm)) {
+            containsAll = true;
           }
         });
 
@@ -159,6 +158,34 @@ void main() {
       Product productTest = foundCorrectProducts[0];
 
       expect(productTest.getTitle(), "lg 10 red");
+
+      await closeSqfliteFfiDatabase();
+    });
+
+    test('search products with filters', () async {
+      var productRepository = ProductRepostitorySqfliteFfiImpl();
+
+      Product product = Product("lg 10");
+      product.setCategory('smartphone');
+
+      Product product2 = Product("lg Pad");
+      product2.setCategory('tablet');
+      product2.setPrice(250);
+
+      await productRepository.registerProduct(product);
+      await productRepository.registerProduct(product2);
+
+      Search_Product_Usecase search_product_usecase =
+          Search_Product_Usecase(productRepository);
+
+      var filters = {'category': 'tablet', 'price': 250};
+
+      var products_searched_with_filters =
+          await search_product_usecase.search_products_with_filters(filters);
+
+      var first_product_found = await products_searched_with_filters[0];
+
+      expect(await first_product_found.getTitle(), "lg Pad");
 
       await closeSqfliteFfiDatabase();
     });

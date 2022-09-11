@@ -11,4 +11,11 @@ class Search_Product_Usecase {
 
     return await productList;
   }
+
+  search_products_with_filters(Map filters) async {
+    var productList =
+        await productRepository.search_products_with_filters(filters);
+
+    return await productList;
+  }
 }

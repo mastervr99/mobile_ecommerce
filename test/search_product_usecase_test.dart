@@ -42,89 +42,90 @@ void main() {
       await closeSqfliteFfiDatabase();
     });
 
-    test('create database from csv', () async {
-      var productRepository = ProductRepostitorySqfliteFfiImpl();
+    // test('create database from csv', () async {
+    //   var productRepository = ProductRepostitorySqfliteFfiImpl();
 
-      TestWidgetsFlutterBinding.ensureInitialized();
+    //   TestWidgetsFlutterBinding.ensureInitialized();
 
-      final _rawData =
-          await rootBundle.loadString("assets/csv_database/fashion.csv");
+    //   final _rawData =
+    //       await rootBundle.loadString("assets/csv_database/fashion.csv");
 
-      var encoded = utf8.encode(_rawData);
-      var decoded = utf8.decode(encoded);
-      var rowAsListValues =
-          const CsvToListConverter(fieldDelimiter: ',', eol: '\n')
-              .convert(decoded);
-      var parsedList = [];
+    //   var encoded = utf8.encode(_rawData);
+    //   var decoded = utf8.decode(encoded);
+    //   var rowAsListValues =
+    //       const CsvToListConverter(fieldDelimiter: ',', eol: '\n')
+    //           .convert(decoded);
+    //   var parsedList = [];
 
-      for (var items in rowAsListValues) {
-        parsedList.add(items);
-      }
+    //   for (var items in rowAsListValues) {
+    //     parsedList.add(items);
+    //   }
 
-      parsedList.removeAt(0);
+    //   parsedList.removeAt(0);
 
-      for (int i = 0; i < parsedList.length; i++) {
-        parsedList[i].removeAt(0);
-        parsedList[i].removeAt(7);
-      }
+    //   for (int i = 0; i < parsedList.length; i++) {
+    //     parsedList[i].removeAt(0);
+    //     parsedList[i].removeAt(7);
+    //   }
 
-      for (int i = 0; i < parsedList.length; i++) {
-        Product product = Product(parsedList[i][6]);
-        product.setDescription(
-            'lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at magna in velit egestas tristique sit  vel est.');
-        product.setGender(parsedList[i][0]);
-        product.setCategory(parsedList[i][1]);
-        product.setSubCategory(parsedList[i][2]);
-        product.setType(parsedList[i][3]);
-        product.setColor(parsedList[i][4]);
-        product.setUsage(parsedList[i][5]);
-        product.setImageUrl(parsedList[i][7]);
-        product.setPrice(0.01);
-        product.setSku(100 + i);
+    //   for (int i = 0; i < parsedList.length; i++) {
+    //     Product product = Product(parsedList[i][6]);
+    //     product.setDescription(
+    //         'lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at magna in velit egestas tristique sit  vel est.');
+    //     product.setGender(parsedList[i][0]);
+    //     product.setCategory(parsedList[i][1]);
+    //     product.setSubCategory(parsedList[i][2]);
+    //     product.setType(parsedList[i][3]);
+    //     product.setColor(parsedList[i][4]);
+    //     product.setUsage(parsedList[i][5]);
+    //     product.setImageUrl(parsedList[i][7]);
+    //     product.setPrice(0.01);
+    //     product.setSku(100 + i);
 
-        await productRepository.registerProduct(product);
-      }
+    //     await productRepository.registerProduct(product);
+    //   }
 
-      Search_Product_Usecase search_product_usecase =
-          Search_Product_Usecase(productRepository);
+    //   Search_Product_Usecase search_product_usecase =
+    //       Search_Product_Usecase(productRepository);
 
-      var searchedProduct =
-          await search_product_usecase.searchProductsByTitle("Gini");
-      expect(await searchedProduct[0].getTitle(),
-          'Gini and Jony Girls Knit White Top');
+    //   var searchedProduct =
+    //       await search_product_usecase.searchProductsByTitle("Gini");
+    //   expect(await searchedProduct[0].getTitle(),
+    //       'Gini and Jony Girls Knit White Top');
 
-      expect(await searchedProduct[0].getImageUrl(),
-          'http://assets.myntassets.com/v1/images/style/properties/f3964f76c78edd85f4512d98b26d52e9_images.jpg');
+    //   expect(await searchedProduct[0].getImageUrl(),
+    //       'http://assets.myntassets.com/v1/images/style/properties/f3964f76c78edd85f4512d98b26d52e9_images.jpg');
 
-      await closeSqfliteFfiDatabase();
-    });
+    //   await closeSqfliteFfiDatabase();
+    // });
 
-    test('Search with multiple words', () async {
-      var productRepository = ProductRepostitorySqfliteFfiImpl();
+    // test('Search with multiple words', () async {
+    //   var productRepository = ProductRepostitorySqfliteFfiImpl();
 
-      Product product = Product("samsung 10 red");
-      Product product2 = Product("samsung 12 blue");
+    //   Product product = Product("samsung 10 red");
+    //   Product product2 = Product("samsung 12 blue");
 
-      await productRepository.registerProduct(product);
-      await productRepository.registerProduct(product2);
+    //   await productRepository.registerProduct(product);
+    //   await productRepository.registerProduct(product2);
 
-      Search_Product_Usecase search_product_usecase =
-          Search_Product_Usecase(productRepository);
+    //   Search_Product_Usecase search_product_usecase =
+    //       Search_Product_Usecase(productRepository);
 
-      var searchResults =
-          await search_product_usecase.searchProductsByTitle("samsung 12");
+    //   var searchResults =
+    //       await search_product_usecase.searchProductsByTitle("samsung 12");
 
-      expect(await searchResults[0].getTitle(), "samsung 10 red");
-      expect(await searchResults[1].getTitle(), "samsung 12 blue");
+    //   expect(await searchResults[0].getTitle(), "samsung 10 red");
+    //   expect(await searchResults[1].getTitle(), "samsung 12 blue");
 
-      await closeSqfliteFfiDatabase();
-    });
+    //   await closeSqfliteFfiDatabase();
+    // });
 
     test('search return product with all searchs terms in title', () async {
       var productRepository = ProductRepostitorySqfliteFfiImpl();
 
-      Product product = Product("lg 10 red");
+      Product product = Product("lg 10 blue");
       Product product2 = Product("lg 12 blue");
+      // Product product3 = Product("lg 12 blue and black");
 
       await productRepository.registerProduct(product);
       await productRepository.registerProduct(product2);
@@ -133,31 +134,13 @@ void main() {
           Search_Product_Usecase(productRepository);
 
       var searchResults =
-          await search_product_usecase.searchProductsByTitle("lg 10");
+          await search_product_usecase.searchProductsByTitle("lg 12 blue");
 
-      var value = "lg 10";
-      var searchTerms = value.split(' ');
-      var foundCorrectProducts = [];
+      expect(await searchResults.length, 1);
 
-      await searchResults.forEach((product) {
-        var productTitle = product.getTitle();
+      Product found_product = searchResults[0];
 
-        bool containsAll = false;
-
-        searchTerms.forEach((searchTerm) {
-          if (productTitle.contains(searchTerm)) {
-            containsAll = true;
-          }
-        });
-
-        if (containsAll) {
-          foundCorrectProducts.add(product);
-        }
-      });
-
-      Product productTest = foundCorrectProducts[0];
-
-      expect(productTest.getTitle(), "lg 10 red");
+      expect(found_product.getTitle(), "lg 12 blue");
 
       await closeSqfliteFfiDatabase();
     });
@@ -183,9 +166,11 @@ void main() {
       var products_searched_with_filters =
           await search_product_usecase.search_products_with_filters(filters);
 
-      var first_product_found = await products_searched_with_filters[0];
+      expect(await products_searched_with_filters.length, 1);
 
-      expect(await first_product_found.getTitle(), "lg Pad");
+      var product_found = await products_searched_with_filters[0];
+
+      expect(await product_found.getTitle(), "lg Pad");
 
       await closeSqfliteFfiDatabase();
     });

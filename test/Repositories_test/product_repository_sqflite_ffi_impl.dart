@@ -39,17 +39,20 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
   retrieveProductsByTitle(String searchKeywords) async {
     await _init_database();
 
-    var searchedProductsInDb = [];
-
     var searchTerms = searchKeywords.split(' ');
 
-    for (var searchTerm in searchTerms) {
-      var searchResults = await database
-          .rawQuery("SELECT * FROM products WHERE title like '%$searchTerm%'");
-      for (var searchResult in await searchResults) {
-        searchedProductsInDb.add(await searchResult);
+    var search_query = "SELECT * FROM products";
+
+    for (var i = 0; i < searchTerms.length; i++) {
+      String searchTerm = searchTerms[i].toString();
+      if (i == 0) {
+        search_query += " WHERE title like '%$searchTerm%'";
+      } else {
+        search_query += " AND title like '%$searchTerm%'";
       }
     }
+
+    var searchedProductsInDb = await database.rawQuery(search_query);
 
     List<Product> searchResults = [];
 
@@ -107,12 +110,30 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
     var search_query = "SELECT * FROM products";
 
     filters.forEach((key, value) {
-      if (key == first_key) {
+      if (key == 'title') {
+        var searchTerms = value.split(' ');
+        for (var i = 0; i < searchTerms.length; i++) {
+          String searchTerm = searchTerms[i].toString();
+          if (i == 0 && key == first_key) {
+            search_query += " WHERE title like '%$searchTerm%'";
+          } else {
+            search_query += " AND title like '%$searchTerm%'";
+          }
+        }
+      } else if (key == first_key) {
         search_query += " WHERE $key = '$value'";
       } else {
         search_query += " AND $key = '$value'";
       }
     });
+
+    // filters.forEach((key, value) {
+    //   if (key == first_key) {
+    //     search_query += " WHERE $key = '$value'";
+    //   } else {
+    //     search_query += " AND $key = '$value'";
+    //   }
+    // });
 
     var products_found_in_db = [];
 

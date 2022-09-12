@@ -58,6 +58,131 @@ class _Products_Search_Screen_State extends State<Products_Search_Screen>
 
   TextEditingController searchController = TextEditingController();
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: Appbar_Widget(context),
+      endDrawer: Drawer_Widget(),
+      bottomNavigationBar: Bottom_Navbar_Widget(),
+      body: Column(
+        children: <Widget>[
+          // **************** TO REMOVE **************** */
+          // ElevatedButton(
+          //   style: ElevatedButton.styleFrom(
+          //       textStyle: const TextStyle(fontSize: 20)),
+          //   onPressed: () async {
+          //     await createProductTable();
+          //   },
+          //   child: const Text('Enabled'),
+          // ),
+          // ******************************** */
+
+          Card(
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Theme(
+                      child: TextField(
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            borderSide: BorderSide(
+                              width: 0,
+                              style: BorderStyle.none,
+                            ),
+                          ),
+                          filled: true,
+                          prefixIcon: Icon(Icons.search),
+                          fillColor: Color(0xFFF2F4F5),
+                          hintStyle: new TextStyle(color: Colors.grey[600]),
+                          hintText: translate("label_search"),
+                        ),
+                        autofocus: false,
+                        onSubmitted: (value) async {
+                          setState(() {
+                            searchTerms = value;
+                          });
+                        },
+                      ),
+                      data: Theme.of(context).copyWith(
+                        primaryColor: Colors.grey[600],
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                      tooltip: 'Sort',
+                      icon: const Icon(Icons.filter_list),
+                      onPressed: () {
+                        showModalBottomSheet(
+                            // isScrollControlled: true,
+                            context: context,
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadiusDirectional.only(
+                                topEnd: Radius.circular(25),
+                                topStart: Radius.circular(25),
+                              ),
+                            ),
+                            builder: (BuildContext context) {
+                              return _filters_modal();
+                            });
+                      }),
+                ],
+              ),
+            ),
+          ),
+
+          if (searchTerms != null && searchTerms.isNotEmpty)
+            FutureBuilder(
+              future: findProducts(searchTerms),
+              builder: (context, AsyncSnapshot snapshot) {
+                List<dynamic>? productsList = snapshot.data;
+
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return Center(
+                        child: Text('Check your internet connection!!'));
+                  case ConnectionState.waiting:
+                    return Center(child: Text('Loading ...'));
+                  default:
+                    if (snapshot.hasError)
+                      return Text('Error: ${snapshot.error}');
+                    else if (productsList!.isEmpty)
+                      return Center(
+                        child: Text(translate('label_product_search_failed')),
+                      );
+                    else
+                      return Expanded(
+                        child: GridView.count(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          crossAxisCount: 2,
+                          padding: EdgeInsets.all(1.0),
+                          childAspectRatio: 8.0 / 12.0,
+                          children: List<Widget>.generate(productsList.length,
+                              (index) {
+                            return GridTile(
+                                child: Products_Grid_Tiles_Component(
+                              name: productsList[index]!.getTitle(),
+                              imageUrl: productsList[index]!.getImageUrl(),
+                              product: productsList[index]!,
+                              price: productsList[index]!.getPrice().toString(),
+                            ));
+                          }),
+                        ),
+                      );
+                }
+              },
+            ),
+        ],
+      ),
+    );
+  }
+
   Widget _filters_modal() {
     return Container(
       decoration: BoxDecoration(
@@ -191,131 +316,6 @@ class _Products_Search_Screen_State extends State<Products_Search_Screen>
               scrollDirection: Axis.horizontal,
             ),
           )
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: Appbar_Widget(context),
-      endDrawer: Drawer_Widget(),
-      bottomNavigationBar: Bottom_Navbar_Widget(),
-      body: Column(
-        children: <Widget>[
-          // **************** TO REMOVE **************** */
-          // ElevatedButton(
-          //   style: ElevatedButton.styleFrom(
-          //       textStyle: const TextStyle(fontSize: 20)),
-          //   onPressed: () async {
-          //     await createProductTable();
-          //   },
-          //   child: const Text('Enabled'),
-          // ),
-          // ******************************** */
-
-          Card(
-            child: Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Theme(
-                      child: TextField(
-                        controller: searchController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                            borderSide: BorderSide(
-                              width: 0,
-                              style: BorderStyle.none,
-                            ),
-                          ),
-                          filled: true,
-                          prefixIcon: Icon(Icons.search),
-                          fillColor: Color(0xFFF2F4F5),
-                          hintStyle: new TextStyle(color: Colors.grey[600]),
-                          hintText: translate("label_search"),
-                        ),
-                        autofocus: false,
-                        onSubmitted: (value) async {
-                          setState(() {
-                            searchTerms = value;
-                          });
-                        },
-                      ),
-                      data: Theme.of(context).copyWith(
-                        primaryColor: Colors.grey[600],
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                      tooltip: 'Sort',
-                      icon: const Icon(Icons.filter_list),
-                      onPressed: () {
-                        showModalBottomSheet(
-                            // isScrollControlled: true,
-                            context: context,
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadiusDirectional.only(
-                                topEnd: Radius.circular(25),
-                                topStart: Radius.circular(25),
-                              ),
-                            ),
-                            builder: (BuildContext context) {
-                              return _filters_modal();
-                            });
-                      }),
-                ],
-              ),
-            ),
-          ),
-
-          if (searchTerms != null && searchTerms.isNotEmpty)
-            FutureBuilder(
-              future: findProducts(searchTerms),
-              builder: (context, AsyncSnapshot snapshot) {
-                List<dynamic>? productsList = snapshot.data;
-
-                switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                    return Center(
-                        child: Text('Check your internet connection!!'));
-                  case ConnectionState.waiting:
-                    return Center(child: Text('Loading ...'));
-                  default:
-                    if (snapshot.hasError)
-                      return Text('Error: ${snapshot.error}');
-                    else if (productsList!.isEmpty)
-                      return Center(
-                        child: Text(translate('label_product_search_failed')),
-                      );
-                    else
-                      return Expanded(
-                        child: GridView.count(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          crossAxisCount: 2,
-                          padding: EdgeInsets.all(1.0),
-                          childAspectRatio: 8.0 / 12.0,
-                          children: List<Widget>.generate(productsList.length,
-                              (index) {
-                            return GridTile(
-                                child: Products_Grid_Tiles_Component(
-                              name: productsList[index]!.getTitle(),
-                              imageUrl: productsList[index]!.getImageUrl(),
-                              product: productsList[index]!,
-                              price: productsList[index]!.getPrice().toString(),
-                            ));
-                          }),
-                        ),
-                      );
-                }
-              },
-            ),
         ],
       ),
     );

@@ -127,14 +127,6 @@ class ProductRepostitorySqfliteFfiImpl extends ProductRepository {
       }
     });
 
-    // filters.forEach((key, value) {
-    //   if (key == first_key) {
-    //     search_query += " WHERE $key = '$value'";
-    //   } else {
-    //     search_query += " AND $key = '$value'";
-    //   }
-    // });
-
     var products_found_in_db = [];
 
     products_found_in_db = await database.rawQuery(search_query);

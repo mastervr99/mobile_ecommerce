@@ -57,7 +57,12 @@ class ProductRepostitorySqfliteImpl extends ProductRepository {
       }
     }
 
-    var searchedProductsInDb = await database.rawQuery(search_query);
+    var searchedProductsInDb = [];
+    try {
+      searchedProductsInDb = await database.rawQuery(search_query);
+    } catch (e) {
+      print(e);
+    }
 
     List<Product> searchResults = [];
 

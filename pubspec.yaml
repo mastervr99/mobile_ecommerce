@@ -79,6 +79,7 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
+    - assets/images/search_background_image.jpg
     - assets/images/women.jpg
     - assets/images/men.jpg
     - assets/images/tshirts.jpg

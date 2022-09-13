@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
 import 'package:mobile_ecommerce/Application/usecases/add_product_to_shopping_cart_usecase.dart';
@@ -23,7 +24,7 @@ class _Product_Detail_Screen_State extends State<Product_Detail_Screen> {
       backgroundColor: Color(0xFFfafafa),
       appBar: Appbar_Widget(context),
       endDrawer: Drawer_Widget(),
-      bottomNavigationBar: BottomNavBar(product: widget.product),
+      bottomNavigationBar: Bottom_Navbar_Widget(),
       body: FutureBuilder(
         future: getProduct(widget.product),
         builder: (context, AsyncSnapshot snapshot) {
@@ -38,64 +39,6 @@ class _Product_Detail_Screen_State extends State<Product_Detail_Screen> {
                 return createDetailView(context, snapshot);
           }
         },
-      ),
-    );
-  }
-}
-
-class BottomNavBar extends StatefulWidget {
-  Product product;
-
-  BottomNavBar({Key? key, required this.product}) : super(key: key);
-
-  @override
-  _BottomNavBarState createState() => _BottomNavBarState();
-}
-
-class _BottomNavBarState extends State<BottomNavBar> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: Color(0xFFfef2f2),
-              shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10)),
-                side: BorderSide(color: Color(0xFFfef2f2)),
-              ),
-              minimumSize: Size(300, 50),
-              textStyle: const TextStyle(
-                color: Colors.white,
-              ),
-              elevation: 0,
-            ),
-            onPressed: () async {
-              ShoppingCartItemRepository shoppingCartItemRepository =
-                  ShoppingCartItemRepositorySqfliteImpl();
-
-              Add_Product_To_Shopping_Cart_Usecase
-                  add_product_to_shopping_cart_usecase =
-                  Add_Product_To_Shopping_Cart_Usecase(
-                      shoppingCartItemRepository);
-
-              await add_product_to_shopping_cart_usecase
-                  .addCartItem(widget.product);
-            },
-            child: Container(
-              padding: EdgeInsets.only(left: 5, right: 5, top: 15, bottom: 15),
-              child: Text("Add to cart".toUpperCase(),
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFFff665e))),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -214,6 +157,54 @@ class _DetailScreenState extends State<DetailScreen> {
           ),
           SizedBox(
             height: 10,
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Color(0xFFfef2f2),
+              shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10)),
+                side: BorderSide(color: Color(0xFFfef2f2)),
+              ),
+              minimumSize: Size(300, 50),
+              textStyle: const TextStyle(
+                color: Colors.white,
+              ),
+              elevation: 0,
+            ),
+            onPressed: () async {
+              ShoppingCartItemRepository shoppingCartItemRepository =
+                  ShoppingCartItemRepositorySqfliteImpl();
+
+              Add_Product_To_Shopping_Cart_Usecase
+                  add_product_to_shopping_cart_usecase =
+                  Add_Product_To_Shopping_Cart_Usecase(
+                      shoppingCartItemRepository);
+
+              await add_product_to_shopping_cart_usecase
+                  .addCartItem(widget.product);
+
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    content: Text(
+                      'Product added to cart !',
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                },
+              );
+            },
+            child: Container(
+              padding: EdgeInsets.only(left: 5, right: 5, top: 15, bottom: 15),
+              child: Text("Add to cart".toUpperCase(),
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFFff665e))),
+            ),
           ),
         ],
       ),

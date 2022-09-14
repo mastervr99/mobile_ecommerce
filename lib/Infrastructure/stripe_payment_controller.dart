@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:mobile_ecommerce/Application/screens/Orders_History_Screen.dart';
 import 'package:mobile_ecommerce/.env.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/payment_gateway.dart';
 

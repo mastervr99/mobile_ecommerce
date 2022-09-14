@@ -270,7 +270,6 @@ class _CartList extends StatelessWidget {
                                           await removeCartItem(
                                               snapshot.data[index]);
                                           Navigator.pop(context);
-                                          // CircularProgress();
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -375,14 +374,14 @@ class _MyCounterState extends State<MyCounter> {
 
                 widget.shoppingCartItem.setQuantity(decrementedQuantity);
                 await updateCartItem(widget.shoppingCartItem);
-                // setState(() {});
+                setState(() {});
 
-                Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            Shopping_Cart_Screen()));
+                // Navigator.pop(context);
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (BuildContext context) =>
+                //             Shopping_Cart_Screen()));
               }
             },
           ),
@@ -410,14 +409,14 @@ class _MyCounterState extends State<MyCounter> {
 
               widget.shoppingCartItem.setQuantity(incrementedQuantity);
               await updateCartItem(widget.shoppingCartItem);
-              // setState(() {});
+              setState(() {});
 
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          Shopping_Cart_Screen()));
+              // Navigator.pop(context);
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (BuildContext context) =>
+              //             Shopping_Cart_Screen()));
             },
           ),
         ],

@@ -287,13 +287,6 @@ class _CartList_State extends State<_CartList> {
                                                     await updateCartItem(
                                                         snapshot.data[index]);
                                                     setState(() {});
-
-                                                    // Navigator.pop(context);
-                                                    // Navigator.push(
-                                                    //     context,
-                                                    //     MaterialPageRoute(
-                                                    //         builder: (BuildContext context) =>
-                                                    //             Shopping_Cart_Screen()));
                                                   }
                                                 },
                                               ),
@@ -330,13 +323,6 @@ class _CartList_State extends State<_CartList> {
                                                   await updateCartItem(
                                                       snapshot.data[index]);
                                                   setState(() {});
-
-                                                  // Navigator.pop(context);
-                                                  // Navigator.push(
-                                                  //     context,
-                                                  //     MaterialPageRoute(
-                                                  //         builder: (BuildContext context) =>
-                                                  //             Shopping_Cart_Screen()));
                                                 },
                                               ),
                                             ],
@@ -367,15 +353,6 @@ class _CartList_State extends State<_CartList> {
                                           await removeCartItem(
                                               snapshot.data[index]);
                                           setState(() {});
-
-                                          // Navigator.pop(context);
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //     builder: (BuildContext context) =>
-                                          //         Shopping_Cart_Screen(),
-                                          //   ),
-                                          // );
                                         },
                                       ),
                                     ],
@@ -443,90 +420,83 @@ getCartTotalPrice(BuildContext context) async {
   return await cartTotalPrice;
 }
 
-class MyCounter extends StatefulWidget {
-  ShoppingCartItem shoppingCartItem;
-  MyCounter({Key? key, required this.shoppingCartItem}) : super(key: key);
+// class MyCounter extends StatefulWidget {
+//   ShoppingCartItem shoppingCartItem;
+//   MyCounter({Key? key, required this.shoppingCartItem}) : super(key: key);
 
-  @override
-  _MyCounterState createState() => _MyCounterState();
-}
+//   @override
+//   _MyCounterState createState() => _MyCounterState();
+// }
 
-class _MyCounterState extends State<MyCounter> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-      Row(
-        children: <Widget>[
-          GestureDetector(
-            child: Container(
-              padding: const EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xFFAC252B),
-              ),
-              child: Icon(
-                Icons.remove,
-                color: Colors.white,
-              ),
-            ),
-            onTap: () async {
-              if (widget.shoppingCartItem.getQuantity() > 0) {
-                var decrementedQuantity =
-                    widget.shoppingCartItem.getQuantity() - 1;
+// class _MyCounterState extends State<MyCounter> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(children: [
+//       Row(
+//         children: <Widget>[
+//           GestureDetector(
+//             child: Container(
+//               padding: const EdgeInsets.all(5.0),
+//               decoration: BoxDecoration(
+//                 shape: BoxShape.circle,
+//                 color: Color(0xFFAC252B),
+//               ),
+//               child: Icon(
+//                 Icons.remove,
+//                 color: Colors.white,
+//               ),
+//             ),
+//             onTap: () async {
+//               if (widget.shoppingCartItem.getQuantity() > 0) {
+//                 var decrementedQuantity =
+//                     widget.shoppingCartItem.getQuantity() - 1;
 
-                widget.shoppingCartItem.setQuantity(decrementedQuantity);
-                await updateCartItem(widget.shoppingCartItem);
-                setState(() {});
+//                 widget.shoppingCartItem.setQuantity(decrementedQuantity);
+//                 await updateCartItem(widget.shoppingCartItem);
+//                 setState(() {});
 
-                // Navigator.pop(context);
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (BuildContext context) =>
-                //             Shopping_Cart_Screen()));
-              }
-            },
-          ),
-          SizedBox(width: 15),
-          Text(
-            "${widget.shoppingCartItem.getQuantity()}",
-            style: Theme.of(context).textTheme.headline6,
-          ),
-          SizedBox(width: 15),
-          GestureDetector(
-            child: Container(
-              padding: const EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xFFAC252B),
-              ),
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-            ),
-            onTap: () async {
-              var incrementedQuantity =
-                  widget.shoppingCartItem.getQuantity() + 1;
+//                 // Navigator.pop(context);
+//                 // Navigator.push(
+//                 //     context,
+//                 //     MaterialPageRoute(
+//                 //         builder: (BuildContext context) =>
+//                 //             Shopping_Cart_Screen()));
+//               }
+//             },
+//           ),
+//           SizedBox(width: 15),
+//           Text(
+//             "${widget.shoppingCartItem.getQuantity()}",
+//             style: Theme.of(context).textTheme.headline6,
+//           ),
+//           SizedBox(width: 15),
+//           GestureDetector(
+//             child: Container(
+//               padding: const EdgeInsets.all(5.0),
+//               decoration: BoxDecoration(
+//                 shape: BoxShape.circle,
+//                 color: Color(0xFFAC252B),
+//               ),
+//               child: Icon(
+//                 Icons.add,
+//                 color: Colors.white,
+//               ),
+//             ),
+//             onTap: () async {
+//               var incrementedQuantity =
+//                   widget.shoppingCartItem.getQuantity() + 1;
 
-              widget.shoppingCartItem.setQuantity(incrementedQuantity);
-              await updateCartItem(widget.shoppingCartItem);
-              setState(() {});
-
-              // Navigator.pop(context);
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (BuildContext context) =>
-              //             Shopping_Cart_Screen()));
-            },
-          ),
-        ],
-      ),
-      SizedBox(height: 15),
-    ]);
-  }
-}
+//               widget.shoppingCartItem.setQuantity(incrementedQuantity);
+//               await updateCartItem(widget.shoppingCartItem);
+//               setState(() {});
+//             },
+//           ),
+//         ],
+//       ),
+//       SizedBox(height: 15),
+//     ]);
+//   }
+// }
 
 updateCartItem(ShoppingCartItem shoppingCartItem) async {
   ShoppingCartItemRepository shoppingCartItemRepository =

@@ -32,8 +32,7 @@ signInSucceded(BuildContext context) {
               style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
               child: Text(translate('label_homepage')),
               onPressed: (() {
-                Navigator.pop(context);
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => Home_Screen()),
                 );
@@ -60,8 +59,7 @@ emailNotRegistered(BuildContext context) {
               style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
               child: Text(translate('label_sign_up')),
               onPressed: (() {
-                Navigator.pop(context);
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => Sign_Up_Component()),
                 );
@@ -332,8 +330,7 @@ class _Sign_In_Component_State extends State<Sign_In_Component> {
                           ),
                           InkWell(
                             onTap: () => {
-                              Navigator.pop(context),
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => Sign_Up_Component()),

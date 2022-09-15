@@ -39,32 +39,32 @@ class _Bottom_Navbar_Widget_State extends State<Bottom_Navbar_Widget> {
 
       switch (index) {
         case 0:
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => Home_Screen()),
           );
           break;
         case 1:
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => Products_Search_Screen()),
           );
           break;
         case 2:
           if (await check_if_user_connected()) {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => User_Account_Screen()),
             );
           } else {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => Sign_In_Component()),
             );
           }
           break;
         case 3:
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => Shopping_Cart_Screen()),
           );

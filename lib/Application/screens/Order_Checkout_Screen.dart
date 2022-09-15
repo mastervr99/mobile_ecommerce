@@ -354,8 +354,7 @@ class _OrderCheckoutScreenBottomBarState
                         if (is_payment_valid) {
                           Order order = Order();
                           await register_order(context, order);
-                          Navigator.pop(context);
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => Orders_History_Screen(),

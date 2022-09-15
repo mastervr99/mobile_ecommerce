@@ -106,8 +106,7 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                           SignOutUsecase signOutUsecase =
                               SignOutUsecase(connectedUserRepository);
                           await signOutUsecase.disconnectUser();
-                          Navigator.pop(context);
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => Home_Screen(),

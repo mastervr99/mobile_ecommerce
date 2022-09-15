@@ -26,8 +26,7 @@ registrationSucceded(BuildContext context) {
               style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
               child: Text(translate('label_sign_in')),
               onPressed: (() {
-                Navigator.pop(context);
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => Sign_In_Component()),
                 );
@@ -355,8 +354,7 @@ class _Sign_Up_Component_State extends State<Sign_Up_Component> {
                             ),
                             InkWell(
                               onTap: () {
-                                Navigator.pop(context);
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>

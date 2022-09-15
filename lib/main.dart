@@ -102,14 +102,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: Appbar_Widget(context),
         endDrawer: Drawer_Widget(),
         // body: IndexedStack(
         //   index: currentIndex,
         //   children: viewContainer,
         // ),
         body: Home_Screen(),
-        bottomNavigationBar: Bottom_Navbar_Widget(),
       ),
     );
   }

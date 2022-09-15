@@ -5,6 +5,7 @@ import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Wi
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
 import 'package:mobile_ecommerce/Application/screens/Orders_History_Screen.dart';
 import 'package:mobile_ecommerce/Application/components/User_Personal_Details_Component.dart';
+import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/connected_user_repository_sqflite_impl.dart';
@@ -23,9 +24,12 @@ get_connected_user_data() async {
 
   UserRepository userRepository = UserRepositorySqfliteImpl();
 
-  var user = await userRepository
-      .retrieve_user_by_id(await connected_user.get_user_id());
+  late var user;
 
+  if (connected_user.runtimeType == User) {
+    user = await userRepository
+        .retrieve_user_by_id(await connected_user.get_user_id());
+  }
   return await user;
 }
 

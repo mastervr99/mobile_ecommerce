@@ -27,54 +27,54 @@ class Shopping_Cart_Screen extends StatefulWidget {
 class _Shopping_Cart_Screen_State extends State<Shopping_Cart_Screen> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ShoppingCart>(builder: (context, settings, child) {
-      return Scaffold(
-        appBar: Appbar_Widget(context),
-        endDrawer: Drawer_Widget(),
-        bottomNavigationBar: Bottom_Navbar_Widget(),
-        body: FutureBuilder(
-          future: getAllCartItems(context),
-          builder: (context, AsyncSnapshot snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
+    // return Consumer<ShoppingCart>(builder: (context, settings, child) {
+    return Scaffold(
+      appBar: Appbar_Widget(context),
+      endDrawer: Drawer_Widget(),
+      bottomNavigationBar: Bottom_Navbar_Widget(),
+      body: FutureBuilder(
+        future: getAllCartItems(context),
+        builder: (context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return Container(
+                decoration: BoxDecoration(color: Colors.white),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                          padding: const EdgeInsets.all(32),
+                          child: _emptyShoppingCart(context)),
+                    ),
+                  ],
+                ),
+              );
+            case ConnectionState.waiting:
+              return Circular_Progress_Widget();
+            default:
+              if (snapshot.hasError)
+                return Text('Error: ${snapshot.error}');
+              else
                 return Container(
                   decoration: BoxDecoration(color: Colors.white),
                   child: Column(
                     children: [
                       Expanded(
                         child: Padding(
-                            padding: const EdgeInsets.all(32),
-                            child: _emptyShoppingCart(context)),
+                          padding: const EdgeInsets.all(32),
+                          child: snapshot.data.isEmpty
+                              ? _emptyShoppingCart(context)
+                              : _CartList(),
+                        ),
                       ),
                     ],
                   ),
                 );
-              case ConnectionState.waiting:
-                return Circular_Progress_Widget();
-              default:
-                if (snapshot.hasError)
-                  return Text('Error: ${snapshot.error}');
-                else
-                  return Container(
-                    decoration: BoxDecoration(color: Colors.white),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(32),
-                            child: snapshot.data.isEmpty
-                                ? _emptyShoppingCart(context)
-                                : _CartList(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-            }
-          },
-        ),
-      );
-    });
+          }
+        },
+      ),
+    );
+    // });
   }
 }
 
@@ -128,7 +128,14 @@ check_if_user_connected() async {
   return await signInUsecase.checkIfUserConnected();
 }
 
-class _CartList extends StatelessWidget {
+// class _CartList extends StatelessWidget {
+
+class _CartList extends StatefulWidget {
+  @override
+  _CartList_State createState() => _CartList_State();
+}
+
+class _CartList_State extends State<_CartList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -245,9 +252,99 @@ class _CartList extends StatelessWidget {
                                             .headline5,
                                       ),
                                       SizedBox(height: 15),
-                                      MyCounter(
-                                          shoppingCartItem:
-                                              snapshot.data[index]),
+                                      // MyCounter(
+                                      //     shoppingCartItem:
+                                      //         snapshot.data[index]),
+                                      Column(
+                                        children: [
+                                          Row(
+                                            children: <Widget>[
+                                              GestureDetector(
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(5.0),
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Color(0xFFAC252B),
+                                                  ),
+                                                  child: Icon(
+                                                    Icons.remove,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                onTap: () async {
+                                                  if (snapshot.data[index]
+                                                          .getQuantity() >
+                                                      0) {
+                                                    var decrementedQuantity =
+                                                        snapshot.data[index]
+                                                                .getQuantity() -
+                                                            1;
+
+                                                    snapshot.data[index]
+                                                        .setQuantity(
+                                                            decrementedQuantity);
+                                                    await updateCartItem(
+                                                        snapshot.data[index]);
+                                                    setState(() {});
+
+                                                    // Navigator.pop(context);
+                                                    // Navigator.push(
+                                                    //     context,
+                                                    //     MaterialPageRoute(
+                                                    //         builder: (BuildContext context) =>
+                                                    //             Shopping_Cart_Screen()));
+                                                  }
+                                                },
+                                              ),
+                                              SizedBox(width: 15),
+                                              Text(
+                                                "${snapshot.data[index].getQuantity()}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline6,
+                                              ),
+                                              SizedBox(width: 15),
+                                              GestureDetector(
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(5.0),
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Color(0xFFAC252B),
+                                                  ),
+                                                  child: Icon(
+                                                    Icons.add,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                onTap: () async {
+                                                  var incrementedQuantity =
+                                                      snapshot.data[index]
+                                                              .getQuantity() +
+                                                          1;
+
+                                                  snapshot.data[index]
+                                                      .setQuantity(
+                                                          incrementedQuantity);
+                                                  await updateCartItem(
+                                                      snapshot.data[index]);
+                                                  setState(() {});
+
+                                                  // Navigator.pop(context);
+                                                  // Navigator.push(
+                                                  //     context,
+                                                  //     MaterialPageRoute(
+                                                  //         builder: (BuildContext context) =>
+                                                  //             Shopping_Cart_Screen()));
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 15),
+                                        ],
+                                      ),
+
                                       SizedBox(height: 15),
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
@@ -269,13 +366,16 @@ class _CartList extends StatelessWidget {
                                         onPressed: () async {
                                           await removeCartItem(
                                               snapshot.data[index]);
-                                          Navigator.pop(context);
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (BuildContext
-                                                          context) =>
-                                                      Shopping_Cart_Screen()));
+                                          setState(() {});
+
+                                          // Navigator.pop(context);
+                                          // Navigator.push(
+                                          //   context,
+                                          //   MaterialPageRoute(
+                                          //     builder: (BuildContext context) =>
+                                          //         Shopping_Cart_Screen(),
+                                          //   ),
+                                          // );
                                         },
                                       ),
                                     ],
@@ -300,7 +400,8 @@ getAllCartItems(BuildContext context) async {
   ShoppingCartItemRepository shoppingCartItemRepository =
       ShoppingCartItemRepositorySqfliteImpl();
 
-  var shoppingCart = context.watch<ShoppingCart>();
+  // var shoppingCart = context.watch<ShoppingCart>();
+  var shoppingCart = ShoppingCart();
 
   await shoppingCart.setItemRepository(shoppingCartItemRepository);
 
@@ -333,7 +434,8 @@ getCartTotalPrice(BuildContext context) async {
   ShoppingCartItemRepository shoppingCartItemRepository =
       ShoppingCartItemRepositorySqfliteImpl();
 
-  var shoppingCart = context.watch<ShoppingCart>();
+  // var shoppingCart = context.watch<ShoppingCart>();
+  var shoppingCart = ShoppingCart();
 
   await shoppingCart.setItemRepository(shoppingCartItemRepository);
 

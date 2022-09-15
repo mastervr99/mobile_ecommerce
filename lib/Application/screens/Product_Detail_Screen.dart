@@ -160,11 +160,9 @@ class _DetailScreenState extends State<DetailScreen> {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Color(0xFFfef2f2),
+              primary: Color(0xFFAC252B),
               shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10)),
+                borderRadius: new BorderRadius.circular(10.0),
                 side: BorderSide(color: Color(0xFFfef2f2)),
               ),
               minimumSize: Size(300, 50),
@@ -199,11 +197,14 @@ class _DetailScreenState extends State<DetailScreen> {
             },
             child: Container(
               padding: EdgeInsets.only(left: 5, right: 5, top: 15, bottom: 15),
-              child: Text("Add to cart".toUpperCase(),
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFFff665e))),
+              child: Text(
+                "Add to cart".toUpperCase(),
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
         ],

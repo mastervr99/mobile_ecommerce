@@ -6,15 +6,19 @@ import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Wi
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
 import 'package:mobile_ecommerce/Application/components/Sign_In_Component.dart';
 import 'package:mobile_ecommerce/Application/screens/Order_Checkout_Screen.dart';
+import 'package:mobile_ecommerce/Application/screens/Product_Detail_Screen.dart';
 import 'package:mobile_ecommerce/Application/usecases/remove_shopping_cart_item_usecase.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
 import 'package:mobile_ecommerce/Application/usecases/update_shopping_cart_item_usecase.dart';
+import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart_item.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/product_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/shopping_cart_item_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/connected_user_repository_sqflite_impl.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/product_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/shopping_cart_item_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
 import 'package:provider/provider.dart';
@@ -221,15 +225,30 @@ class _CartList_State extends State<_CartList> {
                             child: Row(
                               children: <Widget>[
                                 Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      color: Colors.white,
+                                  child: GestureDetector(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        color: Colors.white,
+                                      ),
+                                      child: Image.network(
+                                        "${snapshot.data[index].getImageUrl()}",
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                    child: Image.network(
-                                      "${snapshot.data[index].getImageUrl()}",
-                                      fit: BoxFit.cover,
-                                    ),
+                                    onTap: () async {
+                                      Product product = await get_product(
+                                          snapshot.data[index]);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Product_Detail_Screen(
+                                                  product: product,
+                                                )),
+                                      );
+                                    },
                                   ),
                                 ),
                                 SizedBox(width: 15),
@@ -239,7 +258,16 @@ class _CartList_State extends State<_CartList> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        "${snapshot.data[index].getTitle()}",
+                                        snapshot.data[index]
+                                                    .getTitle()
+                                                    .length <=
+                                                25
+                                            ? snapshot.data[index].getTitle()
+                                            : snapshot.data[index]
+                                                    .getTitle()
+                                                    .substring(0, 25) +
+                                                '...',
+                                        // "${snapshot.data[index].getTitle()}",
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline6,
@@ -327,11 +355,9 @@ class _CartList_State extends State<_CartList> {
                                               ),
                                             ],
                                           ),
-                                          SizedBox(height: 15),
                                         ],
                                       ),
-
-                                      SizedBox(height: 15),
+                                      SizedBox(height: 18),
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           primary: Color(0xFFAC252B),
@@ -418,6 +444,12 @@ getCartTotalPrice(BuildContext context) async {
 
   var cartTotalPrice = await shoppingCart.getCartTotalPrice();
   return await cartTotalPrice;
+}
+
+get_product(ShoppingCartItem shoppingCartItem) async {
+  ProductRepository productRepository = ProductRepostitorySqfliteImpl();
+  return await productRepository
+      .retrieve_product_with_sku(shoppingCartItem.getSku());
 }
 
 // class MyCounter extends StatefulWidget {

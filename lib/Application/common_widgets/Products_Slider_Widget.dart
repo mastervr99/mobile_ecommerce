@@ -86,7 +86,7 @@ class _Products_Slider_Widget_State extends State<Products_Slider_Widget> {
                               ? widget.products[pagePosition].getTitle()
                               : widget.products[pagePosition]
                                       .getTitle()
-                                      .substring(0, 20) +
+                                      .substring(0, 30) +
                                   '...',
                       imageUrl: widget.products[pagePosition].getImageUrl(),
                       product: widget.products[pagePosition],

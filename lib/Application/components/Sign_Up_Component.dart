@@ -23,14 +23,19 @@ registrationSucceded(BuildContext context) {
         ),
         actions: [
           ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
-              child: Text(translate('label_sign_in')),
-              onPressed: (() {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => Sign_In_Component()),
-                );
-              }))
+            style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
+            child: Text(translate('label_sign_in')),
+            onPressed: (() {
+              Navigator.of(context).pushReplacement(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return Sign_In_Component();
+                  },
+                  transitionDuration: Duration(milliseconds: 200),
+                ),
+              );
+            }),
+          )
         ],
       );
     },
@@ -354,11 +359,15 @@ class _Sign_Up_Component_State extends State<Sign_Up_Component> {
                             ),
                             InkWell(
                               onTap: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Sign_In_Component()),
+                                Navigator.of(context).pushReplacement(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                        secondaryAnimation) {
+                                      return Sign_In_Component();
+                                    },
+                                    transitionDuration:
+                                        Duration(milliseconds: 200),
+                                  ),
                                 );
                               },
                               child: Container(

@@ -29,14 +29,19 @@ signInSucceded(BuildContext context) {
         ),
         actions: [
           ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
-              child: Text(translate('label_homepage')),
-              onPressed: (() {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => Home_Screen()),
-                );
-              }))
+            style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
+            child: Text(translate('label_homepage')),
+            onPressed: (() {
+              Navigator.of(context).pushReplacement(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return Home_Screen();
+                  },
+                  transitionDuration: Duration(milliseconds: 200),
+                ),
+              );
+            }),
+          )
         ],
       );
     },
@@ -56,14 +61,19 @@ emailNotRegistered(BuildContext context) {
         ),
         actions: [
           ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
-              child: Text(translate('label_sign_up')),
-              onPressed: (() {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => Sign_Up_Component()),
-                );
-              }))
+            style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
+            child: Text(translate('label_sign_up')),
+            onPressed: (() {
+              Navigator.of(context).pushReplacement(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return Sign_Up_Component();
+                  },
+                  transitionDuration: Duration(milliseconds: 200),
+                ),
+              );
+            }),
+          )
         ],
       );
     },
@@ -330,11 +340,16 @@ class _Sign_In_Component_State extends State<Sign_In_Component> {
                           ),
                           InkWell(
                             onTap: () => {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Sign_Up_Component()),
-                              )
+                              Navigator.of(context).pushReplacement(
+                                PageRouteBuilder(
+                                  pageBuilder:
+                                      (context, animation, secondaryAnimation) {
+                                    return Sign_Up_Component();
+                                  },
+                                  transitionDuration:
+                                      Duration(milliseconds: 200),
+                                ),
+                              ),
                             },
                             child: Container(
                               child: Text(

@@ -354,10 +354,14 @@ class _OrderCheckoutScreenBottomBarState
                         if (is_payment_valid) {
                           Order order = Order();
                           await register_order(context, order);
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Orders_History_Screen(),
+
+                          Navigator.of(context).pushReplacement(
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) {
+                                return Orders_History_Screen();
+                              },
+                              transitionDuration: Duration(milliseconds: 200),
                             ),
                           );
                         }

@@ -39,34 +39,54 @@ class _Bottom_Navbar_Widget_State extends State<Bottom_Navbar_Widget> {
 
       switch (index) {
         case 0:
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Home_Screen()),
+          Navigator.of(context).pushReplacement(
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) {
+                return Home_Screen();
+              },
+              transitionDuration: Duration(milliseconds: 200),
+            ),
           );
           break;
         case 1:
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Products_Search_Screen()),
+          Navigator.of(context).pushReplacement(
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) {
+                return Products_Search_Screen();
+              },
+              transitionDuration: Duration(milliseconds: 200),
+            ),
           );
           break;
         case 2:
           if (await check_if_user_connected()) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => User_Account_Screen()),
+            Navigator.of(context).pushReplacement(
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return User_Account_Screen();
+                },
+                transitionDuration: Duration(milliseconds: 200),
+              ),
             );
           } else {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Sign_In_Component()),
+            Navigator.of(context).pushReplacement(
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return Sign_In_Component();
+                },
+                transitionDuration: Duration(milliseconds: 200),
+              ),
             );
           }
           break;
         case 3:
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Shopping_Cart_Screen()),
+          Navigator.of(context).pushReplacement(
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) {
+                return Shopping_Cart_Screen();
+              },
+              transitionDuration: Duration(milliseconds: 200),
+            ),
           );
           break;
       }

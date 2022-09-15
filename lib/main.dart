@@ -5,6 +5,9 @@ import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
 import 'package:mobile_ecommerce/Application/screens/Home_Screen.dart';
+import 'package:mobile_ecommerce/Application/screens/Products_Search_Screen.dart';
+import 'package:mobile_ecommerce/Application/screens/Shopping_Cart_Screen.dart';
+import 'package:mobile_ecommerce/Application/screens/User_Account_Screen.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_ecommerce/.env.dart';
@@ -87,8 +90,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> viewContainer = [
     Home_Screen(),
+    Products_Search_Screen(),
+    User_Account_Screen(),
+    Shopping_Cart_Screen()
     //WishListScreen(),
-    //ShoppingCartScreen(),
     //HomeScreen()
   ];
 
@@ -99,10 +104,11 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         appBar: Appbar_Widget(context),
         endDrawer: Drawer_Widget(),
-        body: IndexedStack(
-          index: currentIndex,
-          children: viewContainer,
-        ),
+        // body: IndexedStack(
+        //   index: currentIndex,
+        //   children: viewContainer,
+        // ),
+        body: Home_Screen(),
         bottomNavigationBar: Bottom_Navbar_Widget(),
       ),
     );

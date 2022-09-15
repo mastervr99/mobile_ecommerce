@@ -346,7 +346,6 @@ findProducts(var value) async {
 // **************** TO REMOVE **************** */
 // createProductTable() async {
 //   var productRepository = ProductRepostitorySqfliteImpl();
-//   await productRepository.init();
 
 //   WidgetsFlutterBinding.ensureInitialized();
 

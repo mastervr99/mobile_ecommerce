@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_ecommerce/Application/components/Sign_In_Component.dart';
+import 'package:mobile_ecommerce/Application/screens/Home_Screen.dart';
 import 'package:mobile_ecommerce/Application/screens/Products_Search_Screen.dart';
 import 'package:mobile_ecommerce/Application/screens/Shopping_Cart_Screen.dart';
 import 'package:mobile_ecommerce/Application/screens/User_Account_Screen.dart';
@@ -40,7 +41,7 @@ class _Bottom_Navbar_Widget_State extends State<Bottom_Navbar_Widget> {
         case 0:
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MyHomePage(title: 'ESHOP')),
+            MaterialPageRoute(builder: (context) => Home_Screen()),
           );
           break;
         case 1:

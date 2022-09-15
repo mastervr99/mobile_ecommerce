@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Category_Slider_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Products_Slider_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Search_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Promo_Slider_Widget.dart';
@@ -34,6 +37,9 @@ class _Home_Screen_State extends State<Home_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: Appbar_Widget(context),
+      endDrawer: Drawer_Widget(),
+      bottomNavigationBar: Bottom_Navbar_Widget(),
       body: Container(
         width: double.infinity,
         height: double.infinity,

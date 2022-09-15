@@ -3,6 +3,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Application/components/Language_Selection_Component.dart';
 import 'package:mobile_ecommerce/Application/components/Sign_Up_Component.dart';
+import 'package:mobile_ecommerce/Application/screens/Home_Screen.dart';
 import 'package:mobile_ecommerce/Application/screens/Orders_History_Screen.dart';
 import 'package:mobile_ecommerce/Application/screens/User_Account_Screen.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_in_usecase.dart';
@@ -58,7 +59,7 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MyHomePage(title: 'ESHOP')),
+                              builder: (context) => Home_Screen()),
                         ),
                       ),
                       _createDrawerItem(
@@ -109,8 +110,8 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    MyHomePage(title: 'ESHOP')),
+                              builder: (context) => Home_Screen(),
+                            ),
                           );
                         },
                       ),
@@ -129,7 +130,7 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MyHomePage(title: 'ESHOP')),
+                              builder: (context) => Home_Screen()),
                         ),
                       ),
                       _createDrawerItem(

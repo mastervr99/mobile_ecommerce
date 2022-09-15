@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
 import 'package:mobile_ecommerce/Application/components/Sign_Up_Component.dart';
+import 'package:mobile_ecommerce/Application/screens/Home_Screen.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
@@ -34,9 +35,7 @@ signInSucceded(BuildContext context) {
                 Navigator.pop(context);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const MyHomePage(title: 'MOBILE ESHOP')),
+                  MaterialPageRoute(builder: (context) => Home_Screen()),
                 );
               }))
         ],

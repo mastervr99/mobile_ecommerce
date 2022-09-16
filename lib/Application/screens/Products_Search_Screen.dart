@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
@@ -366,6 +367,7 @@ findProducts(var value) async {
 //   }
 
 //   for (int i = 0; i < parsedList.length; i++) {
+//     var price = Random().nextInt(50).toDouble();
 //     var sku = i + 100;
 //     Product product = Product(parsedList[i][6]);
 //     product.setDescription(
@@ -377,7 +379,7 @@ findProducts(var value) async {
 //     product.setColor(parsedList[i][4]);
 //     product.setUsage(parsedList[i][5]);
 //     product.setImageUrl(parsedList[i][7]);
-//     product.setPrice(1);
+//     product.setPrice(price);
 //     product.setSku(sku);
 
 //     await productRepository.registerProduct(product);

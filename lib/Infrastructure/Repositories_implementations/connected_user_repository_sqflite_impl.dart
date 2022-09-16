@@ -9,7 +9,7 @@ class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
   @override
   _init_database() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, 'connected_user1.db');
+    final path = join(databasesPath, 'connected_user2.db');
     database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table
@@ -41,12 +41,11 @@ class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
     await _init_database();
 
     var connectedUserData = [];
-    try {
-      connectedUserData =
-          await database.rawQuery('SELECT * FROM ConnectedUser LIMIT 1');
-    } catch (e) {
-      print(e);
-    }
+
+    connectedUserData =
+        await database.rawQuery('SELECT * FROM ConnectedUser LIMIT 1');
+
+    await connectedUserData;
 
     if (await connectedUserData.isEmpty) {
       await _close_database();

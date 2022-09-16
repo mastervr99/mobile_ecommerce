@@ -12,7 +12,6 @@ import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/connected_user_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
-import 'package:mobile_ecommerce/main.dart';
 import 'package:mobile_ecommerce/Application/components/Sign_In_Component.dart';
 
 class Drawer_Widget extends StatefulWidget {

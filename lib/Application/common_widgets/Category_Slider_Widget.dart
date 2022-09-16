@@ -75,7 +75,7 @@ class _Category_Slider_Widget_State extends State<Category_Slider_Widget> {
                 return buildItem(context, index);
               },
             ),
-          )
+          ),
         ],
       ),
     );
@@ -85,26 +85,24 @@ class _Category_Slider_Widget_State extends State<Category_Slider_Widget> {
     return Container(
       width: MediaQuery.of(context).size.width / 6,
       height: MediaQuery.of(context).size.height / 11,
-      child: Expanded(
-        child: ListView(
-          children: [
-            GestureDetector(
-              child: Column(
-                children: [
-                  Image.asset(
-                    categories[index]['category_image']!,
-                    height: MediaQuery.of(context).size.height / 8,
-                    width: MediaQuery.of(context).size.width / 4,
-                  ),
-                  Text(
-                    categories[index]['category_name']!,
-                  ),
-                ],
-              ),
-              onTap: () {},
+      child: ListView(
+        children: [
+          GestureDetector(
+            child: Column(
+              children: [
+                Image.asset(
+                  categories[index]['category_image']!,
+                  height: MediaQuery.of(context).size.height / 8,
+                  width: MediaQuery.of(context).size.width / 4,
+                ),
+                Text(
+                  categories[index]['category_name']!,
+                ),
+              ],
             ),
-          ],
-        ),
+            onTap: () {},
+          ),
+        ],
       ),
     );
   }

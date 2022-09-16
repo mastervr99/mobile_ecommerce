@@ -74,13 +74,21 @@ class ShoppingCartItemRepositorySqfliteFfiImpl
   retrieveAllItems() async {
     await _init_database();
 
-    var allCartItemsinDB =
-        await database.rawQuery("SELECT * FROM shoppingCartItems");
+    var allCartItemsinDB = [];
+
+    try {
+      allCartItemsinDB =
+          await database.rawQuery("SELECT * FROM shoppingCartItems");
+    } catch (e) {
+      print(e);
+    }
 
     List<ShoppingCartItem> allCartItems = [];
 
+    await allCartItemsinDB;
+
     if (await allCartItemsinDB.isNotEmpty) {
-      await allCartItemsinDB.forEach((itemData) {
+      allCartItemsinDB.forEach((itemData) {
         ShoppingCartItem shoppingCartItem =
             ShoppingCartItem(itemData['title'] ?? '');
         shoppingCartItem.setDescription(itemData['description'] ?? '');

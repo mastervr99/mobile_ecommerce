@@ -51,7 +51,6 @@ class _Home_Screen_State extends State<Home_Screen> {
                 children: <Widget>[
                   Search_Widget(),
                   Promo_Slider_Widget(),
-                  //PopularMenu(),
                   SizedBox(
                     height: 15,
                     child: Container(

@@ -4,16 +4,18 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
-  late var database;
+  static Database? database;
 
   @override
   _init_database() async {
     final databasesPath = await getDatabasesPath();
     final path = join(databasesPath, 'connected_user2.db');
-    database = await openDatabase(path, version: 1,
-        onCreate: (Database db, int version) async {
-      // When creating the db, create the table
-      await db.execute('''
+    Database _database = await openDatabase(
+      path,
+      version: 1,
+      onCreate: (Database db, int version) async {
+        // When creating the db, create the table
+        await db.execute('''
       CREATE TABLE IF NOT EXISTS ConnectedUser (
         id INTEGER PRIMARY KEY,
         user_id TEXT,
@@ -24,32 +26,42 @@ class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
         phone_number TEXT
       )
       ''');
-    });
+      },
+    );
+
+    return await _database;
+  }
+
+  Future<Database> get_database() async {
+    if (await database != null) {
+      return await database!;
+    } else {
+      database = await _init_database();
+      return await database!;
+    }
   }
 
   @override
   registerUser(User newUser) async {
-    await _init_database();
-
-    await database.insert('ConnectedUser', newUser.toMap());
-
+    Database _database = await get_database();
+    await _database.insert('ConnectedUser', newUser.toMap());
     await _close_database();
   }
 
   @override
   retrieveConnectedUser() async {
-    await _init_database();
+    Database _database = await get_database();
 
     var connectedUserData = [];
 
     connectedUserData =
-        await database.rawQuery('SELECT * FROM ConnectedUser LIMIT 1');
+        await _database.rawQuery('SELECT * FROM ConnectedUser LIMIT 1');
 
     await connectedUserData;
 
-    if (await connectedUserData.isEmpty) {
-      await _close_database();
+    await _close_database();
 
+    if (await connectedUserData.isEmpty) {
       return [];
     } else {
       User connectedUser = User();
@@ -59,26 +71,35 @@ class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
       connectedUser.setUserLastname(await connectedUserData[0]['lastname']);
       connectedUser.setUserEmail(await connectedUserData[0]['email']);
       connectedUser.setUserPassword(await connectedUserData[0]['password']);
+      connectedUser.setUserPassword(await connectedUserData[0]['password']);
       connectedUser
           .set_user_phone_number(await connectedUserData[0]['phone_number']);
-
-      await _close_database();
 
       return await connectedUser;
     }
   }
 
   @override
+  update_connected_user_data(User user) async {
+    Database _database = await get_database();
+
+    await _database.update('ConnectedUser', user.toMap(),
+        where: 'user_id = ?', whereArgs: [user.get_user_id()]);
+    await _close_database();
+  }
+
+  @override
   removeConnectedUser() async {
-    await _init_database();
+    Database _database = await get_database();
 
-    await database.rawQuery('DELETE FROM ConnectedUser');
-
+    await _database.rawQuery('DELETE FROM ConnectedUser');
     await _close_database();
   }
 
   @override
   _close_database() async {
-    await database.close();
+    final _database = await get_database();
+    database = null;
+    _database.close();
   }
 }

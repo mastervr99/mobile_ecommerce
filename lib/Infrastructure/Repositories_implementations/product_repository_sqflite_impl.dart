@@ -169,5 +169,6 @@ class ProductRepostitorySqfliteImpl extends ProductRepository {
   @override
   _close_database() async {
     await database.close();
+    database = null;
   }
 }

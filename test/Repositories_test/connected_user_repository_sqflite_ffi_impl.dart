@@ -4,12 +4,13 @@ import 'package:sqflite_common/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class ConnectedUserRepositorySqfliteFfiImpl extends ConnectedUserRepository {
-  late var database;
+  static Database? database;
 
   @override
   _init_database() async {
-    database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
-    await database.execute('''
+    Database _database =
+        await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
+    await _database.execute('''
       CREATE TABLE IF NOT EXISTS ConnectedUser (
         id INTEGER PRIMARY KEY,
         user_id TEXT,
@@ -20,25 +21,39 @@ class ConnectedUserRepositorySqfliteFfiImpl extends ConnectedUserRepository {
         phone_number TEXT
       )
       ''');
+
+    return await _database;
+  }
+
+  Future<Database> get_database() async {
+    if (database != null) {
+      return database!;
+    } else {
+      database = await _init_database();
+      return await database!;
+    }
   }
 
   @override
   registerUser(User newUser) async {
-    await _init_database();
-    await database.insert('ConnectedUser', newUser.toMap());
+    Database _database = await get_database();
+    await _database.insert('ConnectedUser', newUser.toMap());
     await _close_database();
   }
 
   @override
   retrieveConnectedUser() async {
-    await _init_database();
+    Database _database = await get_database();
 
-    var connectedUserData =
-        await database.rawQuery('SELECT * FROM ConnectedUser LIMIT 1');
+    var connectedUserData = [];
+
+    connectedUserData =
+        await _database.rawQuery('SELECT * FROM ConnectedUser LIMIT 1');
+
+    await connectedUserData;
+    await _close_database();
 
     if (await connectedUserData.isEmpty) {
-      await _close_database();
-
       return [];
     } else {
       User connectedUser = User();
@@ -52,26 +67,24 @@ class ConnectedUserRepositorySqfliteFfiImpl extends ConnectedUserRepository {
       connectedUser
           .set_user_phone_number(await connectedUserData[0]['phone_number']);
 
-      await _close_database();
-
       return await connectedUser;
     }
   }
 
   @override
   update_connected_user_data(User user) async {
-    await _init_database();
+    Database _database = await get_database();
 
-    await database.update('ConnectedUser', user.toMap(),
+    await _database.update('ConnectedUser', user.toMap(),
         where: 'user_id = ?', whereArgs: [user.get_user_id()]);
     await _close_database();
   }
 
   @override
   removeConnectedUser() async {
-    await _init_database();
+    Database _database = await get_database();
 
-    await database.rawQuery('DELETE FROM ConnectedUser');
+    await _database.rawQuery('DELETE FROM ConnectedUser');
     await _close_database();
   }
 

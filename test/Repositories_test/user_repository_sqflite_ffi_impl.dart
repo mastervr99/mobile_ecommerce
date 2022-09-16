@@ -70,8 +70,13 @@ class UserRepositorySqfliteFfiImpl extends UserRepository {
   retrieve_user_by_id(String user_id) async {
     await _init_database();
 
-    var userInfos = await database
-        .rawQuery('SELECT * FROM Users WHERE user_id = ? LIMIT 1', [user_id]);
+    var userInfos = [];
+    try {
+      userInfos = await database
+          .rawQuery('SELECT * FROM Users WHERE user_id = ? LIMIT 1', [user_id]);
+    } catch (e) {
+      print(e);
+    }
 
     if (await userInfos.isEmpty) {
       await _close_database();

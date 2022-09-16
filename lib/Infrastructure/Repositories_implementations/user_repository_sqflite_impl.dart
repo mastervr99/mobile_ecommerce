@@ -105,5 +105,6 @@ class UserRepositorySqfliteImpl extends UserRepository {
   @override
   _close_database() async {
     await database.close();
+    database = null;
   }
 }

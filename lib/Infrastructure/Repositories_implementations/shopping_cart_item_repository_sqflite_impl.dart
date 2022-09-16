@@ -179,5 +179,6 @@ class ShoppingCartItemRepositorySqfliteImpl extends ShoppingCartItemRepository {
   @override
   _close_database() async {
     await database.close();
+    database = null;
   }
 }

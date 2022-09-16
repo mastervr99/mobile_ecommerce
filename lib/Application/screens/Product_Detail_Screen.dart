@@ -28,15 +28,12 @@ class _Product_Detail_Screen_State extends State<Product_Detail_Screen> {
       body: FutureBuilder(
         future: getProduct(widget.product),
         builder: (context, AsyncSnapshot snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return Circular_Progress_Widget();
-            default:
-              if (snapshot.hasError)
-                return Text('Error: ${snapshot.error}');
-              else
-                return createDetailView(context, snapshot);
+          if (snapshot.hasData) {
+            return createDetailView(context, snapshot);
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Circular_Progress_Widget();
           }
         },
       ),

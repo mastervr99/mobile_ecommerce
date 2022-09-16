@@ -62,17 +62,15 @@ class _Home_Screen_State extends State<Home_Screen> {
                     future: get_trending_products(),
                     builder: (context, AsyncSnapshot snapshot) {
                       var products = snapshot.data;
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.none:
-                        case ConnectionState.waiting:
-                          return Circular_Progress_Widget();
-                        default:
-                          if (snapshot.hasError)
-                            return Text('Error: ${snapshot.error}');
-                          else
-                            return Products_Slider_Widget(
-                                products: products,
-                                title: 'Latest Trending : Gini & Jony');
+
+                      if (snapshot.hasData) {
+                        return Products_Slider_Widget(
+                            products: products,
+                            title: 'Latest Trending : Gini & Jony');
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        return Circular_Progress_Widget();
                       }
                     },
                   ),
@@ -93,17 +91,15 @@ class _Home_Screen_State extends State<Home_Screen> {
                     future: get_girls_products(),
                     builder: (context, AsyncSnapshot snapshot) {
                       var products = snapshot.data;
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.none:
-                        case ConnectionState.waiting:
-                          return Circular_Progress_Widget();
-                        default:
-                          if (snapshot.hasError)
-                            return Text('Error: ${snapshot.error}');
-                          else
-                            return Products_Slider_Widget(
-                                products: products,
-                                title: 'Our Selection for Girls');
+
+                      if (snapshot.hasData) {
+                        return Products_Slider_Widget(
+                            products: products,
+                            title: 'Our Selection for Girls');
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        return Circular_Progress_Widget();
                       }
                     },
                   ),

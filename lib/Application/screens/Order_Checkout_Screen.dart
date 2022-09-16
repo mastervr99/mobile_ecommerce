@@ -289,88 +289,79 @@ class _OrderCheckoutScreenBottomBarState
     return FutureBuilder(
       future: getShoppingCartTotalPrice(context),
       builder: (context, AsyncSnapshot snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-          case ConnectionState.waiting:
-            return Circular_Progress_Widget();
-          default:
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              return Container(
-                padding: EdgeInsets.symmetric(horizontal: 32.0),
-                height: 48.0,
-                color: Colors.red,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      'Subtotal :',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    ),
-                    FutureBuilder(
-                      future: getShoppingCartTotalQuantity(context),
-                      builder: (context, AsyncSnapshot snapshot) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.none:
-                          case ConnectionState.waiting:
-                            return Circular_Progress_Widget();
-                          default:
-                            if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
-                            } else {
-                              return Text(
-                                snapshot.data.toString() + ' items',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16),
-                              );
-                            }
-                        }
-                      },
-                    ),
-                    Text(
-                      snapshot.data.toString() + '€',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    ),
-                    ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
-                      child: Text(translate('PAY')),
-                      onPressed: (() async {
-                        await controller.makePayment(
-                            context: context,
-                            amount: snapshot.data.toString(),
-                            currency: 'USD');
-                        bool is_payment_valid =
-                            await controller.check_if_payment_valid();
-                        if (is_payment_valid) {
-                          Order order = Order();
-                          await register_order(context, order);
-
-                          Navigator.of(context).pushReplacement(
-                            PageRouteBuilder(
-                              pageBuilder:
-                                  (context, animation, secondaryAnimation) {
-                                return Orders_History_Screen();
-                              },
-                              transitionDuration: Duration(milliseconds: 200),
-                            ),
-                          );
-                        }
-                      }),
-                    ),
-                  ],
+        if (snapshot.hasData) {
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 32.0),
+            height: 48.0,
+            color: Colors.red,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  'Subtotal :',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
                 ),
-              );
-            }
+                FutureBuilder(
+                  future: getShoppingCartTotalQuantity(context),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(
+                        snapshot.data.toString() + ' items',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return Circular_Progress_Widget();
+                    }
+                  },
+                ),
+                Text(
+                  snapshot.data.toString() + '€',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
+                  child: Text(translate('PAY')),
+                  onPressed: (() async {
+                    await controller.makePayment(
+                        context: context,
+                        amount: snapshot.data.toString(),
+                        currency: 'USD');
+                    bool is_payment_valid =
+                        await controller.check_if_payment_valid();
+                    if (is_payment_valid) {
+                      Order order = Order();
+                      await register_order(context, order);
+
+                      Navigator.of(context).pushReplacement(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return Orders_History_Screen();
+                          },
+                          transitionDuration: Duration(milliseconds: 200),
+                        ),
+                      );
+                    }
+                  }),
+                ),
+              ],
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return Circular_Progress_Widget();
         }
       },
     );

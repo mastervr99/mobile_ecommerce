@@ -93,24 +93,21 @@ class _Orders_History_Screen_State extends State<Orders_History_Screen> {
                 child: FutureBuilder(
                   future: get_alll_user_order(context),
                   builder: (context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.none:
-                      case ConnectionState.waiting:
-                        return Circular_Progress_Widget();
-                      default:
-                        if (snapshot.hasError)
-                          return Text('Error: ${snapshot.error}');
-                        else
-                          return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
-                            child: TabBarView(
-                              children: <Widget>[
-                                buildOrdersList(context, snapshot.data),
-                                buildOrdersList(context, snapshot.data),
-                                buildOrdersList(context, snapshot.data),
-                              ],
-                            ),
-                          );
+                    if (snapshot.hasData) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        child: TabBarView(
+                          children: <Widget>[
+                            buildOrdersList(context, snapshot.data),
+                            buildOrdersList(context, snapshot.data),
+                            buildOrdersList(context, snapshot.data),
+                          ],
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return Circular_Progress_Widget();
                     }
                   },
                 ),

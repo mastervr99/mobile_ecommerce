@@ -49,174 +49,170 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
       body: FutureBuilder(
         future: get_order_items(widget.order),
         builder: (context, AsyncSnapshot snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return Circular_Progress_Widget();
-            default:
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                return Padding(
-                  padding: EdgeInsets.all(15),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+          if (snapshot.hasData) {
+            return Padding(
+              padding: EdgeInsets.all(15),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            RichText(
-                                text: TextSpan(children: <TextSpan>[
-                              TextSpan(
-                                text: 'Order: ',
-                                style: _theme.textTheme.headline5,
-                              ),
-                              TextSpan(
-                                // text: '#' +
-                                //     state.orderData.orderNumber.toString(),
-                                text: 'test',
-                                style: _theme.textTheme.headline5!
-                                    .copyWith(fontWeight: FontWeight.w700),
-                              ),
-                            ])),
-                            Text(
-                                // DateFormat('yyyy-MM-dd')
-                                //     .format(state.orderData.orderDate),
-                                'test',
-                                style: _theme.textTheme.headline3!
-                                    .copyWith(color: Color(0xFF9B9B9B)))
-                          ],
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            RichText(
-                              text: TextSpan(
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'Tacking Number: ',
-                                    style: _theme.textTheme.headline5!.copyWith(
-                                        color: _theme.primaryColorLight),
-                                  ),
-                                  TextSpan(
-                                    // text: state.orderData.trackingNumber,
-                                    style: _theme.textTheme.headline5,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              // widget.order.get_order_state(),
-                              'DELIVREEEE',
-                              style: _theme.textTheme.headline5!
-                                  .copyWith(color: Colors.green),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: <Widget>[
-                        //     Row(
-                        //       children: <Widget>[
-                        //         Text(
-                        //           // state.orderData.totalQuantity.toString(),
-                        //           'test',
-                        //           style: _theme.textTheme.headline5,
-                        //         ),
-                        //         Padding(
-                        //           padding: const EdgeInsets.only(left: 4),
-                        //           child: Text(
-                        //             'items',
-                        //             style: _theme.textTheme.headline5,
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ],
-                        // ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Column(
-                          children: _build_order_items(snapshot.data),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        buildSummaryLine(
-                            'Shipping Address:',
-                            // snapshot.data.orderData.shippingAddress.toString(),
+                        RichText(
+                            text: TextSpan(children: <TextSpan>[
+                          TextSpan(
+                            text: 'Order: ',
+                            style: _theme.textTheme.headline5,
+                          ),
+                          TextSpan(
+                            // text: '#' +
+                            //     state.orderData.orderNumber.toString(),
+                            text: 'test',
+                            style: _theme.textTheme.headline5!
+                                .copyWith(fontWeight: FontWeight.w700),
+                          ),
+                        ])),
+                        Text(
+                            // DateFormat('yyyy-MM-dd')
+                            //     .format(state.orderData.orderDate),
                             'test',
-                            _theme,
-                            width),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        buildSummaryLine(
-                            'Payment Methods:',
-                            // snapshot.data.orderData.paymentMethod,
-                            'test',
-                            _theme,
-                            width),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        buildSummaryLine(
-                            'Discount:',
-                            // snapshot.data.orderData.promo.toString(),
-                            'test',
-                            _theme,
-                            width),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        buildSummaryLine(
-                            'Total Amount:',
-                            '\$' +
-                                // snapshot.data.orderData.totalPrice
-                                // .toStringAsFixed(0),
-                                'test',
-                            _theme,
-                            width),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        // Row(children: <Widget>[
-                        // OpenFlutterButton(
-                        //   backgroundColor: Colors.white,
-                        //   borderColor: _theme.primaryColor,
-                        //   textColor: _theme.primaryColor,
-                        //   height: 36,
-                        //   width: (width - 15 * 3) / 2,
-                        //   title: 'Reorder',
-                        //   onPressed: (() => {
-                        //         //TODO: reorder process
-                        //       }),
-                        // ),
-                        // Padding(
-                        //   padding: EdgeInsets.only(left: 15),
-                        // ),
-                        // OpenFlutterButton(
-                        //   height: 36,
-                        //   width: (width - 15 * 3) / 2,
-                        //   title: 'Leave Feedback',
-                        //   onPressed: (() => {
-                        //         //TODO: leave feedback
-                        //       }),
-                        // )
-                        // ])
+                            style: _theme.textTheme.headline3!
+                                .copyWith(color: Color(0xFF9B9B9B)))
                       ],
                     ),
-                  ),
-                );
-              }
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        RichText(
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Tacking Number: ',
+                                style: _theme.textTheme.headline5!
+                                    .copyWith(color: _theme.primaryColorLight),
+                              ),
+                              TextSpan(
+                                // text: state.orderData.trackingNumber,
+                                style: _theme.textTheme.headline5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          // widget.order.get_order_state(),
+                          'DELIVREEEE',
+                          style: _theme.textTheme.headline5!
+                              .copyWith(color: Colors.green),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: <Widget>[
+                    //     Row(
+                    //       children: <Widget>[
+                    //         Text(
+                    //           // state.orderData.totalQuantity.toString(),
+                    //           'test',
+                    //           style: _theme.textTheme.headline5,
+                    //         ),
+                    //         Padding(
+                    //           padding: const EdgeInsets.only(left: 4),
+                    //           child: Text(
+                    //             'items',
+                    //             style: _theme.textTheme.headline5,
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ],
+                    // ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Column(
+                      children: _build_order_items(snapshot.data),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    buildSummaryLine(
+                        'Shipping Address:',
+                        // snapshot.data.orderData.shippingAddress.toString(),
+                        'test',
+                        _theme,
+                        width),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    buildSummaryLine(
+                        'Payment Methods:',
+                        // snapshot.data.orderData.paymentMethod,
+                        'test',
+                        _theme,
+                        width),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    buildSummaryLine(
+                        'Discount:',
+                        // snapshot.data.orderData.promo.toString(),
+                        'test',
+                        _theme,
+                        width),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    buildSummaryLine(
+                        'Total Amount:',
+                        '\$' +
+                            // snapshot.data.orderData.totalPrice
+                            // .toStringAsFixed(0),
+                            'test',
+                        _theme,
+                        width),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    // Row(children: <Widget>[
+                    // OpenFlutterButton(
+                    //   backgroundColor: Colors.white,
+                    //   borderColor: _theme.primaryColor,
+                    //   textColor: _theme.primaryColor,
+                    //   height: 36,
+                    //   width: (width - 15 * 3) / 2,
+                    //   title: 'Reorder',
+                    //   onPressed: (() => {
+                    //         //TODO: reorder process
+                    //       }),
+                    // ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(left: 15),
+                    // ),
+                    // OpenFlutterButton(
+                    //   height: 36,
+                    //   width: (width - 15 * 3) / 2,
+                    //   title: 'Leave Feedback',
+                    //   onPressed: (() => {
+                    //         //TODO: leave feedback
+                    //       }),
+                    // )
+                    // ])
+                  ],
+                ),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Circular_Progress_Widget();
           }
         },
       ),
@@ -251,40 +247,36 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
                       FutureBuilder(
                         future: get_product_from_order_item(item),
                         builder: (context, AsyncSnapshot snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.none:
-                            case ConnectionState.waiting:
-                              return Circular_Progress_Widget();
-                            default:
-                              if (snapshot.hasError)
-                                return Text('Error: ${snapshot.error}');
-                              else
-                                return RichText(
-                                  text: TextSpan(children: <TextSpan>[
-                                    TextSpan(
-                                        text: "${item.getTitle()}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6!
-                                            .copyWith(
-                                              color: Colors.blue,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                            ),
-                                        recognizer: new TapGestureRecognizer()
-                                          ..onTap = () async {
-                                            // await get_product_from_order_item(item.getSku()).then();
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Product_Detail_Screen(
-                                                        product: snapshot.data),
-                                              ),
-                                            );
-                                          }),
-                                  ]),
-                                );
+                          if (snapshot.hasData) {
+                            return RichText(
+                              text: TextSpan(children: <TextSpan>[
+                                TextSpan(
+                                    text: "${item.getTitle()}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6!
+                                        .copyWith(
+                                          color: Colors.blue,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                    recognizer: new TapGestureRecognizer()
+                                      ..onTap = () async {
+                                        // await get_product_from_order_item(item.getSku()).then();
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Product_Detail_Screen(
+                                                    product: snapshot.data),
+                                          ),
+                                        );
+                                      }),
+                              ]),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            return Circular_Progress_Widget();
                           }
                         },
                       ),

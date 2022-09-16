@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
 
@@ -149,40 +150,35 @@ class _Products_Search_Screen_State extends State<Products_Search_Screen>
                 builder: (context, AsyncSnapshot snapshot) {
                   List<dynamic>? productsList = snapshot.data;
 
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
+                  if (snapshot.hasData) {
+                    if (productsList!.isEmpty)
                       return Center(
-                          child: Text('Check your internet connection!!'));
-                    case ConnectionState.waiting:
-                      return Center(child: Text('Loading ...'));
-                    default:
-                      if (snapshot.hasError)
-                        return Text('Error: ${snapshot.error}');
-                      else if (productsList!.isEmpty)
-                        return Center(
-                          child: Text(translate('label_product_search_failed')),
-                        );
-                      else
-                        return Expanded(
-                          child: GridView.count(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            crossAxisCount: 2,
-                            padding: EdgeInsets.all(1.0),
-                            childAspectRatio: 8.0 / 12.0,
-                            children: List<Widget>.generate(productsList.length,
-                                (index) {
-                              return GridTile(
-                                  child: Products_Grid_Tiles_Component(
-                                name: productsList[index]!.getTitle(),
-                                imageUrl: productsList[index]!.getImageUrl(),
-                                product: productsList[index]!,
-                                price:
-                                    productsList[index]!.getPrice().toString(),
-                              ));
-                            }),
-                          ),
-                        );
+                        child: Text(translate('label_product_search_failed')),
+                      );
+                    else
+                      return Expanded(
+                        child: GridView.count(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          crossAxisCount: 2,
+                          padding: EdgeInsets.all(1.0),
+                          childAspectRatio: 8.0 / 12.0,
+                          children: List<Widget>.generate(productsList.length,
+                              (index) {
+                            return GridTile(
+                                child: Products_Grid_Tiles_Component(
+                              name: productsList[index]!.getTitle(),
+                              imageUrl: productsList[index]!.getImageUrl(),
+                              product: productsList[index]!,
+                              price: productsList[index]!.getPrice().toString(),
+                            ));
+                          }),
+                        ),
+                      );
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    return Circular_Progress_Widget();
                   }
                 },
               ),

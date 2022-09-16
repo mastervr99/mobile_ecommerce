@@ -39,8 +39,10 @@ class _Shopping_Cart_Screen_State extends State<Shopping_Cart_Screen> {
       body: FutureBuilder(
         future: getAllCartItems(context),
         builder: (context, AsyncSnapshot snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
+          var cart_items = snapshot.data;
+
+          if (snapshot.hasData) {
+            if (cart_items.isEmpty) {
               return Container(
                 decoration: BoxDecoration(color: Colors.white),
                 child: Column(
@@ -53,27 +55,27 @@ class _Shopping_Cart_Screen_State extends State<Shopping_Cart_Screen> {
                   ],
                 ),
               );
-            case ConnectionState.waiting:
-              return Circular_Progress_Widget();
-            default:
-              if (snapshot.hasError)
-                return Text('Error: ${snapshot.error}');
-              else
-                return Container(
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(32),
-                          child: snapshot.data.isEmpty
-                              ? _emptyShoppingCart(context)
-                              : _CartList(),
-                        ),
+            } else {
+              return Container(
+                decoration: BoxDecoration(color: Colors.white),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(32),
+                        child: snapshot.data.isEmpty
+                            ? _emptyShoppingCart(context)
+                            : _CartList(),
                       ),
-                    ],
-                  ),
-                );
+                    ),
+                  ],
+                ),
+              );
+            }
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Circular_Progress_Widget();
           }
         },
       ),
@@ -145,254 +147,240 @@ class _CartList_State extends State<_CartList> {
     return FutureBuilder(
       future: getAllCartItems(context),
       builder: (context, AsyncSnapshot snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-          case ConnectionState.waiting:
-            return Circular_Progress_Widget();
-          default:
-            if (snapshot.hasError)
-              return Text('Error: ${snapshot.error}');
-            else
-              return Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        if (snapshot.hasData) {
+          return Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(translate("label_shopping_cart"),
-                                  style: Theme.of(context).textTheme.headline6),
-                              _showCartTotalprice(context)
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            height: 40,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Color(0xFFAC252B),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                              ),
-                              child: Text(
-                                translate("label_validate_shopping_cart"),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .button!
-                                    .copyWith(
-                                      color: Colors.white,
-                                    ),
-                              ),
-                              onPressed: () async {
-                                if (await check_if_user_connected()) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              Order_Checkout_Screen()));
-                                } else {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              Sign_In_Component()));
-                                }
-                              },
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    const Divider(
-                      height: 20,
-                      thickness: 1,
-                      indent: 20,
-                      endIndent: 0,
-                      color: Color(0xFFAC252B),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(translate("label_shopping_cart"),
+                              style: Theme.of(context).textTheme.headline6),
+                          _showCartTotalprice(context)
+                        ],
+                      ),
                     ),
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 25),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: GestureDetector(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        color: Colors.white,
-                                      ),
-                                      child: Image.network(
-                                        "${snapshot.data[index].getImageUrl()}",
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    onTap: () async {
-                                      Product product = await get_product(
-                                          snapshot.data[index]);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                Product_Detail_Screen(
-                                                  product: product,
-                                                )),
-                                      );
-                                    },
+                      child: Container(
+                        height: 40,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xFFAC252B),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
+                          child: Text(
+                            translate("label_validate_shopping_cart"),
+                            style: Theme.of(context).textTheme.button!.copyWith(
+                                  color: Colors.white,
+                                ),
+                          ),
+                          onPressed: () async {
+                            if (await check_if_user_connected()) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          Order_Checkout_Screen()));
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          Sign_In_Component()));
+                            }
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                const Divider(
+                  height: 20,
+                  thickness: 1,
+                  indent: 20,
+                  endIndent: 0,
+                  color: Color(0xFFAC252B),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 25),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: GestureDetector(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    color: Colors.white,
+                                  ),
+                                  child: Image.network(
+                                    "${snapshot.data[index].getImageUrl()}",
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                                SizedBox(width: 15),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        snapshot.data[index]
-                                                    .getTitle()
-                                                    .length <=
-                                                25
-                                            ? snapshot.data[index].getTitle()
-                                            : snapshot.data[index]
-                                                    .getTitle()
-                                                    .substring(0, 25) +
-                                                '...',
-                                        // "${snapshot.data[index].getTitle()}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6,
-                                      ),
-                                      Text(
-                                        "${snapshot.data[index].getPrice()}" +
-                                            translate("label_currency"),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline5,
-                                      ),
-                                      SizedBox(height: 15),
-                                      // MyCounter(
-                                      //     shoppingCartItem:
-                                      //         snapshot.data[index]),
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: <Widget>[
-                                              GestureDetector(
-                                                child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(5.0),
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Color(0xFFAC252B),
-                                                  ),
-                                                  child: Icon(
-                                                    Icons.remove,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                                onTap: () async {
-                                                  if (snapshot.data[index]
-                                                          .getQuantity() >
-                                                      0) {
-                                                    var decrementedQuantity =
-                                                        snapshot.data[index]
-                                                                .getQuantity() -
-                                                            1;
-
+                                onTap: () async {
+                                  Product product =
+                                      await get_product(snapshot.data[index]);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Product_Detail_Screen(
+                                              product: product,
+                                            )),
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 15),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    snapshot.data[index].getTitle().length <= 25
+                                        ? snapshot.data[index].getTitle()
+                                        : snapshot.data[index]
+                                                .getTitle()
+                                                .substring(0, 25) +
+                                            '...',
+                                    // "${snapshot.data[index].getTitle()}",
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
+                                  ),
+                                  Text(
+                                    "${snapshot.data[index].getPrice()}" +
+                                        translate("label_currency"),
+                                    style:
+                                        Theme.of(context).textTheme.headline5,
+                                  ),
+                                  SizedBox(height: 15),
+                                  // MyCounter(
+                                  //     shoppingCartItem:
+                                  //         snapshot.data[index]),
+                                  Column(
+                                    children: [
+                                      Row(
+                                        children: <Widget>[
+                                          GestureDetector(
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Color(0xFFAC252B),
+                                              ),
+                                              child: Icon(
+                                                Icons.remove,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            onTap: () async {
+                                              if (snapshot.data[index]
+                                                      .getQuantity() >
+                                                  0) {
+                                                var decrementedQuantity =
                                                     snapshot.data[index]
-                                                        .setQuantity(
-                                                            decrementedQuantity);
-                                                    await updateCartItem(
-                                                        snapshot.data[index]);
-                                                    setState(() {});
-                                                  }
-                                                },
-                                              ),
-                                              SizedBox(width: 15),
-                                              Text(
-                                                "${snapshot.data[index].getQuantity()}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline6,
-                                              ),
-                                              SizedBox(width: 15),
-                                              GestureDetector(
-                                                child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(5.0),
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Color(0xFFAC252B),
-                                                  ),
-                                                  child: Icon(
-                                                    Icons.add,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                                onTap: () async {
-                                                  var incrementedQuantity =
-                                                      snapshot.data[index]
-                                                              .getQuantity() +
-                                                          1;
+                                                            .getQuantity() -
+                                                        1;
 
-                                                  snapshot.data[index]
-                                                      .setQuantity(
-                                                          incrementedQuantity);
-                                                  await updateCartItem(
-                                                      snapshot.data[index]);
-                                                  setState(() {});
-                                                },
+                                                snapshot.data[index]
+                                                    .setQuantity(
+                                                        decrementedQuantity);
+                                                await updateCartItem(
+                                                    snapshot.data[index]);
+                                                setState(() {});
+                                              }
+                                            },
+                                          ),
+                                          SizedBox(width: 15),
+                                          Text(
+                                            "${snapshot.data[index].getQuantity()}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6,
+                                          ),
+                                          SizedBox(width: 15),
+                                          GestureDetector(
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Color(0xFFAC252B),
                                               ),
-                                            ],
+                                              child: Icon(
+                                                Icons.add,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            onTap: () async {
+                                              var incrementedQuantity = snapshot
+                                                      .data[index]
+                                                      .getQuantity() +
+                                                  1;
+
+                                              snapshot.data[index].setQuantity(
+                                                  incrementedQuantity);
+                                              await updateCartItem(
+                                                  snapshot.data[index]);
+                                              setState(() {});
+                                            },
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: 18),
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Color(0xFFAC252B),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15.0),
-                                          ),
-                                        ),
-                                        child: Text(
-                                          translate("label_remove_cart_item"),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .button!
-                                              .copyWith(
-                                                color: Colors.white,
-                                              ),
-                                        ),
-                                        onPressed: () async {
-                                          await removeCartItem(
-                                              snapshot.data[index]);
-                                          setState(() {});
-                                        },
-                                      ),
                                     ],
                                   ),
-                                ),
-                              ],
+                                  SizedBox(height: 18),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color(0xFFAC252B),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      translate("label_remove_cart_item"),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .button!
+                                          .copyWith(
+                                            color: Colors.white,
+                                          ),
+                                    ),
+                                    onPressed: () async {
+                                      await removeCartItem(
+                                          snapshot.data[index]);
+                                      setState(() {});
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              );
+              ],
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return Circular_Progress_Widget();
         }
       },
     );
@@ -416,18 +404,13 @@ Widget _showCartTotalprice(BuildContext context) {
   return FutureBuilder(
     future: getCartTotalPrice(context),
     builder: (context, AsyncSnapshot snapshot) {
-      switch (snapshot.connectionState) {
-        case ConnectionState.none:
-          return Text(translate("label_currency") + "0.00",
-              style: Theme.of(context).textTheme.headline6);
-        case ConnectionState.waiting:
-          return Circular_Progress_Widget();
-        default:
-          if (snapshot.hasError)
-            return Text('Error: ${snapshot.error}');
-          else
-            return Text(translate("label_currency") + snapshot.data.toString(),
-                style: Theme.of(context).textTheme.headline6);
+      if (snapshot.hasData) {
+        return Text(translate("label_currency") + snapshot.data.toString(),
+            style: Theme.of(context).textTheme.headline6);
+      } else if (snapshot.hasError) {
+        return Text('Error: ${snapshot.error}');
+      } else {
+        return Circular_Progress_Widget();
       }
     },
   );

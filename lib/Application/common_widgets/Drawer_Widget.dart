@@ -40,139 +40,140 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
         future: check_if_user_connected(),
         builder: (context, AsyncSnapshot snapshot) {
           var is_user_connected = snapshot.data;
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return Circular_Progress_Widget();
-            default:
-              if (snapshot.hasError)
-                return Text('Error: ${snapshot.error}');
-              else if (is_user_connected == true) {
-                return Drawer(
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    children: <Widget>[
-                      _createDrawerHeader(),
-                      _createDrawerItem(
-                        icon: Icons.home,
-                        text: translate('label_home'),
+
+          if (snapshot.hasData) {
+            if (is_user_connected == true) {
+              return Drawer(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: <Widget>[
+                    _createDrawerHeader(),
+                    _createDrawerItem(
+                      icon: Icons.home,
+                      text: translate('label_home'),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Home_Screen()),
+                      ),
+                    ),
+                    _createDrawerItem(
+                      icon: Icons.shopping_bag_outlined,
+                      text: translate('My Account'),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => User_Account_Screen()),
+                      ),
+                    ),
+                    _createDrawerItem(
+                      icon: Icons.shopping_bag_outlined,
+                      text: translate('My Orders'),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Orders_History_Screen()),
+                      ),
+                    ),
+                    _createDrawerItem(
+                        icon: Icons.call,
+                        text: translate('label_contact'),
                         onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Home_Screen()),
-                        ),
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      /**EmptyWishListScreen()*/ Sign_In_Component()),
+                            )),
+                    _createDrawerItem(
+                      icon: Icons.language,
+                      text: translate('SELECT LANGUAGE'),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Language_Selection_Component()),
                       ),
-                      _createDrawerItem(
-                        icon: Icons.shopping_bag_outlined,
-                        text: translate('My Account'),
+                    ),
+                    _createDrawerItem(
+                      icon: Icons.logout,
+                      text: translate('SIGN OUT'),
+                      onTap: () async {
+                        SignOutUsecase signOutUsecase =
+                            SignOutUsecase(connectedUserRepository);
+                        await signOutUsecase.disconnectUser();
+
+                        Navigator.of(context).pushReplacement(
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return Home_Screen();
+                            },
+                            transitionDuration: Duration(milliseconds: 200),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              return Drawer(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: <Widget>[
+                    _createDrawerHeader(),
+                    _createDrawerItem(
+                      icon: Icons.home,
+                      text: translate('label_home'),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Home_Screen()),
+                      ),
+                    ),
+                    _createDrawerItem(
+                        icon: Icons.call,
+                        text: translate('label_contact'),
                         onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => User_Account_Screen()),
-                        ),
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      /**EmptyWishListScreen()*/ Sign_In_Component()),
+                            )),
+                    _createDrawerItem(
+                      icon: Icons.language,
+                      text: translate('SELECT LANGUAGE'),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Language_Selection_Component()),
                       ),
-                      _createDrawerItem(
-                        icon: Icons.shopping_bag_outlined,
-                        text: translate('My Orders'),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Orders_History_Screen()),
-                        ),
+                    ),
+                    _createDrawerItem(
+                      icon: Icons.login,
+                      text: translate('SIGN IN'),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Sign_In_Component()),
                       ),
-                      _createDrawerItem(
-                          icon: Icons.call,
-                          text: translate('label_contact'),
-                          onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        /**EmptyWishListScreen()*/ Sign_In_Component()),
-                              )),
-                      _createDrawerItem(
-                        icon: Icons.language,
-                        text: translate('SELECT LANGUAGE'),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  Language_Selection_Component()),
-                        ),
+                    ),
+                    _createDrawerItem(
+                      icon: Icons.app_registration,
+                      text: translate('SIGN UP'),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Sign_Up_Component()),
                       ),
-                      _createDrawerItem(
-                        icon: Icons.logout,
-                        text: translate('SIGN OUT'),
-                        onTap: () async {
-                          SignOutUsecase signOutUsecase =
-                              SignOutUsecase(connectedUserRepository);
-                          await signOutUsecase.disconnectUser();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Home_Screen(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return Drawer(
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    children: <Widget>[
-                      _createDrawerHeader(),
-                      _createDrawerItem(
-                        icon: Icons.home,
-                        text: translate('label_home'),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Home_Screen()),
-                        ),
-                      ),
-                      _createDrawerItem(
-                          icon: Icons.call,
-                          text: translate('label_contact'),
-                          onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        /**EmptyWishListScreen()*/ Sign_In_Component()),
-                              )),
-                      _createDrawerItem(
-                        icon: Icons.language,
-                        text: translate('SELECT LANGUAGE'),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  Language_Selection_Component()),
-                        ),
-                      ),
-                      _createDrawerItem(
-                        icon: Icons.login,
-                        text: translate('SIGN IN'),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Sign_In_Component()),
-                        ),
-                      ),
-                      _createDrawerItem(
-                        icon: Icons.app_registration,
-                        text: translate('SIGN UP'),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Sign_Up_Component()),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }
+                    ),
+                  ],
+                ),
+              );
+            }
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Circular_Progress_Widget();
           }
         },
       ),

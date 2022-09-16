@@ -210,6 +210,7 @@ class _CartList_State extends State<_CartList> {
                 ),
                 Expanded(
                   child: ListView.builder(
+                    key: PageStorageKey("my_key"),
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) {
                       return Container(
@@ -288,7 +289,7 @@ class _CartList_State extends State<_CartList> {
                                             onTap: () async {
                                               if (snapshot.data[index]
                                                       .getQuantity() >
-                                                  0) {
+                                                  1) {
                                                 var decrementedQuantity =
                                                     snapshot.data[index]
                                                             .getQuantity() -

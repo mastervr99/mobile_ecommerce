@@ -100,6 +100,6 @@ class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
   _close_database() async {
     final _database = await get_database();
     database = null;
-    _database.close();
+    await _database.close();
   }
 }

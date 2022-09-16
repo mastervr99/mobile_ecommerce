@@ -88,14 +88,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Widget> viewContainer = [
-    Home_Screen(),
-    Products_Search_Screen(),
-    User_Account_Screen(),
-    Shopping_Cart_Screen()
-    //WishListScreen(),
-    //HomeScreen()
-  ];
+  // final List<Widget> viewContainer = [
+  //   Home_Screen(),
+  //   Products_Search_Screen(),
+  //   User_Account_Screen(),
+  //   Shopping_Cart_Screen()
+  //   //WishListScreen(),
+  //   //HomeScreen()
+  // ];
 
   @override
   Widget build(BuildContext context) {

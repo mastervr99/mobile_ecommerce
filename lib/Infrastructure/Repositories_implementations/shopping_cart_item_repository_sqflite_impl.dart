@@ -10,7 +10,7 @@ class ShoppingCartItemRepositorySqfliteImpl extends ShoppingCartItemRepository {
   @override
   _init_database() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, 'shoppingCartItems.db');
+    final path = join(databasesPath, 'shopping_cart_items2.db');
     database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table

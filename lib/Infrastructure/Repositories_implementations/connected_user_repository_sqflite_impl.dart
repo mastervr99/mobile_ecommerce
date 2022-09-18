@@ -59,7 +59,7 @@ class ConnectedUserRepositorySqfliteImpl extends ConnectedUserRepository {
 
     await connectedUserData;
 
-    await _close_database();
+    // await _close_database();
 
     if (await connectedUserData.isEmpty) {
       return [];

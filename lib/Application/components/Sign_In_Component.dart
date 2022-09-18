@@ -139,10 +139,9 @@ class _Sign_In_Component_State extends State<Sign_In_Component> {
           child: Column(
             children: [
               Expanded(
-                child: ListView(children: [
-                  Flexible(
-                    flex: 1,
-                    child: InkWell(
+                child: ListView(
+                  children: [
+                    InkWell(
                       child: Container(
                         child: Align(
                           alignment: Alignment.topRight,
@@ -153,10 +152,7 @@ class _Sign_In_Component_State extends State<Sign_In_Component> {
                         Navigator.pop(context);
                       },
                     ),
-                  ),
-                  Flexible(
-                    flex: 5,
-                    child: Column(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
@@ -318,10 +314,7 @@ class _Sign_In_Component_State extends State<Sign_In_Component> {
                         ),
                       ],
                     ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Align(
+                    Align(
                       alignment: Alignment.bottomCenter,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -366,8 +359,8 @@ class _Sign_In_Component_State extends State<Sign_In_Component> {
                         ],
                       ),
                     ),
-                  )
-                ]),
+                  ],
+                ),
               ),
             ],
           ),

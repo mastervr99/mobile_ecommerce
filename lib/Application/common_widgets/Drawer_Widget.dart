@@ -22,9 +22,9 @@ class Drawer_Widget extends StatefulWidget {
 class _Drawer_Widget_State extends State<Drawer_Widget> {
   ConnectedUserRepository connectedUserRepository =
       ConnectedUserRepositorySqfliteImpl();
-  UserRepository userRepository = UserRepositorySqfliteImpl();
 
   check_if_user_connected() async {
+    UserRepository userRepository = UserRepositorySqfliteImpl();
     SignInUsecase signInUsecase =
         SignInUsecase(userRepository, connectedUserRepository);
 

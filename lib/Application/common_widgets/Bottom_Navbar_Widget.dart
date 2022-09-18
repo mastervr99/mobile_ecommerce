@@ -69,7 +69,7 @@ class _Bottom_Navbar_Widget_State extends State<Bottom_Navbar_Widget> {
               ),
             );
           } else {
-            Navigator.of(context).pushReplacement(
+            Navigator.of(context).push(
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) {
                   return Sign_In_Component();

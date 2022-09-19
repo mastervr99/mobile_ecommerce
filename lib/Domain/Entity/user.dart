@@ -24,7 +24,7 @@ class User {
   }
 
   User() {
-    user_id = getRandomString(10);
+    this.user_id = getRandomString(10);
   }
 
   set_user_id(String user_id) {

@@ -52,7 +52,7 @@ class Order_Item_Repostitory_Sqflite_Ffi_Impl extends Order_Item_Repository {
     } else {
       List<Order_Item> order_items = [];
 
-      await items_in_db.forEach((itemData) async {
+      await items_in_db.forEach((itemData) {
         Order_Item order_item = Order_Item(itemData['title']);
         order_item.setDescription(itemData['description']);
         order_item.setGender(itemData['gender']);

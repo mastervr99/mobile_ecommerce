@@ -5,8 +5,6 @@ import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
-import 'package:mobile_ecommerce/Application/components/Sign_In_Component.dart';
-import 'package:mobile_ecommerce/Application/usecases/sign_up_usecase.dart';
 import 'package:mobile_ecommerce/Application/usecases/update_user_details_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
@@ -89,215 +87,200 @@ class _User_Personal_Details_Component_State
               Expanded(
                 child: ListView(
                   children: [
-                    Flexible(
-                      flex: 5,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            width: 130,
-                            height: 130,
-                            alignment: Alignment.center,
-                            child: Image.asset("assets/images/ic_app_icon.png"),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Flexible(
-                                flex: 1,
-                                child: TextFormField(
-                                  controller: firstNameController,
-                                  showCursor: true,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10.0)),
-                                      borderSide: BorderSide(
-                                        width: 0,
-                                        style: BorderStyle.none,
-                                      ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Flexible(
+                              flex: 1,
+                              child: TextFormField(
+                                controller: firstNameController,
+                                showCursor: true,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(
+                                      width: 0,
+                                      style: BorderStyle.none,
                                     ),
-                                    filled: true,
-                                    fillColor: Color(0xFFF2F3F5),
-                                    hintStyle: TextStyle(
-                                      color: Color(0xFF666666),
-                                      fontFamily: defaultFontFamily,
-                                      fontSize: defaultFontSize,
-                                    ),
-                                    hintText: widget.connected_user
-                                        .get_user_firstname(),
                                   ),
-                                  validator: (name) {
-                                    if (!formFieldValidator.isValidName(name)) {
-                                      return translate('label_valid_firstname');
-                                    }
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Flexible(
-                                flex: 1,
-                                child: TextFormField(
-                                  controller: lastNameController,
-                                  showCursor: true,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10.0)),
-                                      borderSide: BorderSide(
-                                        width: 0,
-                                        style: BorderStyle.none,
-                                      ),
-                                    ),
-                                    filled: true,
-                                    fillColor: Color(0xFFF2F3F5),
-                                    hintStyle: TextStyle(
-                                      color: Color(0xFF666666),
-                                      fontFamily: defaultFontFamily,
-                                      fontSize: defaultFontSize,
-                                    ),
-                                    hintText: widget.connected_user
-                                        .get_user_lastname(),
+                                  filled: true,
+                                  fillColor: Color(0xFFF2F3F5),
+                                  hintStyle: TextStyle(
+                                    color: Color(0xFF666666),
+                                    fontFamily: defaultFontFamily,
+                                    fontSize: defaultFontSize,
                                   ),
-                                  validator: (name) {
-                                    if (!formFieldValidator.isValidName(name)) {
-                                      return translate('label_valid_lastname');
-                                    }
-                                  },
+                                  hintText: widget.connected_user
+                                      .get_user_firstname(),
                                 ),
+                                validator: (name) {
+                                  if (!formFieldValidator.isValidName(name)) {
+                                    return translate('label_valid_firstname');
+                                  }
+                                },
                               ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          TextFormField(
-                            controller: emailController,
-                            showCursor: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                  width: 0,
-                                  style: BorderStyle.none,
-                                ),
-                              ),
-                              filled: true,
-                              prefixIcon: Icon(
-                                Icons.email,
-                                color: Color(0xFF666666),
-                                size: defaultIconSize,
-                              ),
-                              fillColor: Color(0xFFF2F3F5),
-                              hintStyle: TextStyle(
-                                  color: Color(0xFF666666),
-                                  fontFamily: defaultFontFamily,
-                                  fontSize: defaultFontSize),
-                              hintText: widget.connected_user.getUserEmail(),
                             ),
-                            validator: (email) {
-                              if (!formFieldValidator.isValidEmail(email)) {
-                                return translate('label_valid_email');
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: TextFormField(
+                                controller: lastNameController,
+                                showCursor: true,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(
+                                      width: 0,
+                                      style: BorderStyle.none,
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: Color(0xFFF2F3F5),
+                                  hintStyle: TextStyle(
+                                    color: Color(0xFF666666),
+                                    fontFamily: defaultFontFamily,
+                                    fontSize: defaultFontSize,
+                                  ),
+                                  hintText:
+                                      widget.connected_user.get_user_lastname(),
+                                ),
+                                validator: (name) {
+                                  if (!formFieldValidator.isValidName(name)) {
+                                    return translate('label_valid_lastname');
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        TextFormField(
+                          controller: emailController,
+                          showCursor: true,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                            ),
+                            filled: true,
+                            prefixIcon: Icon(
+                              Icons.email,
+                              color: Color(0xFF666666),
+                              size: defaultIconSize,
+                            ),
+                            fillColor: Color(0xFFF2F3F5),
+                            hintStyle: TextStyle(
+                                color: Color(0xFF666666),
+                                fontFamily: defaultFontFamily,
+                                fontSize: defaultFontSize),
+                            hintText: widget.connected_user.getUserEmail(),
+                          ),
+                          validator: (email) {
+                            if (!formFieldValidator.isValidEmail(email)) {
+                              return translate('label_valid_email');
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        TextFormField(
+                          controller: phone_number_controller,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp('[0-9.,]+')),
+                          ],
+                          showCursor: true,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                            ),
+                            filled: true,
+                            prefixIcon: Icon(
+                              Icons.phone,
+                              color: Color(0xFF666666),
+                              size: defaultIconSize,
+                            ),
+                            fillColor: Color(0xFFF2F3F5),
+                            hintStyle: TextStyle(
+                                color: Color(0xFF666666),
+                                fontFamily: defaultFontFamily,
+                                fontSize: defaultFontSize),
+                            hintText:
+                                widget.connected_user.get_user_phone_number(),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.all(17.0),
+                              primary: Color(0xFFBC1F26),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  side: BorderSide(color: Color(0xFFBC1F26))),
+                            ),
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                widget.connected_user
+                                    .setUserEmail(emailController.text.trim());
+                                widget.connected_user.set_user_phone_number(
+                                    phone_number_controller.text.trim());
+                                widget.connected_user.setUserFirstname(
+                                    firstNameController.text.trim());
+                                widget.connected_user.setUserLastname(
+                                    lastNameController.text.trim());
+                              }
+                              bool is_unaffected_email =
+                                  await update_user_details_usecase
+                                      .check_if_new_email_available(
+                                          widget.connected_user.getUserEmail());
+                              if (await is_unaffected_email) {
+                                await update_user_details_usecase.update(
+                                  widget.connected_user,
+                                );
+                                registrationSucceded(context);
+                              } else {
+                                registrationFailed(context);
                               }
                             },
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          TextFormField(
-                            controller: phone_number_controller,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                  RegExp('[0-9.,]+')),
-                            ],
-                            showCursor: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                  width: 0,
-                                  style: BorderStyle.none,
-                                ),
+                            child: Text(
+                              translate("Register"),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: 'Poppins-Medium.ttf',
                               ),
-                              filled: true,
-                              prefixIcon: Icon(
-                                Icons.phone,
-                                color: Color(0xFF666666),
-                                size: defaultIconSize,
-                              ),
-                              fillColor: Color(0xFFF2F3F5),
-                              hintStyle: TextStyle(
-                                  color: Color(0xFF666666),
-                                  fontFamily: defaultFontFamily,
-                                  fontSize: defaultFontSize),
-                              hintText:
-                                  widget.connected_user.get_user_phone_number(),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.all(17.0),
-                                primary: Color(0xFFBC1F26),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(15.0),
-                                    side: BorderSide(color: Color(0xFFBC1F26))),
-                              ),
-                              onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  widget.connected_user.setUserEmail(
-                                      emailController.text.trim());
-                                  widget.connected_user.set_user_phone_number(
-                                      phone_number_controller.text.trim());
-                                  widget.connected_user.setUserFirstname(
-                                      firstNameController.text.trim());
-                                  widget.connected_user.setUserLastname(
-                                      lastNameController.text.trim());
-                                }
-                                bool is_unaffected_email =
-                                    await update_user_details_usecase
-                                        .check_if_new_email_available(widget
-                                            .connected_user
-                                            .getUserEmail());
-                                if (await is_unaffected_email) {
-                                  await update_user_details_usecase.update(
-                                    widget.connected_user,
-                                  );
-                                  registrationSucceded(context);
-                                } else {
-                                  registrationFailed(context);
-                                }
-                              },
-                              child: Text(
-                                translate("Register"),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontFamily: 'Poppins-Medium.ttf',
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFFF2F3F7)),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
                     ),
                   ],
                 ),

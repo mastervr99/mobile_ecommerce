@@ -170,18 +170,22 @@ class _User_Account_Screen_State extends State<User_Account_Screen> {
                                 Container(
                                   alignment: Alignment.centerLeft,
                                   child: IconButton(
-                                      icon: ofericon,
-                                      color: Colors.blueAccent,
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  User_Personal_Details_Component(
-                                                      connected_user:
-                                                          connected_user)),
-                                        );
-                                      }),
+                                    icon: ofericon,
+                                    color: Colors.blueAccent,
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        PageRouteBuilder(
+                                          pageBuilder: (context, animation,
+                                              secondaryAnimation) {
+                                            return User_Personal_Details_Component(
+                                                connected_user: connected_user);
+                                          },
+                                          transitionDuration:
+                                              Duration(milliseconds: 200),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 )
                               ],
                             ),

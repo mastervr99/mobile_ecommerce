@@ -82,7 +82,6 @@ class _User_Account_Screen_State extends State<User_Account_Screen> {
     bool checkboxValueB = false;
     bool checkboxValueC = false;
 
-    //List<address> addresLst = loadAddress() as List<address> ;
     return Scaffold(
       appBar: Appbar_Widget(context),
       endDrawer: Drawer_Widget(),
@@ -431,44 +430,6 @@ class _User_Account_Screen_State extends State<User_Account_Screen> {
                               'Change Password',
                               style: TextStyle(
                                   fontSize: 15.0, color: Colors.black87),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(7.0),
-                      child: Card(
-                        elevation: 1.0,
-                        child: Row(
-                          children: <Widget>[
-                            IconButton(icon: clear, onPressed: null),
-                            _verticalD(),
-                            Text(
-                              'Clear History',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.black87,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(7.0),
-                      child: Card(
-                        elevation: 1.0,
-                        child: Row(
-                          children: <Widget>[
-                            IconButton(icon: logout, onPressed: null),
-                            _verticalD(),
-                            Text(
-                              'Deactivate Account',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.redAccent,
-                              ),
                             )
                           ],
                         ),

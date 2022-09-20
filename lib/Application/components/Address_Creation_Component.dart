@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
+import 'package:mobile_ecommerce/Application/usecases/add_an_address_usecase.dart';
 import 'package:mobile_ecommerce/Application/usecases/update_user_details_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/address.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/address_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/address_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
 
 class Address_Creation_Component extends StatefulWidget {
@@ -52,10 +54,6 @@ registrationFailed(BuildContext context) {
   );
 }
 
-UserRepository user_repository = UserRepositorySqfliteImpl();
-Update_User_Details_Usecase update_user_details_usecase =
-    Update_User_Details_Usecase(user_repository);
-
 class _Address_Creation_Component_State
     extends State<Address_Creation_Component> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -70,6 +68,9 @@ class _Address_Creation_Component_State
 
   @override
   Widget build(BuildContext context) {
+    Address_Repository address_repository = Address_Repository_Sqflite_Impl();
+    Add_An_Address_Usecase add_an_address_usecase =
+        Add_An_Address_Usecase(address_repository);
     String defaultFontFamily = 'Roboto-Light.ttf';
     double defaultFontSize = 14;
     double defaultIconSize = 17;
@@ -114,10 +115,11 @@ class _Address_Creation_Component_State
                             ),
                             hintText: 'Recipient Fullname',
                           ),
-                          validator: (name) {
-                            // if (!formFieldValidator.isValidName(name)) {
-                            //   return translate('label_valid_firstname');
-                            // }
+                          validator: (recipient_fullname) {
+                            if (!formFieldValidator
+                                .isValidName(recipient_fullname)) {
+                              return translate('label_valid_firstname');
+                            }
                           },
                         ),
                         SizedBox(
@@ -128,7 +130,7 @@ class _Address_Creation_Component_State
                             Flexible(
                               flex: 1,
                               child: TextFormField(
-                                controller: postal_code_controller,
+                                controller: house_number_ontroller,
                                 showCursor: true,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
@@ -148,10 +150,12 @@ class _Address_Creation_Component_State
                                   ),
                                   hintText: 'N°',
                                 ),
-                                validator: (postal_code) {
-                                  // if (!formFieldValidator.isValidName(name)) {
-                                  //   return translate('label_valid_firstname');
-                                  // }
+                                validator: (house_number) {
+                                  if (!formFieldValidator
+                                      .check_if_valid_house_number(
+                                          house_number)) {
+                                    return translate('label_valid_firstname');
+                                  }
                                 },
                               ),
                             ),
@@ -181,10 +185,12 @@ class _Address_Creation_Component_State
                                   ),
                                   hintText: "Street Name",
                                 ),
-                                validator: (name) {
-                                  // if (!formFieldValidator.isValidName(name)) {
-                                  //   return translate('label_valid_lastname');
-                                  // }
+                                validator: (street_name) {
+                                  if (!formFieldValidator
+                                      .check_if_valid_street_name(
+                                          street_name)) {
+                                    return translate('label_valid_lastname');
+                                  }
                                 },
                               ),
                             ),
@@ -219,9 +225,11 @@ class _Address_Creation_Component_State
                                   hintText: "Postal Code",
                                 ),
                                 validator: (postal_code) {
-                                  // if (!formFieldValidator.isValidName(name)) {
-                                  //   return translate('label_valid_firstname');
-                                  // }
+                                  if (!formFieldValidator
+                                      .check_if_valid_postal_code(
+                                          postal_code)) {
+                                    return translate('label_valid_firstname');
+                                  }
                                 },
                               ),
                             ),
@@ -251,8 +259,8 @@ class _Address_Creation_Component_State
                                   ),
                                   hintText: "City",
                                 ),
-                                validator: (name) {
-                                  if (!formFieldValidator.isValidName(name)) {
+                                validator: (city) {
+                                  if (!formFieldValidator.isValidName(city)) {
                                     return translate('label_valid_lastname');
                                   }
                                 },
@@ -283,10 +291,10 @@ class _Address_Creation_Component_State
                                 fontSize: defaultFontSize),
                             hintText: "Country",
                           ),
-                          validator: (address) {
-                            // if (!formFieldValidator.isValidEmail(email)) {
-                            //   return translate('label_valid_email');
-                            // }
+                          validator: (country) {
+                            if (!formFieldValidator.isValidName(country)) {
+                              return translate('label_valid_lastname');
+                            }
                           },
                         ),
                         SizedBox(
@@ -304,32 +312,25 @@ class _Address_Creation_Component_State
                             ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                // widget.connected_user!
-                                //     .setUserEmail(emailController.text.trim());
-                                // widget.connected_user!.set_user_phone_number(
-                                //     phone_number_controller.text.trim());
-                                // widget.connected_user!.setUserFirstname(
-                                //     firstNameController.text.trim());
-                                // widget.connected_user!.setUserLastname(
-                                //     lastNameController.text.trim());
                                 Address address = Address();
                                 address.set_user_id(
                                     widget.connected_user.get_user_id());
                                 address.set_recipient_name(
                                     recipient_name_controller.text.trim());
-                              }
-                              bool is_unaffected_email =
-                                  await update_user_details_usecase
-                                      .check_if_new_email_available(widget
-                                          .connected_user!
-                                          .getUserEmail());
-                              if (await is_unaffected_email) {
-                                await update_user_details_usecase.update(
-                                  widget.connected_user!,
-                                );
+                                address.set_house_number(
+                                    house_number_ontroller.text.trim());
+                                address.set_street_name(
+                                    street_name_controller.text.trim());
+                                address.set_postal_code(
+                                    postal_code_controller.text.trim());
+                                address.set_city(city_controller.text.trim());
+                                address.set_country(
+                                    country_controller.text.trim());
+
+                                await add_an_address_usecase
+                                    .register_user_address(address);
+                                setState(() {});
                                 registrationSucceded(context);
-                              } else {
-                                registrationFailed(context);
                               }
                             },
                             child: Text(

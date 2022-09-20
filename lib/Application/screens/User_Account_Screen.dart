@@ -4,11 +4,14 @@ import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
 import 'package:mobile_ecommerce/Application/components/Address_Creation_Component.dart';
+import 'package:mobile_ecommerce/Application/components/Address_Update_Component.dart';
 import 'package:mobile_ecommerce/Application/screens/Orders_History_Screen.dart';
 import 'package:mobile_ecommerce/Application/components/User_Personal_Details_Component.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
+import 'package:mobile_ecommerce/Domain/Repositories_abstractions/address_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/address_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/connected_user_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
 
@@ -32,6 +35,14 @@ get_connected_user_data() async {
         .retrieve_user_by_id(await connected_user.get_user_id());
   }
   return await user;
+}
+
+get_user_addresses(User user) async {
+  Address_Repository address_repository = Address_Repository_Sqflite_Impl();
+
+  var addresses = await address_repository.retrieve_user_addresses(user);
+
+  return await addresses;
 }
 
 class _User_Account_Screen_State extends State<User_Account_Screen> {
@@ -109,16 +120,18 @@ class _User_Account_Screen_State extends State<User_Account_Screen> {
                                   ),
                                 )),
 
-                            FlatButton(
+                            ElevatedButton(
                               onPressed: null,
                               child: Text(
                                 'Change',
                                 style: TextStyle(
                                     fontSize: 13.0, color: Colors.blueAccent),
                               ),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  side: BorderSide(color: Colors.blueAccent)),
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    side: BorderSide(color: Colors.blueAccent)),
+                              ),
                             ),
 
                             Row(
@@ -242,322 +255,139 @@ class _User_Account_Screen_State extends State<User_Account_Screen> {
                               ),
                             ),
                           ),
-                          Container(
-                            height: 165.0,
-                            width: 230.0,
-                            margin: EdgeInsets.all(7.0),
-                            child: Card(
-                              elevation: 3.0,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Column(
-                                    children: <Widget>[
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 12.0,
-                                            top: 5.0,
-                                            right: 0.0,
-                                            bottom: 5.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text(
-                                              'Naomi A. Schultz',
-                                              style: TextStyle(
-                                                color: Colors.black87,
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.bold,
-                                                letterSpacing: 0.5,
-                                              ),
-                                            ),
-                                            _verticalDivider(),
-                                            Text(
-                                              '2585 Columbia Boulevard',
-                                              style: TextStyle(
-                                                  color: Colors.black45,
-                                                  fontSize: 13.0,
-                                                  letterSpacing: 0.5),
-                                            ),
-                                            _verticalDivider(),
-                                            Text(
-                                              'Salisbury',
-                                              style: TextStyle(
-                                                  color: Colors.black45,
-                                                  fontSize: 13.0,
-                                                  letterSpacing: 0.5),
-                                            ),
-                                            _verticalDivider(),
-                                            Text(
-                                              ' MD 21801',
-                                              style: TextStyle(
-                                                  color: Colors.black45,
-                                                  fontSize: 13.0,
-                                                  letterSpacing: 0.5),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                  left: 00.0,
-                                                  top: 05.0,
-                                                  right: 0.0,
-                                                  bottom: 5.0),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                          FutureBuilder(
+                            future: get_user_addresses(connected_user),
+                            builder: (context, AsyncSnapshot snapshot) {
+                              var addresses_list = snapshot.data;
+
+                              if (snapshot.hasData) {
+                                return Container(
+                                  height: 165.0,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: ListView.builder(
+                                    itemCount: addresses_list.length,
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        height: 165.0,
+                                        width: 230.0,
+                                        margin: EdgeInsets.all(7.0),
+                                        child: Card(
+                                          elevation: 3.0,
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Column(
                                                 children: <Widget>[
-                                                  Text(
-                                                    'Delivery Address',
-                                                    style: TextStyle(
-                                                      fontSize: 15.0,
-                                                      color: Colors.black26,
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 12.0,
+                                                        top: 5.0,
+                                                        right: 0.0,
+                                                        bottom: 5.0),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: <Widget>[
+                                                        Text(
+                                                          addresses_list[index]
+                                                              .get_recipient_name(),
+                                                          style: TextStyle(
+                                                            color:
+                                                                Colors.black87,
+                                                            fontSize: 15.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            letterSpacing: 0.5,
+                                                          ),
+                                                        ),
+                                                        _verticalDivider(),
+                                                        Text(
+                                                          addresses_list[index]
+                                                                  .get_house_number() +
+                                                              ' ' +
+                                                              addresses_list[
+                                                                      index]
+                                                                  .get_street_name(),
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black45,
+                                                              fontSize: 13.0,
+                                                              letterSpacing:
+                                                                  0.5),
+                                                        ),
+                                                        _verticalDivider(),
+                                                        Text(
+                                                          addresses_list[index]
+                                                                  .get_postal_code() +
+                                                              ' ' +
+                                                              addresses_list[
+                                                                      index]
+                                                                  .get_city(),
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black45,
+                                                              fontSize: 13.0,
+                                                              letterSpacing:
+                                                                  0.5),
+                                                        ),
+                                                        _verticalDivider(),
+                                                        Text(
+                                                          addresses_list[index]
+                                                              .get_country(),
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black45,
+                                                              fontSize: 13.0,
+                                                              letterSpacing:
+                                                                  0.5),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
-                                                  _verticalD(),
-                                                  // Checkbox(
-                                                  //   value: checkboxValueA,
-                                                  //   onChanged: (bool value) {
-                                                  //     setState(() {
-                                                  //       checkboxValueA = value;
-                                                  //     });
-                                                  //   },
-                                                  // ),
                                                 ],
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Container(
-                                    alignment: Alignment.topLeft,
-                                    child: IconButton(
-                                      icon: menu,
-                                      color: Colors.black38,
-                                      onPressed: () {
-                                        Navigator.of(context).push(
-                                          PageRouteBuilder(
-                                            pageBuilder: (context, animation,
-                                                secondaryAnimation) {
-                                              return Address_Creation_Component(
-                                                  connected_user:
-                                                      connected_user);
-                                            },
-                                            transitionDuration:
-                                                Duration(milliseconds: 200),
+                                              Container(
+                                                alignment: Alignment.topLeft,
+                                                child: IconButton(
+                                                  icon: menu,
+                                                  color: Colors.black38,
+                                                  onPressed: () {
+                                                    Navigator.of(context).push(
+                                                      PageRouteBuilder(
+                                                        pageBuilder: (context,
+                                                            animation,
+                                                            secondaryAnimation) {
+                                                          return Address_Update_Component(
+                                                            address:
+                                                                addresses_list[
+                                                                    index],
+                                                          );
+                                                        },
+                                                        transitionDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    200),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              )
+                                            ],
                                           ),
-                                        );
-                                      },
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 130.0,
-                            width: 230.0,
-                            margin: EdgeInsets.all(7.0),
-                            child: Card(
-                              elevation: 3.0,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Column(
-                                    children: <Widget>[
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 12.0,
-                                            top: 5.0,
-                                            right: 0.0,
-                                            bottom: 5.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text(
-                                              'Bradford R. Butler',
-                                              style: TextStyle(
-                                                color: Colors.black87,
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.bold,
-                                                letterSpacing: 0.5,
-                                              ),
-                                            ),
-                                            _verticalDivider(),
-                                            Text(
-                                              '4528 Filbert Street',
-                                              style: TextStyle(
-                                                  color: Colors.black45,
-                                                  fontSize: 13.0,
-                                                  letterSpacing: 0.5),
-                                            ),
-                                            _verticalDivider(),
-                                            Text(
-                                              'Philadelphia',
-                                              style: TextStyle(
-                                                  color: Colors.black45,
-                                                  fontSize: 13.0,
-                                                  letterSpacing: 0.5),
-                                            ),
-                                            _verticalDivider(),
-                                            Text(
-                                              ' PA 19103',
-                                              style: TextStyle(
-                                                  color: Colors.black45,
-                                                  fontSize: 13.0,
-                                                  letterSpacing: 0.5),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                  left: 00.0,
-                                                  top: 05.0,
-                                                  right: 0.0,
-                                                  bottom: 5.0),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Text(
-                                                    'Delivery Address',
-                                                    style: TextStyle(
-                                                      fontSize: 15.0,
-                                                      color: Colors.black12,
-                                                    ),
-                                                  ),
-                                                  _verticalD(),
-                                                  // Checkbox(
-                                                  //   value: checkboxValueB,
-                                                  //   onChanged: (bool value) {
-                                                  //     setState(() {
-                                                  //       checkboxValueB = value;
-                                                  //     });
-                                                  //   },
-                                                  // ),
-                                                ],
-                                              ),
-                                            )
-                                          ],
                                         ),
-                                      ),
-                                    ],
+                                      );
+                                    },
                                   ),
-                                  Container(
-                                    alignment: Alignment.topLeft,
-                                    child: IconButton(
-                                        icon: menu,
-                                        color: Colors.black38,
-                                        onPressed: null),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 130.0,
-                            width: 230.0,
-                            margin: EdgeInsets.all(7.0),
-                            child: Card(
-                              elevation: 3.0,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Column(
-                                    children: <Widget>[
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 12.0,
-                                            top: 5.0,
-                                            right: 0.0,
-                                            bottom: 5.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text(
-                                              'Elizabeth J. Schmidt',
-                                              style: TextStyle(
-                                                color: Colors.black87,
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.bold,
-                                                letterSpacing: 0.5,
-                                              ),
-                                            ),
-                                            _verticalDivider(),
-                                            Text(
-                                              '3674 Oakway Lane',
-                                              style: TextStyle(
-                                                  color: Colors.black45,
-                                                  fontSize: 13.0,
-                                                  letterSpacing: 0.5),
-                                            ),
-                                            _verticalDivider(),
-                                            Text(
-                                              'Long Beach',
-                                              style: TextStyle(
-                                                  color: Colors.black45,
-                                                  fontSize: 13.0,
-                                                  letterSpacing: 0.5),
-                                            ),
-                                            _verticalDivider(),
-                                            Text(
-                                              'CA 90802',
-                                              style: TextStyle(
-                                                  color: Colors.black45,
-                                                  fontSize: 13.0,
-                                                  letterSpacing: 0.5),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                  left: 00.0,
-                                                  top: 05.0,
-                                                  right: 0.0,
-                                                  bottom: 5.0),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Text(
-                                                    'Delivery Address',
-                                                    style: TextStyle(
-                                                      fontSize: 15.0,
-                                                      color: Colors.black12,
-                                                    ),
-                                                  ),
-                                                  _verticalD(),
-                                                  // Checkbox(
-                                                  //   value: checkboxValueC,
-                                                  //   onChanged: (bool value) {
-                                                  //     setState(() {
-                                                  //       checkboxValueC = value;
-                                                  //     });
-                                                  //   },
-                                                  // ),
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Container(
-                                    alignment: Alignment.topLeft,
-                                    child: IconButton(
-                                        icon: menu,
-                                        color: Colors.black38,
-                                        onPressed: null),
-                                  )
-                                ],
-                              ),
-                            ),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                return Circular_Progress_Widget();
+                              }
+                            },
                           ),
                         ],
                       ),
@@ -566,25 +396,26 @@ class _User_Account_Screen_State extends State<User_Account_Screen> {
                       margin: EdgeInsets.all(7.0),
                       child: Card(
                         elevation: 1.0,
-                        child: Row(
-                          children: <Widget>[
-                            IconButton(
-                                icon: orders,
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            Orders_History_Screen()),
-                                  );
-                                }),
-                            _verticalD(),
-                            Text(
-                              'My Orders',
-                              style: TextStyle(
-                                  fontSize: 15.0, color: Colors.black87),
-                            )
-                          ],
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Orders_History_Screen()),
+                            );
+                          },
+                          child: Row(
+                            children: <Widget>[
+                              IconButton(onPressed: () {}, icon: orders),
+                              _verticalD(),
+                              Text(
+                                'My Orders',
+                                style: TextStyle(
+                                    fontSize: 15.0, color: Colors.black87),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

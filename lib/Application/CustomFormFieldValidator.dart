@@ -16,9 +16,27 @@ class CustomFormFieldValidator {
     return passwordRegExp.hasMatch(password);
   }
 
+  bool check_if_valid_street_name(street_name) {
+    final street_name_reg_exp = RegExp(r"^[#.0-9a-zA-Z\s,-]+$");
+    return street_name_reg_exp.hasMatch(street_name);
+  }
+
   bool check_if_valid_phone_number(phone_number) {
     final phone_number_reg_exp = RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
 
     return phone_number_reg_exp.hasMatch(phone_number);
+  }
+
+  bool check_if_valid_house_number(house_number) {
+    final house_number_reg_exp = RegExp(r"^[#.0-9a-zA-Z\s,-]+$");
+
+    return house_number_reg_exp.hasMatch(house_number);
+  }
+
+  bool check_if_valid_postal_code(postal_code) {
+    final postal_code_reg_exp =
+        RegExp(r"^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$", caseSensitive: false);
+
+    return postal_code_reg_exp.hasMatch(postal_code);
   }
 }

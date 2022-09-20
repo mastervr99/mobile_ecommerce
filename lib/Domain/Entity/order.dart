@@ -13,7 +13,7 @@ class Order {
   double order_price = 0;
   String order_delivery_date = '';
   String user_id = '';
-  String delivery_address = '';
+  String order_delivery_address = '';
 
   String getRandomString(int length) {
     var _chars =
@@ -74,8 +74,8 @@ class Order {
     this.user_id = user_id;
   }
 
-  set_delivery_address(String delivery_address) {
-    this.delivery_address = delivery_address;
+  set_order_delivery_address(String order_delivery_address) {
+    this.order_delivery_address = order_delivery_address;
   }
 
   get_order_reference() {
@@ -110,6 +110,10 @@ class Order {
     return order_payment_method;
   }
 
+  get_order_delivery_address() {
+    return order_delivery_address;
+  }
+
   get_user_id() {
     return user_id;
   }
@@ -124,7 +128,8 @@ class Order {
       'order_price': order_price,
       'order_delivery_method': order_delivery_method,
       'order_payment_method': order_payment_method,
-      'order_delivery_date': order_delivery_date
+      'order_delivery_date': order_delivery_date,
+      'order_delivery_address': order_delivery_address
     };
   }
 }

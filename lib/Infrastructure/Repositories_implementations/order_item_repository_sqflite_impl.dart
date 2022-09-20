@@ -39,7 +39,7 @@ class Order_Item_Repostitory_Sqflite_Impl extends Order_Item_Repository {
 
     await database.insert('order_items', order_item.toMap());
 
-    await _close_database();
+    // await _close_database();
   }
 
   @override

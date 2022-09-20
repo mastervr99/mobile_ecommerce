@@ -92,7 +92,7 @@ class Address_Repository_Sqflite_Impl extends Address_Repository {
       }
     }
 
-    await _close_database();
+    // await _close_database();
 
     return user_addresses;
   }

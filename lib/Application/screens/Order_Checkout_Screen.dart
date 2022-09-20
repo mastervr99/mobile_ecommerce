@@ -666,7 +666,7 @@ class _OrderCheckoutScreenBottomBarState
                           delivery_method_button_choice!);
                       order.set_order_payment_method(
                           payment_method_button_choice!);
-                      order.set_delivery_address(
+                      order.set_order_delivery_address(
                           delivery_address_button_choice!);
 
                       await make_un_order(context, order);

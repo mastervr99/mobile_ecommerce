@@ -13,6 +13,7 @@ class Order {
   double order_price = 0;
   String order_delivery_date = '';
   String user_id = '';
+  String delivery_address = '';
 
   String getRandomString(int length) {
     var _chars =
@@ -71,6 +72,10 @@ class Order {
 
   set_user_id(String user_id) {
     this.user_id = user_id;
+  }
+
+  set_delivery_address(String delivery_address) {
+    this.delivery_address = delivery_address;
   }
 
   get_order_reference() {

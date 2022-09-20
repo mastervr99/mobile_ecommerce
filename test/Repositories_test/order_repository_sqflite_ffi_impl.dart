@@ -21,6 +21,7 @@ class Order_Repository_Sqflite_Ffi_Impl extends Order_Repository {
         order_delivery_method TEXT,
         order_payment_method TEXT,
         order_delivery_date TEXT,
+        order_delivery_address TEXT,
         order_price FLOAT
       )
       ''');
@@ -61,6 +62,8 @@ class Order_Repository_Sqflite_Ffi_Impl extends Order_Repository {
       order.set_order_reference(await order_in_db[0]['order_reference']);
       order.set_order_state(await order_in_db[0]['order_state']);
       order.set_user_id(await order_in_db[0]['user_id']);
+      order.set_order_delivery_address(
+          await order_in_db[0]['order_delivery_address']);
 
       await _close_database();
 
@@ -90,6 +93,7 @@ class Order_Repository_Sqflite_Ffi_Impl extends Order_Repository {
         order.set_order_reference(order_in_db['order_reference']);
         order.set_order_state(order_in_db['order_state']);
         order.set_user_id(order_in_db['user_id']);
+        order.set_order_delivery_address(order_in_db['order_delivery_address']);
 
         all_user_orders.add(order);
       });

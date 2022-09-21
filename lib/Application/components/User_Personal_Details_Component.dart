@@ -265,7 +265,7 @@ class _User_Personal_Details_Component_State
                               }
                             },
                             child: Text(
-                              translate("Register"),
+                              translate("label_register"),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,

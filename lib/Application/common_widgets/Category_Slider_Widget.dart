@@ -67,9 +67,6 @@ class _Category_Slider_Widget_State extends State<Category_Slider_Widget> {
               scrollDirection: Axis.horizontal,
               separatorBuilder: (BuildContext context, int index) => SizedBox(
                 width: 30,
-                child: Container(
-                    // color: Color(0xFFf5f6f7),
-                    ),
               ),
               itemBuilder: (context, index) {
                 return buildItem(context, index);

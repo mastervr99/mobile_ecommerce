@@ -113,7 +113,7 @@ class _Address_Creation_Component_State
                               fontFamily: defaultFontFamily,
                               fontSize: defaultFontSize,
                             ),
-                            hintText: 'Recipient Fullname',
+                            hintText: translate("label_recipient_fullname"),
                           ),
                           validator: (recipient_fullname) {
                             if (!formFieldValidator
@@ -183,7 +183,7 @@ class _Address_Creation_Component_State
                                     fontFamily: defaultFontFamily,
                                     fontSize: defaultFontSize,
                                   ),
-                                  hintText: "Street Name",
+                                  hintText: translate("label_street_name"),
                                 ),
                                 validator: (street_name) {
                                   if (!formFieldValidator
@@ -222,7 +222,7 @@ class _Address_Creation_Component_State
                                     fontFamily: defaultFontFamily,
                                     fontSize: defaultFontSize,
                                   ),
-                                  hintText: "Postal Code",
+                                  hintText: translate("label_postal_code"),
                                 ),
                                 validator: (postal_code) {
                                   if (!formFieldValidator
@@ -257,7 +257,7 @@ class _Address_Creation_Component_State
                                     fontFamily: defaultFontFamily,
                                     fontSize: defaultFontSize,
                                   ),
-                                  hintText: "City",
+                                  hintText: translate("label_city_name"),
                                 ),
                                 validator: (city) {
                                   if (!formFieldValidator.isValidName(city)) {
@@ -289,7 +289,7 @@ class _Address_Creation_Component_State
                                 color: Color(0xFF666666),
                                 fontFamily: defaultFontFamily,
                                 fontSize: defaultFontSize),
-                            hintText: "Country",
+                            hintText: translate("label_country_name"),
                           ),
                           validator: (country) {
                             if (!formFieldValidator.isValidName(country)) {
@@ -334,7 +334,7 @@ class _Address_Creation_Component_State
                               }
                             },
                             child: Text(
-                              translate("Register"),
+                              translate("label_register"),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,

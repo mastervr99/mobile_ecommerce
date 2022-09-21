@@ -57,7 +57,7 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                     ),
                     _createDrawerItem(
                       icon: Icons.shopping_bag_outlined,
-                      text: translate('My Account'),
+                      text: translate('label_personal_account'),
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -66,7 +66,7 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                     ),
                     _createDrawerItem(
                       icon: Icons.shopping_bag_outlined,
-                      text: translate('My Orders'),
+                      text: translate('label_personal_orders'),
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -84,7 +84,7 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                             )),
                     _createDrawerItem(
                       icon: Icons.language,
-                      text: translate('SELECT LANGUAGE'),
+                      text: translate('label_language_selection'),
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -94,7 +94,7 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                     ),
                     _createDrawerItem(
                       icon: Icons.logout,
-                      text: translate('SIGN OUT'),
+                      text: translate('label_sign_out'),
                       onTap: () async {
                         SignOutUsecase signOutUsecase =
                             SignOutUsecase(connectedUserRepository);
@@ -139,7 +139,7 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                             )),
                     _createDrawerItem(
                       icon: Icons.language,
-                      text: translate('SELECT LANGUAGE'),
+                      text: translate('label_language_selection'),
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -149,7 +149,7 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                     ),
                     _createDrawerItem(
                       icon: Icons.login,
-                      text: translate('SIGN IN'),
+                      text: translate('label_sign_in'),
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -158,7 +158,7 @@ class _Drawer_Widget_State extends State<Drawer_Widget> {
                     ),
                     _createDrawerItem(
                       icon: Icons.app_registration,
-                      text: translate('SIGN UP'),
+                      text: translate('label_sign_up'),
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(

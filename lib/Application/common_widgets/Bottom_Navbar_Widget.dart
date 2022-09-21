@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/components/Sign_In_Component.dart';
 import 'package:mobile_ecommerce/Application/screens/Home_Screen.dart';
 import 'package:mobile_ecommerce/Application/screens/Products_Search_Screen.dart';
@@ -94,22 +95,22 @@ class _Bottom_Navbar_Widget_State extends State<Bottom_Navbar_Widget> {
 
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      items: const <BottomNavigationBarItem>[
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          label: 'Home',
+          label: translate('label_home'),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.search),
-          label: 'Search',
+          label: translate('label_search'),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_circle),
-          label: 'Account',
+          label: translate('label_account'),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.shopping_cart),
-          label: 'Cart',
+          label: translate('label_cart'),
         ),
       ],
       currentIndex: _selectedIndex,

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_ecommerce/Application/screens/Product_Detail_Screen.dart';
 import 'package:mobile_ecommerce/Domain/Entity/product.dart';
-// import 'package:mobile_ecommerce/screens/ProductDetailScreen.dart';
-// import 'package:mobile_ecommerce/screens/ProductsScreen.dart';
-// import 'package:mobile_ecommerce/screens/SubCategoryScreen.dart';
 
 class Products_Grid_Tiles_Component extends StatelessWidget {
   String name;
@@ -25,24 +22,6 @@ class Products_Grid_Tiles_Component extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        /* if (fromSubProducts) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ProductsScreen(
-                      slug: "products/?page=1&limit=12&category=" + slug,
-                      name: name,
-                    )),
-          );
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => SubCategoryScreen(
-                      slug: slug,
-                    )),
-          );
-        }*/
         Navigator.push(
           context,
           MaterialPageRoute(

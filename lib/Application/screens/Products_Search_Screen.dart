@@ -108,7 +108,7 @@ class _Products_Search_Screen_State extends State<Products_Search_Screen>
                             prefixIcon: Icon(Icons.search),
                             fillColor: Color(0xFFF2F4F5),
                             hintStyle: new TextStyle(color: Colors.grey[600]),
-                            hintText: translate("label_search"),
+                            hintText: translate("label_search_bar"),
                           ),
                           autofocus: false,
                           onSubmitted: (value) async {

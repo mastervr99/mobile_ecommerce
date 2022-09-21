@@ -1,7 +1,7 @@
 {
   "label_home": "Accueil",
   "label_contact" : "Contactez Nous",
-  "label_search" : "Rechercher sur Eshop",
+  "label_search_bar" : "Rechercher sur Eshop",
   "label_language_selection" : "Sélection du langage",
   "label_phone_number": "Numéro de téléphone",
   "label_email": "Email",
@@ -9,6 +9,7 @@
   "label_password_forgotten" : "Mot de passe oublié ?",
   "label_sign_in" : "S'identifier",
   "label_sign_up" : "S'inscrire",
+  "label_sign_out" : "Se Déconnecter",
   "label_valid_firstname" : "Entrez un prénom valide",
   "label_valid_lastname" : "Entrez un nom valide",
   "label_valid_email" : "Entrez un email valide",
@@ -32,6 +33,17 @@
   "label_validate_shopping_cart" : "VALIDER",
   "label_currency": "€",
   "label_remove_cart_item" : "SUPPRIMER",
-  "label_empty_cart": "Votre panier est vide."
+  "label_empty_cart": "Votre panier est vide.",
+  "label_account" : "Compte",
+  "label_search" : "Recherchez",
+  "label_cart" : "Panier",
+  "label_personal_account" : "Mon Compte",
+  "label_personal_orders" : "Mes Commandes",
+  "label_recipient_fullname" : "Nom et prénom du destinataire",
+  "label_street_name" : "Nom de rue",
+  "label_postal_code" : "Code Postal",
+  "label_city_name" : "Ville",
+  "label_country_name" : "Pays",
+  "label_register" : "Enregistrer"
 
 }

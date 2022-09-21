@@ -1,13 +1,14 @@
 {
   "label_home": "Home",
   "label_contact" : "Contact Us",
-  "label_search" : "Search on Eshop",
+  "label_search_bar" : "Search on Eshop",
   "label_language_selection" : "Language Selection",
   "label_phone_number": "Phone Number",
   "label_email": "Email",
   "label_password": "Password",
   "label_password_forgotten" : "Forgot your password ?",
   "label_sign_in" : "Sign In",
+  "label_sign_out" : "Sign Out",
   "label_user_registration_succeded" : "Congratulation ! You are registered! You can now connect",
   "label_user_registration_failed" : "Your email is already in use: log in or use a different email",
   "label_sign_up" : "Sign Up",
@@ -32,6 +33,18 @@
   "label_validate_shopping_cart" : "BUY",
   "label_currency": "$",
   "label_remove_cart_item" : "DELETE",
-  "label_empty_cart": "Your shopping cart is empty."
+  "label_empty_cart": "Your shopping cart is empty.",
+  "label_account" : "Account",
+  "label_search" : "Search",
+  "label_cart" : "Cart",
+  "label_personal_account" : "My Account",
+  "label_personal_orders" : "My Orders",
+  "label_language" : "Language Selection",
+  "label_recipient_fullname" : "Recipient Fullname",
+  "label_street_name" : "Street Name",
+  "label_postal_code" : "Postal Code",
+  "label_city_name" : "City",
+  "label_country_name" : "Country",
+  "label_register" : "Register"
 
 }

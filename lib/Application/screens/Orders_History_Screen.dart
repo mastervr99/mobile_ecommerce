@@ -93,14 +93,48 @@ class _Orders_History_Screen_State extends State<Orders_History_Screen> {
                 child: FutureBuilder(
                   future: get_alll_user_order(context),
                   builder: (context, AsyncSnapshot snapshot) {
+                    var orders = snapshot.data;
+
                     if (snapshot.hasData) {
+                      var processing_orders = [];
+                      var delivered_orders = [];
+                      var cancelled_orders = [];
+
+                      orders.forEach(
+                        (order) {
+                          if (order.get_order_state() == "processing") {
+                            print(order);
+                          }
+
+                          switch (order.get_order_state()) {
+                            case "processing":
+                              {
+                                processing_orders.add(order);
+                              }
+                              break;
+
+                            case "delivered":
+                              {
+                                delivered_orders.add(order);
+                              }
+                              break;
+
+                            default:
+                              {
+                                cancelled_orders.add(order);
+                              }
+                              break;
+                          }
+                        },
+                      );
+
                       return Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         child: TabBarView(
                           children: <Widget>[
-                            buildOrdersList(context, snapshot.data),
-                            buildOrdersList(context, snapshot.data),
-                            buildOrdersList(context, snapshot.data),
+                            buildOrdersList(context, processing_orders),
+                            buildOrdersList(context, delivered_orders),
+                            buildOrdersList(context, cancelled_orders),
                           ],
                         ),
                       );
@@ -120,21 +154,14 @@ class _Orders_History_Screen_State extends State<Orders_History_Screen> {
   }
 }
 
-ListView buildOrdersList(BuildContext context, List orders) {
+buildOrdersList(BuildContext context, List orders) {
   var _theme = Theme.of(context);
 
   return ListView.builder(
-      shrinkWrap: true,
-      itemCount: orders.length,
-      itemBuilder: (context, index) {
-        // return Text(orders[index].get_order_reference());
-        // return UserOrderDetails(
-        //   order: orders[index],
-        // onClick: ((int orderId) => {
-        //       bloc..add(ProfileMyOrderDetailsEvent(orderId)),
-        //       widget.changeView(changeType: ViewChangeType.Exact, index: 7)
-        //     }),
-        // );
+    shrinkWrap: true,
+    itemCount: orders.length,
+    itemBuilder: (context, index) {
+      if (orders[index] != null && orders.isNotEmpty) {
         return Container(
           padding: EdgeInsets.all(8),
           child: Container(
@@ -163,7 +190,7 @@ ListView buildOrdersList(BuildContext context, List orders) {
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
                         child: Text(
-                          orders[index].get_order_date(),
+                          orders[index]!.get_order_date(),
                           style: _theme.textTheme.headline6,
                         ),
                       ),
@@ -192,12 +219,6 @@ ListView buildOrdersList(BuildContext context, List orders) {
                           ],
                         ),
                       ),
-                      // Text(DateFormat('yyyy-MM-dd')
-                      //     .format(orders[index].get_order_date())),
-
-                      // Text('Test',
-                      //     style: _theme.textTheme.headline2!
-                      //         .copyWith(color: Colors.red))
                     ],
                   ),
                   SizedBox(
@@ -259,5 +280,9 @@ ListView buildOrdersList(BuildContext context, List orders) {
             ),
           ),
         );
-      });
+      } else {
+        return SizedBox.shrink();
+      }
+    },
+  );
 }

@@ -5,12 +5,10 @@ import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
 import 'package:mobile_ecommerce/Application/screens/Order_Details_Screen.dart';
-import 'package:mobile_ecommerce/Domain/Entity/order.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user_repository.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/order_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/connected_user_repository_sqflite_impl.dart';
-import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/order_item_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/order_repository_sqflite_impl.dart';
 
 class Orders_History_Screen extends StatefulWidget {

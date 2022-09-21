@@ -114,8 +114,14 @@ class _User_Account_Screen_State extends State<User_Account_Screen> {
                                   margin: const EdgeInsets.all(10.0),
                                   // padding: const EdgeInsets.all(3.0),
                                   child: ClipOval(
-                                    child: Image.network(
-                                        'https://www.fakenamegenerator.com/images/sil-female.png'),
+                                    child:
+                                        // Image.network(
+                                        //     'https://www.fakenamegenerator.com/images/sil-female.png'),
+                                        Image.asset(
+                                      "assets/images/sil-male.png",
+                                      // height: 250,
+                                      // width: double.infinity,
+                                    ),
                                   ),
                                 )),
 

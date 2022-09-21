@@ -119,13 +119,10 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
                   ),
                 ),
                 Container(
-                  // height: 264.0,
                   margin: EdgeInsets.all(10.0),
-                  // child: Card(
                   child: Container(
                     child: Column(
                       children: <Widget>[
-                        // _verticalD(),
                         Container(
                           padding: EdgeInsets.only(left: 10.0),
                           child: Column(
@@ -135,31 +132,18 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  Container(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Row(
-                                          children: [
-                                            Text("Home Delivery",
-                                                maxLines: 10,
-                                                style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    color: Colors.black)),
-                                            Radio<String>(
-                                              value: "Home Delivery",
-                                              groupValue:
-                                                  delivery_method_button_choice,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  delivery_method_button_choice =
-                                                      value;
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                  Text("Home Delivery",
+                                      maxLines: 10,
+                                      style: TextStyle(
+                                          fontSize: 15.0, color: Colors.black)),
+                                  Radio<String>(
+                                    value: "Home Delivery",
+                                    groupValue: delivery_method_button_choice,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        delivery_method_button_choice = value;
+                                      });
+                                    },
                                   ),
                                 ],
                               ),
@@ -167,6 +151,7 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
                             ],
                           ),
                         ),
+                        Divider(),
                         Container(
                           padding: EdgeInsets.only(left: 10.0),
                           child: Row(
@@ -191,10 +176,9 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
                             ],
                           ),
                         ),
-                        // Divider(),
+                        Divider(),
                       ],
                     ),
-                    // ),
                   ),
                 ),
                 Padding(
@@ -207,15 +191,11 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                // _verticalDivider(),
                 Container(
-                  // height: 264.0,
                   margin: EdgeInsets.all(10.0),
-                  // child: Card(
                   child: Container(
                     child: Column(
                       children: <Widget>[
-                        // _verticalD(),
                         Container(
                           padding: EdgeInsets.only(left: 10.0),
                           child: Column(
@@ -247,7 +227,6 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
                           ),
                         ),
                         Divider(),
-                        // _verticalD(),
                         Container(
                           padding: EdgeInsets.only(left: 10.0),
                           child: Row(
@@ -283,10 +262,6 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
       ),
       bottomNavigationBar: OrderCheckoutScreenBottomBar(),
     );
-    //       }
-    //     },
-    //   );
-    // });
   }
 }
 

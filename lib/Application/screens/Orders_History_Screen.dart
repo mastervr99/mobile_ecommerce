@@ -36,7 +36,7 @@ class _Orders_History_Screen_State extends State<Orders_History_Screen> {
     ConnectedUserRepository connectedUserRepository =
         ConnectedUserRepositorySqfliteImpl();
 
-    User connected_user = await connectedUserRepository.retrieveConnectedUser();
+    var connected_user = await connectedUserRepository.retrieveConnectedUser();
 
     Order_Repository order_repository = Order_Repository_Sqflite_Impl();
 

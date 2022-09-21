@@ -183,6 +183,8 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
                                 onChanged: (value) {
                                   setState(() {
                                     delivery_method_button_choice = value;
+                                    delivery_address_button_choice =
+                                        'Store address';
                                   });
                                 },
                               ),
@@ -652,33 +654,36 @@ class _OrderCheckoutScreenBottomBarState
                   style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
                   child: Text(translate('PAY')),
                   onPressed: (() async {
-                    await controller.makePayment(
-                        context: context,
-                        amount: snapshot.data.toString(),
-                        currency: 'USD');
-                    bool is_payment_valid =
-                        await controller.check_if_payment_valid();
-                    if (is_payment_valid) {
-                      Order order = Order();
-                      order.set_order_state('processing');
-                      order.set_order_price(cart_total_price);
-                      order.set_order_delivery_method(
-                          delivery_method_button_choice!);
-                      order.set_order_payment_method(
-                          payment_method_button_choice!);
-                      order.set_order_delivery_address(
-                          delivery_address_button_choice!);
+                    if (delivery_address_button_choice!.isNotEmpty &&
+                        payment_method_button_choice!.isNotEmpty) {
+                      await controller.makePayment(
+                          context: context,
+                          amount: snapshot.data.toString(),
+                          currency: 'USD');
+                      bool is_payment_valid =
+                          await controller.check_if_payment_valid();
+                      if (is_payment_valid) {
+                        Order order = Order();
+                        order.set_order_state('processing');
+                        order.set_order_price(cart_total_price);
+                        order.set_order_delivery_method(
+                            delivery_method_button_choice!);
+                        order.set_order_payment_method(
+                            payment_method_button_choice!);
+                        order.set_order_delivery_address(
+                            delivery_address_button_choice!);
 
-                      await make_un_order(context, order);
-                      Navigator.of(context).pushReplacement(
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) {
-                            return Orders_History_Screen();
-                          },
-                          transitionDuration: Duration(milliseconds: 200),
-                        ),
-                      );
+                        await make_un_order(context, order);
+                        Navigator.of(context).pushReplacement(
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return Orders_History_Screen();
+                            },
+                            transitionDuration: Duration(milliseconds: 200),
+                          ),
+                        );
+                      }
                     }
                   }),
                 ),

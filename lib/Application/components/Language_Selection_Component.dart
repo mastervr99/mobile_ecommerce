@@ -18,17 +18,61 @@ class _Language_Selection_Component_State
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
-                  child: Text("English"),
-                  onPressed: () {
-                    changeLocale(context, 'English');
-                  }),
+                style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
+                child: Text("Français"),
+                onPressed: () {
+                  changeLocale(context, 'French');
+                },
+              ),
               ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
-                  child: Text("Français"),
-                  onPressed: () {
-                    changeLocale(context, 'French');
-                  }),
+                style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
+                child: Text("English"),
+                onPressed: () {
+                  changeLocale(context, 'English');
+                },
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
+                child: Text("中国人"),
+                onPressed: () {
+                  changeLocale(context, 'Chinese');
+                },
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
+                child: Text("Español"),
+                onPressed: () {
+                  changeLocale(context, 'Spanish');
+                },
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
+                child: Text("Indonesia"),
+                onPressed: () {
+                  changeLocale(context, 'Indonesian');
+                },
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
+                child: Text("Português"),
+                onPressed: () {
+                  changeLocale(context, 'Portuguese');
+                },
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
+                child: Text("日本"),
+                onPressed: () {
+                  changeLocale(context, 'Japanese');
+                },
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
+                child: Text("Deutsch"),
+                onPressed: () {
+                  changeLocale(context, 'German');
+                },
+              ),
               InkWell(
                   child: Container(
                     child: Align(

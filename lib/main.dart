@@ -21,7 +21,16 @@ void main() async {
 
   var delegate = await LocalizationDelegate.create(
       fallbackLocale: 'French',
-      supportedLocales: ['English', 'French'],
+      supportedLocales: [
+        'English',
+        'French',
+        "Chinese",
+        "Spanish",
+        "Indonesian",
+        "Portuguese",
+        "Japanese",
+        "German"
+      ],
       basePath: 'assets/app_languages/');
   runApp(LocalizedApp(delegate, const MyApp()));
 }

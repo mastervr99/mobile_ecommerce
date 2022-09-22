@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Category_Slider_Widget.dart';
@@ -65,7 +66,8 @@ class _Home_Screen_State extends State<Home_Screen> {
                       if (snapshot.hasData) {
                         return Products_Slider_Widget(
                             products: products,
-                            title: 'Latest Trending : Gini & Jony');
+                            title: translate("label_trending_products") +
+                                ' : Gini & Jony');
                       } else if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       } else {
@@ -94,7 +96,7 @@ class _Home_Screen_State extends State<Home_Screen> {
                       if (snapshot.hasData) {
                         return Products_Slider_Widget(
                             products: products,
-                            title: 'Our Selection for Girls');
+                            title: translate("label_girls_selection"));
                       } else if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       } else {

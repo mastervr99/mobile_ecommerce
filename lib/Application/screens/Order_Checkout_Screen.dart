@@ -111,7 +111,7 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    'Select Delivery method',
+                    translate("label_delivery_method_selection"),
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.grey,
@@ -132,7 +132,7 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  Text("Home Delivery",
+                                  Text(translate("label_home_delivery"),
                                       maxLines: 10,
                                       style: TextStyle(
                                           fontSize: 15.0, color: Colors.black)),
@@ -158,7 +158,7 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Text("Store Pick Up",
+                              Text(translate("label_store_pickup"),
                                   maxLines: 10,
                                   style: TextStyle(
                                       fontSize: 15.0, color: Colors.black)),
@@ -184,7 +184,7 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    'Select Payment method',
+                    translate("label_payment_selection"),
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.grey,
@@ -233,7 +233,7 @@ class _Order_Checkout_Screen_State extends State<Order_Checkout_Screen> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Text("Cash on Delivery",
+                              Text(translate("label_cash_payment"),
                                   maxLines: 10,
                                   style: TextStyle(
                                       fontSize: 15.0, color: Colors.black)),
@@ -447,7 +447,8 @@ class _DeliveryAdressSelectionState extends State<DeliveryAdressSelection> {
                                                                   .start,
                                                           children: <Widget>[
                                                             Text(
-                                                              'Delivery Address',
+                                                              translate(
+                                                                  "label_delivery_address"),
                                                               style: TextStyle(
                                                                 fontSize: 15.0,
                                                                 color: Colors
@@ -566,7 +567,7 @@ make_un_order(BuildContext context, Order order) async {
     // Retrieve the text the that user has entered by using the
     // TextEditingController.
     content: Text(
-      translate('PAYMENT VALIDATED'),
+      translate('label_validated_payment'),
       textAlign: TextAlign.center,
     ),
   );
@@ -593,7 +594,7 @@ class _OrderCheckoutScreenBottomBarState
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  'Subtotal :',
+                  translate("label_cart_subtotal"),
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -605,7 +606,9 @@ class _OrderCheckoutScreenBottomBarState
                     var cart_total_quantity = snapshot.data;
                     if (snapshot.hasData) {
                       return Text(
-                        cart_total_quantity.toString() + ' items',
+                        cart_total_quantity.toString() +
+                            ' ' +
+                            translate("label_items"),
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

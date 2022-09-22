@@ -1,5 +1,6 @@
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
@@ -20,15 +21,15 @@ class _Orders_History_Screen_State extends State<Orders_History_Screen> {
   final List<Widget> tabs = <Widget>[
     Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Tab(text: 'Processing'),
+      child: Tab(text: translate("label_processing_order")),
     ),
     Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Tab(text: 'Delivered'),
+      child: Tab(text: translate("label_delivered_order")),
     ),
     Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Tab(text: 'Cancelled'),
+      child: Tab(text: translate("label_cancelled_order")),
     ),
   ];
 
@@ -181,7 +182,7 @@ buildOrdersList(BuildContext context, List orders) {
                   Row(
                     children: <Widget>[
                       Text(
-                        'Order Date: ',
+                        translate("label_order_date") + ': ',
                         style: _theme.textTheme.headline6!
                             .copyWith(color: _theme.primaryColorLight),
                       ),
@@ -204,7 +205,7 @@ buildOrdersList(BuildContext context, List orders) {
                         text: TextSpan(
                           children: <TextSpan>[
                             TextSpan(
-                              text: 'Order Reference: ',
+                              text: translate("label_order_reference") + ': ',
                               style: _theme.textTheme.subtitle1!.copyWith(
                                   color: _theme.primaryColorLight,
                                   fontWeight: FontWeight.normal),
@@ -225,7 +226,7 @@ buildOrdersList(BuildContext context, List orders) {
                   Row(
                     children: <Widget>[
                       Text(
-                        'Totat Amount: ',
+                        translate("label_total_amount") + ': ',
                         style: _theme.textTheme.subtitle1!
                             .copyWith(color: _theme.primaryColorLight),
                       ),
@@ -263,14 +264,10 @@ buildOrdersList(BuildContext context, List orders) {
                           );
                         },
                         child: Text(
-                          'Details',
+                          translate("label_details"),
                           style: _theme.textTheme.headline6,
                         ),
                       ),
-                      // Text(orders[index].orderStatus.toString().split('.')[1],
-                      Text('Test',
-                          style: _theme.textTheme.headline6!
-                              .copyWith(color: Colors.green)),
                     ],
                   )
                 ],

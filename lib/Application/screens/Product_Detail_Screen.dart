@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
@@ -105,7 +106,7 @@ class _DetailScreenState extends State<DetailScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text("Price".toUpperCase(),
+                Text(translate("label_price").toUpperCase(),
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
@@ -134,7 +135,7 @@ class _DetailScreenState extends State<DetailScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text("Description",
+                Text(translate("label_item_description"),
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontSize: 16,
@@ -185,7 +186,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 builder: (context) {
                   return AlertDialog(
                     content: Text(
-                      'Product added to cart !',
+                      translate("label_product_added_to_cart"),
                       textAlign: TextAlign.center,
                     ),
                   );
@@ -195,7 +196,7 @@ class _DetailScreenState extends State<DetailScreen> {
             child: Container(
               padding: EdgeInsets.only(left: 5, right: 5, top: 15, bottom: 15),
               child: Text(
-                "Add to cart".toUpperCase(),
+                translate("label_add_to_cart").toUpperCase(),
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,

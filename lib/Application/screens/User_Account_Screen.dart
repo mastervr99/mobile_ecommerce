@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
@@ -128,7 +129,7 @@ class _User_Account_Screen_State extends State<User_Account_Screen> {
                             ElevatedButton(
                               onPressed: null,
                               child: Text(
-                                'Change',
+                                translate("label_change"),
                                 style: TextStyle(
                                     fontSize: 13.0, color: Colors.blueAccent),
                               ),
@@ -217,7 +218,7 @@ class _User_Account_Screen_State extends State<User_Account_Screen> {
                       margin: EdgeInsets.only(
                           left: 12.0, top: 5.0, right: 0.0, bottom: 5.0),
                       child: Text(
-                        'Addresses',
+                        translate("label_addresses"),
                         style: TextStyle(
                             color: Colors.black87,
                             fontWeight: FontWeight.bold,
@@ -415,7 +416,7 @@ class _User_Account_Screen_State extends State<User_Account_Screen> {
                               IconButton(onPressed: () {}, icon: orders),
                               _verticalD(),
                               Text(
-                                'My Orders',
+                                translate("label_user_orders"),
                                 style: TextStyle(
                                     fontSize: 15.0, color: Colors.black87),
                               )
@@ -433,7 +434,7 @@ class _User_Account_Screen_State extends State<User_Account_Screen> {
                             IconButton(icon: keyloch, onPressed: null),
                             _verticalD(),
                             Text(
-                              'Change Password',
+                              translate("label_password_change"),
                               style: TextStyle(
                                   fontSize: 15.0, color: Colors.black87),
                             )

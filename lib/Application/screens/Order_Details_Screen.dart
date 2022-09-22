@@ -65,7 +65,7 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
                           text: TextSpan(
                             children: <TextSpan>[
                               TextSpan(
-                                text: 'Order: ',
+                                text: translate("label_order") + ": ",
                                 style: _theme.textTheme.headline5,
                               ),
                               TextSpan(
@@ -94,7 +94,7 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
                           text: TextSpan(
                             children: <TextSpan>[
                               TextSpan(
-                                text: 'Tacking Number: ',
+                                text: translate("label_tracking_number") + ': ',
                                 style: _theme.textTheme.headline5!,
                               ),
                               TextSpan(
@@ -127,7 +127,7 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
                             Padding(
                               padding: const EdgeInsets.only(left: 4),
                               child: Text(
-                                'items',
+                                translate("label_items"),
                                 style: _theme.textTheme.headline5,
                               ),
                             ),
@@ -145,20 +145,20 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
                       height: 15,
                     ),
                     buildSummaryLine(
-                        'Shipping Address:',
+                        translate("label_shipping_address") + ':',
                         widget.order.get_order_delivery_address(),
                         _theme,
                         width),
                     SizedBox(
                       height: 15,
                     ),
-                    buildSummaryLine('Payment Method:',
+                    buildSummaryLine(translate("label_payment_method") + ':',
                         widget.order.get_order_payment_method(), _theme, width),
                     SizedBox(
                       height: 15,
                     ),
                     buildSummaryLine(
-                        'Total Amount:',
+                        translate("label_total_amount") + ':',
                         '\€' + widget.order.get_order_price().toString(),
                         _theme,
                         width),
@@ -274,12 +274,13 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
                       },
                     ),
                     Text(
-                      "Price : ${item.getPrice()}" +
+                      translate("label_price") +
+                          " : ${item.getPrice()}" +
                           translate("label_currency"),
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     Text(
-                      "Quantity : ${item.get_quantity()}",
+                      translate("label_quantity") + " : ${item.get_quantity()}",
                       style: Theme.of(context).textTheme.headline6,
                     ),
                   ],

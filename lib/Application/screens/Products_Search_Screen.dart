@@ -123,7 +123,7 @@ class _Products_Search_Screen_State extends State<Products_Search_Screen>
                       ),
                     ),
                     IconButton(
-                        tooltip: 'Sort',
+                        tooltip: translate("label_filter"),
                         icon: const Icon(Icons.filter_list),
                         onPressed: () {
                           showModalBottomSheet(
@@ -209,7 +209,7 @@ class _Products_Search_Screen_State extends State<Products_Search_Screen>
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Filters',
+                translate("label_filters"),
                 style: TextStyle(color: Colors.grey[300]),
               ),
             ),
@@ -220,7 +220,7 @@ class _Products_Search_Screen_State extends State<Products_Search_Screen>
               padding:
                   const EdgeInsets.only(left: 32.0, top: 16.0, bottom: 16.0),
               child: Text(
-                'Sort By',
+                translate("label_sort"),
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),

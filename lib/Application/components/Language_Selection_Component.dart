@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:mobile_ecommerce/Application/screens/Home_Screen.dart';
 
 class Language_Selection_Component extends StatefulWidget {
   @override
@@ -81,19 +82,27 @@ class _Language_Selection_Component_State
                 },
               ),
               InkWell(
-                  child: Container(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: CircleAvatar(
-                        radius: 15.0,
-                        backgroundColor: Color(0xFFAC252B),
-                        child: Icon(Icons.close, color: Colors.white),
-                      ),
+                child: Container(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: CircleAvatar(
+                      radius: 15.0,
+                      backgroundColor: Colors.black,
+                      child: Icon(Icons.close, color: Colors.white),
                     ),
                   ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  })
+                ),
+                onTap: () {
+                  Navigator.of(context).pushReplacement(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) {
+                        return Home_Screen();
+                      },
+                      transitionDuration: Duration(milliseconds: 200),
+                    ),
+                  );
+                },
+              )
             ]),
       ],
     );

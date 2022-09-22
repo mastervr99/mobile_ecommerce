@@ -114,8 +114,9 @@ class _Bottom_Navbar_Widget_State extends State<Bottom_Navbar_Widget> {
         ),
       ],
       currentIndex: _selectedIndex,
-      selectedItemColor: Color(0xFFAA292E),
-      unselectedItemColor: Color(0xFF545454),
+      backgroundColor: Color(0xFFAA292E),
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.white,
       onTap: _onItemTapped,
     );
   }

@@ -81,14 +81,10 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
                     ),
                     RichText(
                       text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: translate("label_order_date") +
-                                ": " +
-                                widget.order.get_order_date(),
-                            style: _theme.textTheme.headline5,
-                          ),
-                        ],
+                        text: translate("label_order_date") +
+                            ": " +
+                            widget.order.get_order_date(),
+                        style: _theme.textTheme.headline5,
                       ),
                     ),
                     SizedBox(
@@ -96,16 +92,8 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
                     ),
                     RichText(
                       text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: translate("label_tracking_number") + ': TBD',
-                            style: _theme.textTheme.headline5!,
-                          ),
-                          TextSpan(
-                            // text: state.orderData.trackingNumber,
-                            style: _theme.textTheme.headline5,
-                          ),
-                        ],
+                        text: translate("label_tracking_number") + ': TBD',
+                        style: _theme.textTheme.headline5!,
                       ),
                     ),
                     SizedBox(

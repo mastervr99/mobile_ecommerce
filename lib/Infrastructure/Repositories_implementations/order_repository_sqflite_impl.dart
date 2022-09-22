@@ -111,7 +111,7 @@ class Order_Repository_Sqflite_Impl extends Order_Repository {
 
   @override
   _close_database() async {
-    await database.close();
-    database = null;
+    // await database.close();
+    // database = null;
   }
 }

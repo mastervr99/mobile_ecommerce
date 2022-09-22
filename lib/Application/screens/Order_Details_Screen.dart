@@ -42,10 +42,6 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
       appBar: Appbar_Widget(context),
       endDrawer: Drawer_Widget(),
       bottomNavigationBar: Bottom_Navbar_Widget(),
-      // body: Column(
-      //   children: [Text(widget.order.get_order_reference())],
-      // ),
-
       body: FutureBuilder(
         future: get_order_items(widget.order),
         builder: (context, AsyncSnapshot snapshot) {
@@ -57,81 +53,70 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        RichText(
-                          text: TextSpan(
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: translate("label_order") + ": ",
-                                style: _theme.textTheme.headline5,
-                              ),
-                              TextSpan(
-                                text: widget.order.get_order_reference(),
-                                style: _theme.textTheme.headline5!
-                                    .copyWith(fontWeight: FontWeight.w700),
-                              ),
-                            ],
+                    RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: translate("label_order") + ": ",
+                            style: _theme.textTheme.headline5,
                           ),
-                        ),
-                        Text(
-                          widget.order.get_order_date(),
-                          style: _theme.textTheme.headline6!.copyWith(
-                            color: Color(0xFF9B9B9B),
+                          TextSpan(
+                            text: widget.order.get_order_reference(),
+                            style: _theme.textTheme.headline5!
+                                .copyWith(fontWeight: FontWeight.w700),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: translate("label_order_date") +
+                                ": " +
+                                widget.order.get_order_date(),
+                            style: _theme.textTheme.headline5,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: translate("label_tracking_number") + ': TBD',
+                            style: _theme.textTheme.headline5!,
+                          ),
+                          TextSpan(
+                            // text: state.orderData.trackingNumber,
+                            style: _theme.textTheme.headline5,
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 15,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        RichText(
-                          text: TextSpan(
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: translate("label_tracking_number") + ': ',
-                                style: _theme.textTheme.headline5!,
-                              ),
-                              TextSpan(
-                                // text: state.orderData.trackingNumber,
-                                style: _theme.textTheme.headline5,
-                              ),
-                            ],
-                          ),
-                        ),
                         Text(
-                          // widget.order.get_order_state(),
-                          'TBD',
-                          style: _theme.textTheme.headline5!
-                              .copyWith(color: Colors.green),
+                          order_items.length.toString(),
+                          style: _theme.textTheme.headline5,
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Text(
-                              order_items.length.toString(),
-                              style: _theme.textTheme.headline5,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 4),
-                              child: Text(
-                                translate("label_items"),
-                                style: _theme.textTheme.headline5,
-                              ),
-                            ),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4),
+                          child: Text(
+                            translate("label_items"),
+                            style: _theme.textTheme.headline5,
+                          ),
                         ),
                       ],
                     ),
@@ -165,30 +150,6 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
                     SizedBox(
                       height: 15,
                     ),
-                    // Row(children: <Widget>[
-                    // OpenFlutterButton(
-                    //   backgroundColor: Colors.white,
-                    //   borderColor: _theme.primaryColor,
-                    //   textColor: _theme.primaryColor,
-                    //   height: 36,
-                    //   width: (width - 15 * 3) / 2,
-                    //   title: 'Reorder',
-                    //   onPressed: (() => {
-                    //         //TODO: reorder process
-                    //       }),
-                    // ),
-                    // Padding(
-                    //   padding: EdgeInsets.only(left: 15),
-                    // ),
-                    // OpenFlutterButton(
-                    //   height: 36,
-                    //   width: (width - 15 * 3) / 2,
-                    //   title: 'Leave Feedback',
-                    //   onPressed: (() => {
-                    //         //TODO: leave feedback
-                    //       }),
-                    // )
-                    // ])
                   ],
                 ),
               ),
@@ -206,14 +167,14 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
   _build_order_items(order_items) {
     return <Widget>[
       for (Order_Item item in order_items)
-        // child:
         Container(
-          decoration: BoxDecoration(border: Border.all()),
+          decoration: BoxDecoration(
+            border: Border.all(),
+            borderRadius: BorderRadius.circular(20.0),
+          ),
           margin: const EdgeInsets.all(10),
           padding: const EdgeInsets.all(20),
           height: 180,
-          // child: Padding(
-          //   padding: const EdgeInsets.all(32),
           child: Row(
             children: <Widget>[
               Expanded(
@@ -288,7 +249,6 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
               ),
             ],
           ),
-          // ),
         ),
     ];
   }

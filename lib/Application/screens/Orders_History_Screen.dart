@@ -157,22 +157,15 @@ buildOrdersList(BuildContext context, List orders) {
   var _theme = Theme.of(context);
 
   return ListView.builder(
-    shrinkWrap: true,
     itemCount: orders.length,
     itemBuilder: (context, index) {
       if (orders[index] != null && orders.isNotEmpty) {
         return Container(
-          padding: EdgeInsets.all(8),
+          padding: EdgeInsets.all(15),
           child: Container(
             decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: _theme.primaryColor.withOpacity(0.3),
-                  blurRadius: 8,
-                )
-              ],
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.white,
+              border: Border.all(),
+              borderRadius: BorderRadius.circular(20.0),
             ),
             child: Padding(
               padding: EdgeInsets.all(15),
@@ -181,16 +174,13 @@ buildOrdersList(BuildContext context, List orders) {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Text(
-                        translate("label_order_date") + ': ',
-                        style: _theme.textTheme.headline6!
-                            .copyWith(color: _theme.primaryColorLight),
-                      ),
+                      Text(translate("label_order_date") + ' : ',
+                          style: _theme.textTheme.headline6!),
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
                         child: Text(
                           orders[index]!.get_order_date(),
-                          style: _theme.textTheme.headline6,
+                          style: _theme.textTheme.subtitle1,
                         ),
                       ),
                     ],
@@ -205,10 +195,9 @@ buildOrdersList(BuildContext context, List orders) {
                         text: TextSpan(
                           children: <TextSpan>[
                             TextSpan(
-                              text: translate("label_order_reference") + ': ',
-                              style: _theme.textTheme.subtitle1!.copyWith(
-                                  color: _theme.primaryColorLight,
-                                  fontWeight: FontWeight.normal),
+                              text: translate("label_order") + ' :  ',
+                              style: _theme.textTheme.subtitle1!
+                                  .copyWith(fontWeight: FontWeight.normal),
                             ),
                             TextSpan(
                               text: orders[index].get_order_reference(),
@@ -225,11 +214,8 @@ buildOrdersList(BuildContext context, List orders) {
                   ),
                   Row(
                     children: <Widget>[
-                      Text(
-                        translate("label_total_amount") + ': ',
-                        style: _theme.textTheme.subtitle1!
-                            .copyWith(color: _theme.primaryColorLight),
-                      ),
+                      Text(translate("label_total_amount") + ' : ',
+                          style: _theme.textTheme.subtitle1!),
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
                         child: Text(

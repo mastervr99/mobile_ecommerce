@@ -68,7 +68,6 @@
   "label_delivered_order": "Delivered",
   "label_cancelled_order": "Cancelled",
   "label_order_date": "Order Date",
-  "label_order_reference" : "Order Reference",
   "label_details" : "Details",
   "label_item_description": "Description",
   "label_product_added_to_cart" : "Product added to cart !",

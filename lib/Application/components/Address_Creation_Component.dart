@@ -32,21 +32,7 @@ registrationSucceded(BuildContext context) {
         // Retrieve the text the that user has entered by using the
         // TextEditingController.
         content: Text(
-          translate('label_user_registration_succeded'),
-          textAlign: TextAlign.center,
-        ),
-      );
-    },
-  );
-}
-
-registrationFailed(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        content: Text(
-          translate('label_user_registration_failed'),
+          translate('label_address_registration_succeded'),
           textAlign: TextAlign.center,
         ),
       );

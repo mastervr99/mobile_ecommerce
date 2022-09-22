@@ -68,7 +68,6 @@
     "label_delivered_order": "配達済み",
     "label_cancelled_order": "キャンセル済み",
     "label_order_date": "注文日",
-    "label_order_reference": "注文番号",
     "label_details": "詳細",
     "label_item_description": "説明",
     "label_product_added_to_cart": "商品がカートに追加されました!",

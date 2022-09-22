@@ -99,8 +99,8 @@ class Address_Repository_Sqflite_Impl extends Address_Repository {
 
   @override
   _close_database() async {
-    final _database = await get_database();
-    database = null;
-    await _database.close();
+    // final _database = await get_database();
+    // database = null;
+    // await _database.close();
   }
 }

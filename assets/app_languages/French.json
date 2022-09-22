@@ -46,7 +46,7 @@
   "label_trending_products" : "Dernière Tendance",
   "label_girls_selection" : "Notre Sélection pour les Filles",
   "label_delivery_method_selection": "Choisissez un mode livraison",
-  "label_home_delivery" : "Livrraison à Domicile",
+  "label_home_delivery" : "Livraison à Domicile",
   "label_store_pickup" : "Relais Pick Up",
   "label_payment_selection" : "Choisissez un moyen de paiement",
   "label_credit_card" : "Carte de crédit",
@@ -67,18 +67,19 @@
   "label_delivered_order": "Livrés",
   "label_cancelled_order": "Annulées",
   "label_order_date": "Date de commande",
-  "label_order_reference" : "Référence de commande",
   "label_details" : "Détails",
   "label_item_description": "Description",
   "label_product_added_to_cart" : "Prooduit ajouté au panier !",
   "label_add_to_cart": "Ajouter au panier",
-  "label_filter" : "Filtrer"
-  ,
+  "label_filter" : "Filtrer",
   "label_sort" : "Trier par",
   "label_filters": "Filtres",
   "label_change": "Changer",
   "label_addresses": "Adresses",
   "label_user_orders" : "Mes Commandes",
-  "label_password_change": "Changer de mot de passe"
+  "label_password_change": "Changer de mot de passe",
+  "label_address_registration_succeded" : "Votre adresse a bien été enregistré",
+  "label_address_modification_succeded": "Votre adresse a bien été modifié",
+  "label_order_validated" : "Félicitations ! Votre commande a été validé !"
 
 }

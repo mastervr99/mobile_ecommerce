@@ -77,7 +77,7 @@ class _Orders_History_Screen_State extends State<Orders_History_Screen> {
                         unselectedLabelColor: Colors.black,
                         indicator: BubbleTabIndicator(
                           indicatorHeight: 32,
-                          indicatorColor: Colors.black,
+                          indicatorColor: Color(0xFFBC1F26),
                           tabBarIndicatorSize: TabBarIndicatorSize.tab,
                         ),
                         tabs: tabs,
@@ -235,10 +235,10 @@ buildOrdersList(BuildContext context, List orders) {
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.only(
                               left: 24, right: 24, top: 10, bottom: 10),
-                          primary: Colors.white,
+                          primary: Color(0xFFBC1F26),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              side: BorderSide(color: Colors.black, width: 2)),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                         onPressed: () {
                           Navigator.push(
@@ -249,10 +249,13 @@ buildOrdersList(BuildContext context, List orders) {
                             ),
                           );
                         },
-                        child: Text(
-                          translate("label_details"),
-                          style: _theme.textTheme.headline6,
-                        ),
+                        child: Text(translate("label_details"),
+                            style: _theme.textTheme.headline6!.copyWith(
+                              color: Colors.white,
+                              fontFamily: 'Poppins-Medium.ttf',
+                            )
+                            // color: Colors.white,
+                            ),
                       ),
                     ],
                   )

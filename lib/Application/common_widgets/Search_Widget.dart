@@ -29,7 +29,7 @@ class _Search_Widget_State extends State<Search_Widget> {
               filled: true,
               prefixIcon: Icon(Icons.search),
               fillColor: Color(0xFFF2F4F5),
-              hintStyle: new TextStyle(color: Colors.grey[600]),
+              hintStyle: TextStyle(color: Colors.grey[600]),
               hintText: translate("label_search_bar"),
             ),
             autofocus: false,

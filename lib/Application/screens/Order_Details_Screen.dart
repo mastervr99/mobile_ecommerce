@@ -46,8 +46,13 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
         future: get_order_items(widget.order),
         builder: (context, AsyncSnapshot snapshot) {
           var order_items = snapshot.data;
+          double items_total_quantity = 0;
 
           if (snapshot.hasData) {
+            for (var item in order_items) {
+              items_total_quantity += item.get_quantity();
+            }
+
             return Padding(
               padding: EdgeInsets.all(15),
               child: SingleChildScrollView(
@@ -60,11 +65,12 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
                         children: <TextSpan>[
                           TextSpan(
                             text: translate("label_order") + ": ",
-                            style: _theme.textTheme.headline5,
+                            style: _theme.textTheme.headline4!
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
                           TextSpan(
                             text: widget.order.get_order_reference(),
-                            style: _theme.textTheme.headline5!
+                            style: _theme.textTheme.headline4!
                                 .copyWith(fontWeight: FontWeight.w700),
                           ),
                         ],
@@ -108,7 +114,7 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
                     Row(
                       children: <Widget>[
                         Text(
-                          order_items.length.toString(),
+                          items_total_quantity.toStringAsFixed(0),
                           style: _theme.textTheme.headline5,
                         ),
                         Padding(
@@ -169,7 +175,7 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
       for (Order_Item item in order_items)
         Container(
           decoration: BoxDecoration(
-            border: Border.all(),
+            border: Border.all(color: Color(0xFFAC252B), width: 2.5),
             borderRadius: BorderRadius.circular(20.0),
           ),
           margin: const EdgeInsets.all(10),

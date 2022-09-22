@@ -168,7 +168,12 @@ class _Products_Search_Screen_State extends State<Products_Search_Screen>
                               (index) {
                             return GridTile(
                                 child: Products_Grid_Tiles_Component(
-                              name: productsList[index]!.getTitle(),
+                              name: productsList[index]!.getTitle().length <= 35
+                                  ? productsList[index]!.getTitle()
+                                  : productsList[index]!
+                                          .getTitle()
+                                          .substring(0, 35) +
+                                      '...',
                               imageUrl: productsList[index]!.getImageUrl(),
                               product: productsList[index]!,
                               price: productsList[index]!.getPrice().toString(),

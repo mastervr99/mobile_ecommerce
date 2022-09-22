@@ -207,7 +207,10 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
                           return RichText(
                             text: TextSpan(children: <TextSpan>[
                               TextSpan(
-                                  text: "${item.getTitle()}",
+                                  // text: "${item.getTitle()}",
+                                  text: item.getTitle().length <= 30
+                                      ? "${item.getTitle()}"
+                                      : "${item.getTitle().substring(0, 30) + '...'}",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline6!

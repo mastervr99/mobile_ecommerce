@@ -73,6 +73,13 @@ class _Language_Selection_Component_State
                   changeLocale(context, 'German');
                 },
               ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
+                child: Text("हिन्दी"),
+                onPressed: () {
+                  changeLocale(context, 'Hindi');
+                },
+              ),
               InkWell(
                   child: Container(
                     child: Align(

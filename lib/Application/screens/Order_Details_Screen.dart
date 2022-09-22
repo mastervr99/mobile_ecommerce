@@ -54,7 +54,7 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
             }
 
             return Padding(
-              padding: EdgeInsets.all(15),
+              padding: EdgeInsets.only(left: 15, right: 15),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -141,9 +141,6 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
                         '\€' + widget.order.get_order_price().toString(),
                         _theme,
                         width),
-                    SizedBox(
-                      height: 15,
-                    ),
                   ],
                 ),
               ),

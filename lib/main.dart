@@ -30,7 +30,8 @@ void main() async {
         "Portuguese",
         "Japanese",
         "German",
-        "Hindi"
+        "Hindi",
+        "Italian"
       ],
       basePath: 'assets/app_languages/');
   runApp(LocalizedApp(delegate, const MyApp()));

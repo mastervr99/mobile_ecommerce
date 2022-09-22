@@ -362,7 +362,6 @@ class _DeliveryAdressSelectionState extends State<DeliveryAdressSelection> {
 
                                     return Container(
                                       height: 165.0,
-                                      width: 230.0,
                                       margin: EdgeInsets.all(7.0),
                                       child: Card(
                                         elevation: 3.0,
@@ -652,15 +651,27 @@ class _OrderCheckoutScreenBottomBarState
                             delivery_address_button_choice!);
 
                         await make_un_order(context, order);
-                        Navigator.of(context).pushReplacement(
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) {
-                              return Orders_History_Screen();
-                            },
-                            transitionDuration: Duration(milliseconds: 200),
-                          ),
-                        );
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              content: Text(
+                                translate("label_order_validated"),
+                                textAlign: TextAlign.center,
+                              ),
+                            );
+                          },
+                        ).then((value) {
+                          Navigator.of(context).pushReplacement(
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) {
+                                return Orders_History_Screen();
+                              },
+                              transitionDuration: Duration(milliseconds: 400),
+                            ),
+                          );
+                        });
                       }
                     }
                   }),

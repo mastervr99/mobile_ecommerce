@@ -41,10 +41,12 @@ class _Orders_History_Screen_State extends State<Orders_History_Screen> {
 
     Order_Repository order_repository = Order_Repository_Sqflite_Impl();
 
-    var orders =
-        await order_repository.retrieve_all_user_orders(await connected_user);
+    if (connected_user.runtimeType == User) {
+      var orders =
+          await order_repository.retrieve_all_user_orders(await connected_user);
 
-    return await orders;
+      return await orders;
+    }
   }
 
   @override

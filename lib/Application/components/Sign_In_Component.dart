@@ -27,25 +27,18 @@ signInSucceded(BuildContext context) {
           translate('label_sign_in_succeded'),
           textAlign: TextAlign.center,
         ),
-        actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
-            child: Text(translate('label_homepage')),
-            onPressed: (() {
-              Navigator.of(context).pushReplacement(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) {
-                    return Home_Screen();
-                  },
-                  transitionDuration: Duration(milliseconds: 200),
-                ),
-              );
-            }),
-          )
-        ],
       );
     },
-  );
+  ).then((value) {
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return Home_Screen();
+        },
+        transitionDuration: Duration(milliseconds: 400),
+      ),
+    );
+  });
 }
 
 emailNotRegistered(BuildContext context) {

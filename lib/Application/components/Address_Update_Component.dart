@@ -4,6 +4,7 @@ import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
+import 'package:mobile_ecommerce/Application/screens/User_Account_Screen.dart';
 import 'package:mobile_ecommerce/Application/usecases/update_user_details_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/address.dart';
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
@@ -32,22 +33,31 @@ registrationSucceded(BuildContext context) {
         ),
       );
     },
-  );
+  ).then((value) {
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return User_Account_Screen();
+        },
+        transitionDuration: Duration(milliseconds: 400),
+      ),
+    );
+  });
 }
 
-registrationFailed(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        content: Text(
-          translate('label_user_registration_failed'),
-          textAlign: TextAlign.center,
-        ),
-      );
-    },
-  );
-}
+// registrationFailed(BuildContext context) {
+//   showDialog(
+//     context: context,
+//     builder: (context) {
+//       return AlertDialog(
+//         content: Text(
+//           translate('label_user_registration_failed'),
+//           textAlign: TextAlign.center,
+//         ),
+//       );
+//     },
+//   );
+// }
 
 UserRepository user_repository = UserRepositorySqfliteImpl();
 Update_User_Details_Usecase update_user_details_usecase =

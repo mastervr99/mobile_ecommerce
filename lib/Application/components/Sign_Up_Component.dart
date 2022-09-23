@@ -21,25 +21,18 @@ registrationSucceded(BuildContext context) {
           translate('label_user_registration_succeded'),
           textAlign: TextAlign.center,
         ),
-        actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(primary: Color(0xFFAC252B)),
-            child: Text(translate('label_sign_in')),
-            onPressed: (() {
-              Navigator.of(context).pushReplacement(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) {
-                    return Sign_In_Component();
-                  },
-                  transitionDuration: Duration(milliseconds: 200),
-                ),
-              );
-            }),
-          )
-        ],
       );
     },
-  );
+  ).then((value) {
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return Sign_In_Component();
+        },
+        transitionDuration: Duration(milliseconds: 400),
+      ),
+    );
+  });
 }
 
 registrationFailed(BuildContext context) {

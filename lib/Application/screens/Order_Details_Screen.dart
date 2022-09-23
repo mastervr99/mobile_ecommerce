@@ -54,7 +54,7 @@ class _Order_Details_Screen_State extends State<Order_Details_Screen> {
             }
 
             return Padding(
-              padding: EdgeInsets.only(left: 15, right: 15),
+              padding: EdgeInsets.all(15),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,

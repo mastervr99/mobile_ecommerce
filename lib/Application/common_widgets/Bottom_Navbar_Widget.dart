@@ -10,7 +10,6 @@ import 'package:mobile_ecommerce/Domain/Repositories_abstractions/connected_user
 import 'package:mobile_ecommerce/Domain/Repositories_abstractions/user_repository.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/connected_user_repository_sqflite_impl.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/user_repository_sqflite_impl.dart';
-import 'package:mobile_ecommerce/main.dart';
 
 class Bottom_Navbar_Widget extends StatefulWidget {
   @override
@@ -35,7 +34,6 @@ class _Bottom_Navbar_Widget_State extends State<Bottom_Navbar_Widget> {
     void _onItemTapped(int index) async {
       setState(() {
         _selectedIndex = index;
-        navigateToScreens(index);
       });
 
       switch (index) {
@@ -114,9 +112,8 @@ class _Bottom_Navbar_Widget_State extends State<Bottom_Navbar_Widget> {
         ),
       ],
       currentIndex: _selectedIndex,
-      backgroundColor: Color(0xFFAA292E),
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.white,
+      selectedItemColor: Color(0xFFAC252B),
+      unselectedItemColor: Color(0xFFAC252B),
       onTap: _onItemTapped,
     );
   }

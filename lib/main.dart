@@ -74,23 +74,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-int currentIndex = 0;
-
-void navigateToScreens(int index) {
-  currentIndex = index;
-}
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -99,25 +84,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // final List<Widget> viewContainer = [
-  //   Home_Screen(),
-  //   Products_Search_Screen(),
-  //   User_Account_Screen(),
-  //   Shopping_Cart_Screen()
-  //   //WishListScreen(),
-  //   //HomeScreen()
-  // ];
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         endDrawer: Drawer_Widget(),
-        // body: IndexedStack(
-        //   index: currentIndex,
-        //   children: viewContainer,
-        // ),
         body: Home_Screen(),
       ),
     );

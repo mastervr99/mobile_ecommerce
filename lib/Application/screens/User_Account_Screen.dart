@@ -29,13 +29,14 @@ get_connected_user_data() async {
 
   UserRepository userRepository = UserRepositorySqfliteImpl();
 
-  late var user;
+  var user;
 
   if (connected_user.runtimeType == User) {
     user = await userRepository
         .retrieve_user_by_id(await connected_user.get_user_id());
+
+    return await user;
   }
-  return await user;
 }
 
 get_user_addresses(User user) async {

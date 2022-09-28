@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
+import 'package:mobile_ecommerce/Application/Custom_Form_Field_Validator.dart';
 
 void main() {
   group('Form fields validation : ', () {
-    var formFieldValidator = CustomFormFieldValidator();
+    var formFieldValidator = Custom_Form_Field_Validator();
     test('email validation', () {
       String email = 'test@gmail.com';
       expect(formFieldValidator.isValidEmail(email), true);

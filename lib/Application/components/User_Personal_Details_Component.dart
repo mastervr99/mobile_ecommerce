@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
+import 'package:mobile_ecommerce/Application/Custom_Form_Field_Validator.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Appbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Drawer_Widget.dart';
@@ -63,7 +63,7 @@ class _User_Personal_Details_Component_State
   TextEditingController emailController = TextEditingController();
   TextEditingController phone_number_controller = TextEditingController();
 
-  var formFieldValidator = CustomFormFieldValidator();
+  var formFieldValidator = Custom_Form_Field_Validator();
 
   @override
   Widget build(BuildContext context) {

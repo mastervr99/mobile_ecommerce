@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:mobile_ecommerce/Application/CustomFormFieldValidator.dart';
+import 'package:mobile_ecommerce/Application/Custom_Form_Field_Validator.dart';
 import 'package:mobile_ecommerce/Application/components/Sign_In_Component.dart';
 import 'package:mobile_ecommerce/Application/usecases/sign_up_usecase.dart';
 import 'package:mobile_ecommerce/Domain/Entity/user.dart';
@@ -60,7 +60,7 @@ class _Sign_Up_Component_State extends State<Sign_Up_Component> {
   TextEditingController passwordController = TextEditingController();
   bool _passwordhidden = true;
 
-  var formFieldValidator = CustomFormFieldValidator();
+  var formFieldValidator = Custom_Form_Field_Validator();
 
   @override
   Widget build(BuildContext context) {

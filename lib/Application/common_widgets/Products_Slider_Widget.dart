@@ -64,7 +64,7 @@ class _Products_Slider_Widget_State extends State<Products_Slider_Widget> {
         ),
         SizedBox(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height / 3,
+          height: MediaQuery.of(context).size.height / 2.4,
           child: PageView.builder(
               itemCount: widget.products.length,
               pageSnapping: true,

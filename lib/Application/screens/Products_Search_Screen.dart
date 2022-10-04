@@ -76,14 +76,14 @@ class _Products_Search_Screen_State extends State<Products_Search_Screen>
         body: Column(
           children: <Widget>[
             // **************** TO REMOVE **************** */
-            // ElevatedButton(
-            //   style: ElevatedButton.styleFrom(
-            //       textStyle: const TextStyle(fontSize: 20)),
-            //   onPressed: () async {
-            //     await createProductTable();
-            //   },
-            //   child: const Text('Enabled'),
-            // ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 20)),
+              onPressed: () async {
+                await createProductTable();
+              },
+              child: const Text('Enabled'),
+            ),
             // ******************************** */
 
             Card(
@@ -346,54 +346,54 @@ findProducts(var value) async {
 }
 
 // **************** TO REMOVE **************** */
-// createProductTable() async {
-//   var productRepository = ProductRepostitorySqfliteImpl();
+createProductTable() async {
+  var productRepository = ProductRepostitorySqfliteImpl();
 
-//   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
-//   final _rawData =
-//       await rootBundle.loadString("assets/csv_database/fashion.csv");
+  final _rawData =
+      await rootBundle.loadString("assets/csv_database/fashion.csv");
 
-//   var encoded = utf8.encode(_rawData);
-//   var decoded = utf8.decode(encoded);
-//   var rowAsListValues =
-//       const CsvToListConverter(fieldDelimiter: ',', eol: '\n').convert(decoded);
-//   var parsedList = [];
+  var encoded = utf8.encode(_rawData);
+  var decoded = utf8.decode(encoded);
+  var rowAsListValues =
+      const CsvToListConverter(fieldDelimiter: ',', eol: '\n').convert(decoded);
+  var parsedList = [];
 
-//   for (var items in rowAsListValues) {
-//     parsedList.add(items);
-//   }
+  for (var items in rowAsListValues) {
+    parsedList.add(items);
+  }
 
-//   parsedList.removeAt(0);
+  parsedList.removeAt(0);
 
-//   for (int i = 0; i < parsedList.length; i++) {
-//     parsedList[i].removeAt(0);
-//     parsedList[i].removeAt(7);
-//   }
+  for (int i = 0; i < parsedList.length; i++) {
+    parsedList[i].removeAt(0);
+    parsedList[i].removeAt(7);
+  }
 
-//   for (int i = 0; i < parsedList.length; i++) {
-//     var price = Random().nextInt(50).toDouble();
-//     var sku = i + 100;
-//     Product product = Product(parsedList[i][6]);
-//     product.setDescription(
-//         'lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at magna in velit egestas tristique sit  vel est.');
-//     product.setGender(parsedList[i][0]);
-//     product.setCategory(parsedList[i][1]);
-//     product.setSubCategory(parsedList[i][2]);
-//     product.setType(parsedList[i][3]);
-//     product.setColor(parsedList[i][4]);
-//     product.setUsage(parsedList[i][5]);
-//     product.setImageUrl(parsedList[i][7]);
-//     product.setPrice(price);
-//     product.setSku(sku);
+  for (int i = 0; i < parsedList.length; i++) {
+    var price = Random().nextInt(50).toDouble();
+    var sku = i + 100;
+    Product product = Product(parsedList[i][6]);
+    product.setDescription(
+        'lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at magna in velit egestas tristique sit  vel est.');
+    product.setGender(parsedList[i][0]);
+    product.setCategory(parsedList[i][1]);
+    product.setSubCategory(parsedList[i][2]);
+    product.setType(parsedList[i][3]);
+    product.setColor(parsedList[i][4]);
+    product.setUsage(parsedList[i][5]);
+    product.setImageUrl(parsedList[i][7]);
+    product.setPrice(price);
+    product.setSku(sku);
 
-//     await productRepository.registerProduct(product);
-//   }
+    await productRepository.registerProduct(product);
+  }
 
-//   return AlertDialog(
-//     content: Text(
-//       translate('OK'),
-//       textAlign: TextAlign.center,
-//     ),
-//   );
-// }
+  return AlertDialog(
+    content: Text(
+      translate('OK'),
+      textAlign: TextAlign.center,
+    ),
+  );
+}

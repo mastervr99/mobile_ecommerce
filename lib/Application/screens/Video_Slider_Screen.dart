@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
+import 'package:mobile_ecommerce/Application/screens/Home_Screen.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:math' as math;
 
@@ -84,6 +86,7 @@ class _Video_Slider_Screen_State extends State<Video_Slider_Screen>
           )
         ],
       ),
+      bottomNavigationBar: Bottom_Navbar_Widget(),
     );
   }
 
@@ -251,21 +254,50 @@ class _Video_Slider_Screen_State extends State<Video_Slider_Screen>
                                 ],
                               ),
                             ),
+                            // AnimatedBuilder(
+                            //   animation: animationController,
+                            //   child: CircleAvatar(
+                            //     radius: 22,
+                            //     backgroundColor: Color(0x222222).withOpacity(1),
+                            //     child: CircleAvatar(
+                            //       radius: 12,
+                            //       backgroundImage: AssetImage(
+                            //           'assets/assets_video/oboy.jpg'),
+                            //     ),
+                            //   ),
+                            //   builder: (context, _widget) {
+                            //     return Transform.rotate(
+                            //         angle: animationController.value * 6.3,
+                            //         child: _widget);
+                            //   },
+                            // )
                             AnimatedBuilder(
                               animation: animationController,
-                              child: CircleAvatar(
-                                radius: 22,
-                                backgroundColor: Color(0x222222).withOpacity(1),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Home_Screen()), // Remplacez par votre écran de produit
+                                  );
+                                },
                                 child: CircleAvatar(
-                                  radius: 12,
-                                  backgroundImage: AssetImage(
-                                      'assets/assets_video/oboy.jpg'),
+                                  radius: 22,
+                                  backgroundColor:
+                                      Color(0x222222).withOpacity(1),
+                                  child: CircleAvatar(
+                                    radius: 12,
+                                    backgroundImage: AssetImage(
+                                        'assets/assets_video/oboy.jpg'),
+                                  ),
                                 ),
                               ),
                               builder: (context, _widget) {
                                 return Transform.rotate(
-                                    angle: animationController.value * 6.3,
-                                    child: _widget);
+                                  angle: animationController.value * 6.3,
+                                  child: _widget,
+                                );
                               },
                             )
                           ],

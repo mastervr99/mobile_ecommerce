@@ -8,6 +8,7 @@ import 'package:mobile_ecommerce/Application/screens/Home_Screen.dart';
 import 'package:mobile_ecommerce/Application/screens/Products_Search_Screen.dart';
 import 'package:mobile_ecommerce/Application/screens/Shopping_Cart_Screen.dart';
 import 'package:mobile_ecommerce/Application/screens/User_Account_Screen.dart';
+import 'package:mobile_ecommerce/Application/screens/Video_Slider_Screen.dart';
 import 'package:mobile_ecommerce/Domain/Entity/shopping_cart.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_ecommerce/.env.dart';
@@ -90,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 3,
       child: Scaffold(
         endDrawer: Drawer_Widget(),
-        body: Home_Screen(),
+        body: Video_Slider_Screen(),
       ),
     );
   }

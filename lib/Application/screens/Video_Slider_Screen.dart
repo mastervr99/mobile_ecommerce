@@ -38,9 +38,9 @@ class _Video_Slider_Screen_State extends State<Video_Slider_Screen>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
     animationController.dispose();
+    super.dispose();
   }
 
   @override

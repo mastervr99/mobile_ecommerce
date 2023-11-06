@@ -75,7 +75,7 @@ class _Products_Search_Screen_State extends State<Products_Search_Screen>
         bottomNavigationBar: Bottom_Navbar_Widget(),
         body: Column(
           children: <Widget>[
-            // **************** TO REMOVE **************** */
+            // **************** TO CREATE PRODUCTS **************** */
             // ElevatedButton(
             //   style: ElevatedButton.styleFrom(
             //       textStyle: const TextStyle(fontSize: 20)),
@@ -348,7 +348,7 @@ findProducts(var value) async {
   return await searchedProducts;
 }
 
-// **************** TO REMOVE **************** */
+// **************** TO CREATE PRODUCTS **************** */
 // createProductTable() async {
 //   var productRepository = ProductRepostitorySqfliteImpl();
 

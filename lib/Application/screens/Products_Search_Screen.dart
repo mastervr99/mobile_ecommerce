@@ -386,7 +386,9 @@ createProductTable() async {
     product.setType(parsedList[i][3]);
     product.setColor(parsedList[i][4]);
     product.setUsage(parsedList[i][5]);
-    product.setImageUrl(parsedList[i][7]);
+    String image_url = parsedList[i][7];
+    image_url = image_url.replaceAll('\r', '');
+    product.setImageUrl(image_url);
     product.setPrice(price);
     product.setSku(sku);
 

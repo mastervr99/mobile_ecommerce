@@ -2,12 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
 import 'package:mobile_ecommerce/Application/screens/Home_Screen.dart';
+import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/product_repository_sqflite_impl.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:math' as math;
 
 class Video_Slider_Screen extends StatefulWidget {
   @override
   _Video_Slider_Screen_State createState() => _Video_Slider_Screen_State();
+}
+
+find_video_product() async {
+  ProductRepostitorySqfliteImpl productRepository =
+      ProductRepostitorySqfliteImpl();
+
+  var product = await productRepository.retrieve_product_with_sku(0);
+
+  return await product;
 }
 
 class _Video_Slider_Screen_State extends State<Video_Slider_Screen>
@@ -282,15 +292,20 @@ class _Video_Slider_Screen_State extends State<Video_Slider_Screen>
                                             Home_Screen()), // Remplacez par votre écran de produit
                                   );
                                 },
+                                // child: CircleAvatar(
+                                //   radius: 22,
+                                //   backgroundColor:
+                                //       Color(0xFFFFFF).withOpacity(1),
+                                //   child: CircleAvatar(
+                                //     radius: 12,
+                                //     backgroundImage: AssetImage(
+                                //         'assets/assets_video/oboy.jpg'),
+                                //   ),
+                                // ),
                                 child: CircleAvatar(
-                                  radius: 22,
-                                  backgroundColor:
-                                      Color(0x222222).withOpacity(1),
-                                  child: CircleAvatar(
-                                    radius: 12,
-                                    backgroundImage: AssetImage(
-                                        'assets/assets_video/oboy.jpg'),
-                                  ),
+                                  radius: 32,
+                                  backgroundImage: AssetImage(
+                                      'assets/assets_video/oboy.jpg'),
                                 ),
                               ),
                               builder: (context, _widget) {

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:mobile_ecommerce/Application/common_widgets/Bottom_Navbar_Widget.dart';
+import 'package:mobile_ecommerce/Application/common_widgets/Circular_Progress_Widget.dart';
 import 'package:mobile_ecommerce/Application/screens/Home_Screen.dart';
+import 'package:mobile_ecommerce/Application/screens/Product_Detail_Screen.dart';
 import 'package:mobile_ecommerce/Infrastructure/Repositories_implementations/product_repository_sqflite_impl.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:math' as math;
@@ -11,11 +13,12 @@ class Video_Slider_Screen extends StatefulWidget {
   _Video_Slider_Screen_State createState() => _Video_Slider_Screen_State();
 }
 
-find_video_product() async {
+find_video_product(int product_csv_line_number) async {
   ProductRepostitorySqfliteImpl productRepository =
       ProductRepostitorySqfliteImpl();
 
-  var product = await productRepository.retrieve_product_with_sku(0);
+  var product = await productRepository
+      .retrieve_product_with_sku(product_csv_line_number);
 
   return await product;
 }
@@ -96,7 +99,7 @@ class _Video_Slider_Screen_State extends State<Video_Slider_Screen>
           )
         ],
       ),
-      bottomNavigationBar: Bottom_Navbar_Widget(),
+      // bottomNavigationBar: Bottom_Navbar_Widget(),
     );
   }
 
@@ -183,142 +186,149 @@ class _Video_Slider_Screen_State extends State<Video_Slider_Screen>
                   ),
                 ),
                 Padding(
-                    padding: EdgeInsets.only(bottom: 65, right: 10),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Container(
-                        width: 70,
-                        height: 400,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.only(bottom: 23),
-                              width: 40,
-                              height: 50,
-                              child: Stack(
-                                children: <Widget>[
-                                  CircleAvatar(
-                                    radius: 20,
-                                    backgroundColor: Colors.white,
+                  padding: EdgeInsets.only(bottom: 65, right: 10),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      width: 70,
+                      height: 400,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(bottom: 23),
+                            width: 40,
+                            height: 50,
+                            child: Stack(
+                              children: <Widget>[
+                                CircleAvatar(
+                                  radius: 20,
+                                  backgroundColor: Colors.white,
+                                  child: CircleAvatar(
+                                    radius: 19,
+                                    backgroundColor: Colors.black,
+                                    backgroundImage: AssetImage(
+                                        'assets/assets_video/spook.png'),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: CircleAvatar(
+                                    radius: 10,
+                                    backgroundColor:
+                                        Color(0xfd2c58).withOpacity(1),
+                                    child: Center(
+                                        child: Icon(Icons.add,
+                                            size: 15, color: Colors.white)),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(bottom: 25),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(Icons.favorite,
+                                    size: 35, color: Colors.white),
+                                Text('427.9K',
+                                    style: TextStyle(color: Colors.white))
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(bottom: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Transform(
+                                    alignment: Alignment.center,
+                                    transform: Matrix4.rotationY(math.pi),
+                                    child: Icon(Icons.sms,
+                                        size: 35, color: Colors.white)),
+                                Text('2051',
+                                    style: TextStyle(color: Colors.white))
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(bottom: 50),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Transform(
+                                    alignment: Alignment.center,
+                                    transform: Matrix4.rotationY(math.pi),
+                                    child: Icon(Icons.reply,
+                                        size: 35, color: Colors.white)),
+                                Text('Partager',
+                                    style: TextStyle(color: Colors.white))
+                              ],
+                            ),
+                          ),
+                          // AnimatedBuilder(
+                          //   animation: animationController,
+                          //   child: CircleAvatar(
+                          //     radius: 22,
+                          //     backgroundColor: Color(0x222222).withOpacity(1),
+                          //     child: CircleAvatar(
+                          //       radius: 12,
+                          //       backgroundImage: AssetImage(
+                          //           'assets/assets_video/oboy.jpg'),
+                          //     ),
+                          //   ),
+                          //   builder: (context, _widget) {
+                          //     return Transform.rotate(
+                          //         angle: animationController.value * 6.3,
+                          //         child: _widget);
+                          //   },
+                          // )
+                          FutureBuilder(
+                            future: find_video_product(100),
+                            builder: (context, AsyncSnapshot snapshot) {
+                              var product = snapshot.data;
+
+                              if (snapshot.hasData) {
+                                return AnimatedBuilder(
+                                  animation: animationController,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              Product_Detail_Screen(
+                                            product: product,
+                                          ),
+                                        ),
+                                      );
+                                    },
                                     child: CircleAvatar(
-                                      radius: 19,
-                                      backgroundColor: Colors.black,
+                                      radius: 32,
                                       backgroundImage: AssetImage(
-                                          'assets/assets_video/spook.png'),
+                                          'assets/assets_video/oboy.jpg'),
                                     ),
                                   ),
-                                  Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: CircleAvatar(
-                                      radius: 10,
-                                      backgroundColor:
-                                          Color(0xfd2c58).withOpacity(1),
-                                      child: Center(
-                                          child: Icon(Icons.add,
-                                              size: 15, color: Colors.white)),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(bottom: 25),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(Icons.favorite,
-                                      size: 35, color: Colors.white),
-                                  Text('427.9K',
-                                      style: TextStyle(color: Colors.white))
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(bottom: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Transform(
-                                      alignment: Alignment.center,
-                                      transform: Matrix4.rotationY(math.pi),
-                                      child: Icon(Icons.sms,
-                                          size: 35, color: Colors.white)),
-                                  Text('2051',
-                                      style: TextStyle(color: Colors.white))
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(bottom: 50),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Transform(
-                                      alignment: Alignment.center,
-                                      transform: Matrix4.rotationY(math.pi),
-                                      child: Icon(Icons.reply,
-                                          size: 35, color: Colors.white)),
-                                  Text('Partager',
-                                      style: TextStyle(color: Colors.white))
-                                ],
-                              ),
-                            ),
-                            // AnimatedBuilder(
-                            //   animation: animationController,
-                            //   child: CircleAvatar(
-                            //     radius: 22,
-                            //     backgroundColor: Color(0x222222).withOpacity(1),
-                            //     child: CircleAvatar(
-                            //       radius: 12,
-                            //       backgroundImage: AssetImage(
-                            //           'assets/assets_video/oboy.jpg'),
-                            //     ),
-                            //   ),
-                            //   builder: (context, _widget) {
-                            //     return Transform.rotate(
-                            //         angle: animationController.value * 6.3,
-                            //         child: _widget);
-                            //   },
-                            // )
-                            AnimatedBuilder(
-                              animation: animationController,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            Home_Screen()), // Remplacez par votre écran de produit
-                                  );
-                                },
-                                // child: CircleAvatar(
-                                //   radius: 22,
-                                //   backgroundColor:
-                                //       Color(0xFFFFFF).withOpacity(1),
-                                //   child: CircleAvatar(
-                                //     radius: 12,
-                                //     backgroundImage: AssetImage(
-                                //         'assets/assets_video/oboy.jpg'),
-                                //   ),
-                                // ),
-                                child: CircleAvatar(
-                                  radius: 32,
-                                  backgroundImage: AssetImage(
-                                      'assets/assets_video/oboy.jpg'),
-                                ),
-                              ),
-                              builder: (context, _widget) {
-                                return Transform.rotate(
-                                  angle: animationController.value * 6.3,
-                                  child: _widget,
+                                  builder: (context, _widget) {
+                                    return Transform.rotate(
+                                      angle: animationController.value * 6.3,
+                                      child: _widget,
+                                    );
+                                  },
                                 );
-                              },
-                            )
-                          ],
-                        ),
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                return Circular_Progress_Widget();
+                              }
+                            },
+                          ),
+                        ],
                       ),
-                    ))
+                    ),
+                  ),
+                )
               ],
             );
           });

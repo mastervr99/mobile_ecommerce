@@ -25,9 +25,10 @@ class Products_Grid_Tiles_Component extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => Product_Detail_Screen(
-                    product: product,
-                  )),
+            builder: (context) => Product_Detail_Screen(
+              product: product,
+            ),
+          ),
         );
       },
       // child: Container(

@@ -66,7 +66,7 @@ class _Video_Slider_Screen_State extends State<Video_Slider_Screen>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              FlatButton(
+              ElevatedButton(
                   onPressed: () {
                     setState(() {
                       abo = true;
@@ -81,7 +81,7 @@ class _Video_Slider_Screen_State extends State<Video_Slider_Screen>
                               fontSize: 18)
                           : TextStyle(color: Colors.white, fontSize: 16))),
               Text('|', style: TextStyle(color: Colors.white, fontSize: 5)),
-              FlatButton(
+              ElevatedButton(
                   onPressed: () {
                     setState(() {
                       abo = false;
@@ -118,8 +118,7 @@ class _Video_Slider_Screen_State extends State<Video_Slider_Screen>
           itemBuilder: (context, index) {
             return Stack(
               children: <Widget>[
-                FlatButton(
-                    padding: EdgeInsets.all(0),
+                ElevatedButton(
                     onPressed: () {
                       setState(() {
                         if (play) {
@@ -131,6 +130,7 @@ class _Video_Slider_Screen_State extends State<Video_Slider_Screen>
                         }
                       });
                     },
+                    style: ElevatedButton.styleFrom(padding: EdgeInsets.all(0)),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,

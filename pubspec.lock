@@ -708,11 +708,16 @@ packages:
       sha256: "80b3257d1492ce4d091729e3a67a60407d227c27241d6927be0130c98e741803"
       url: "https://pub.dev"
     source: hosted
+<<<<<<< HEAD
     version: "2.1.4"
+=======
+    version: "2.1.1"
+>>>>>>> origin/master
   video_player:
     dependency: "direct main"
     description:
       name: video_player
+<<<<<<< HEAD
       sha256: e16f0a83601a78d165dabc17e4dac50997604eb9e4cc76e10fa219046b70cef3
       url: "https://pub.dev"
     source: hosted
@@ -733,10 +738,16 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.5.3"
+=======
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.4+2"
+>>>>>>> origin/master
   video_player_platform_interface:
     dependency: transitive
     description:
       name: video_player_platform_interface
+<<<<<<< HEAD
       sha256: be72301bf2c0150ab35a8c34d66e5a99de525f6de1e8d27c0672b836fe48f73a
       url: "https://pub.dev"
     source: hosted
@@ -749,6 +760,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+=======
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
+>>>>>>> origin/master
   watcher:
     dependency: transitive
     description:
